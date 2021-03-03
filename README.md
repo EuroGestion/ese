@@ -43,10 +43,10 @@ Puedes encontrar mucho más de cómo utilizar este proyecto en nuestra Wiki
 
 ## Autores 
 
-* **Carlos la Fuente** - *Trabajo Inicial* - [cfuente](https://gitlab.com/cfuente)
-* **Álvaro de Paz** - *Trabajo Inicial* - [adpaz](https://gitlab.com/adpaz)
-* **Antonio Moral** - *Trabajo Inicial* - [amoral](https://gitlab.com/amoral)
-* **Rubén Merino** - *Trabajo Inicial* - [rmerino](https://gitlab.com/rmerino)
+* **Carlos la Fuente** - *Trabajo Inicial* - [cfuente](https://github.com/cfuente)
+* **Álvaro de Paz** - *Trabajo Inicial* - [adpaz](https://github.com/adpaz)
+* **Antonio Moral** - *Trabajo Inicial* - [amoral](https://github.com/amoral)
+* **Rubén Merino** - *Trabajo Inicial* - [rmerino](https://github.com/rmerino)
 
 ## Licencia 
 
