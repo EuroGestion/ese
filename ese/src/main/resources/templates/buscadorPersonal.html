@@ -1,0 +1,200 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+<script th:inline="javascript">
+    //thymeleaf to javascript variables
+    /*<![CDATA[*/
+    var sortProperty = /*[[${buscadorPersonal.order}]]*/ null;
+    var sortDesc = /*[[${buscadorPersonal.direccion}]]*/ null;
+    var currentPage = /*[[${buscadorPersonal.page}]]*/ 0;
+    /*]]>*/
+
+    $(document).ready(function(){
+     //show up/down arrows
+     $("table#tablaBuscadorPersonal thead th").each(function(){
+        var head = $(this);
+        if(head.attr('data-sort-prop')==sortProperty){
+            head.append(sortDesc=="desc"?'▾':'▴');
+        }
+        });
+
+     //set click action, reload page on clicking with all query params
+     $("table#tablaBuscadorPersonal thead th").click(function() {
+      var headerSortPropName = $(this).attr("data-sort-prop");
+        if(headerSortPropName=="datosLaborales" ||headerSortPropName=="datosRegistro"){
+            return;   
+        }
+         
+
+      $("#order").attr("value",headerSortPropName);
+      if(headerSortPropName==sortProperty){
+       
+          $("#direccion").attr("value",(sortDesc=="desc"?"asc":"desc"));
+      }else{
+          $("#direccion").attr("value","asc");
+          
+      }
+
+      $("#buscadorPersonal").attr("action",getContextPath()+"/ordenTablaBuscadorPersonal");
+      $("#buscadorPersonal").submit();
+      });
+    });
+  </script>
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page" th:text="#{titulo.personal}">Personal</h1>
+                <form action="#" class="my-box"
+                    th:object="${buscadorPersonal}"
+                    id="buscadorPersonal" th:method="post"
+                    th:action="@{/borrarFiltrosPersonal}">
+                    <input type="hidden" th:field="*{page}" />
+                    <input type="hidden" th:field="*{order}" />
+                    <input type="hidden" th:field="*{direccion}" />
+                    <table class="table-grid">
+                        <tr>
+                            <td>
+                                <label for="nombre"
+                                    th:text="#{formulario.nombre}">Nombre:</label>
+                                <input class="form-control" type="text"
+                                    th:field="*{nombre}" />
+                            </td>
+                            <td>
+                                <label for="apellido"
+                                    th:text="#{formulario.apellido}">Apellido:</label>
+                                <input class="form-control" type="text"
+                                    th:field="*{apellido}" />
+                            </td>
+                            <td>
+                                <label for="idCargo"
+                                    th:text="#{formulario.cargo}">Cargo:</label>
+                                <select class="form-control"
+                                    th:field="*{idCargo}">
+                                    <option th:each="var : ${cargos}"
+                                        th:value="${var.idCargo}"
+                                        th:text="${var.nombre}">Cargo</option>
+                                </select>
+                            </td>
+                            <td>
+                                <label for="dni"
+                                    th:text="#{formulario.dni}">DNI:</label>
+                                <input class="form-control" type="text"
+                                    th:field="*{dni}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <input type="submit"
+                                    th:formaction="@{/filtrarBuscadorPersonal}"
+                                    th:value="#{boton.filtrar}"
+                                    class="btn btn-lg btn-primary btn-block mi-boton" />
+                                <input type="submit"
+                                    th:formaction="@{/borrarFiltrosBuscadorPersonal}"
+                                    th:value="#{boton.borrar.filtros}"
+                                    class="btn btn-lg btn-primary btn-block mi-boton" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table id="tablaBuscadorPersonal"
+                        class="table-paginacion">
+                        <thead>
+                            <tr>
+                                <th data-sort-prop="nombreCompleto"
+                                    th:text="#{tabla.nombre.completo}">Nombre</th>
+                                <th data-sort-prop="documento"
+                                    th:text="#{tabla.dni}">DNI</th>
+                                <th data-sort-prop="cargo.nombre"
+                                    th:text="#{tabla.cargo}">Cargo</th>
+                                <th data-sort-prop="datosLaborales"
+                                    th:text="#{tabla.datos.laborales}">Datos
+                                    laborales</th>
+                                <th data-sort-prop="datosRegistro"
+                                    th:text="#{tabla.datos.personales}">Datos
+                                    personales</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="persona : ${personas}"
+                                th:class="${personaStat.odd}? 'odd':'even'">
+                                <td>
+                                    <output
+                                        th:text="${persona.nombreCompleto}">Nombre</output>
+                                </td>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${persona.documento}">DNI</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${persona.cargo.nombre}">Cargo</output>
+                                </td>
+                                <td>
+                                    <button type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:formaction="@{/verDetallePersonal}"
+                                        th:name="idPersonal"
+                                        th:value="${persona.idPersonal}">
+                                        <i class="far fa-eye"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:formaction="@{/cargarModificarRegister}"
+                                        th:if="${session.usuario.tienePermisoEscritura('personal')}"
+                                        th:name="idPersonal"
+                                        th:value="${persona.idPersonal}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:formaction="@{/cargarVerRegister}"
+                                        th:if="${!session.usuario.tienePermisoEscritura('personal')}"
+                                        th:name="idPersonal"
+                                        th:value="${persona.idPersonal}">
+                                        <i class="far fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div
+                        th:replace="utiles :: paginacion('paginacionTablaBuscadorPersonal', ${personas},'page')">...</div>
+                    <div class="botoneraNuevo">
+                        <button type="submit"
+                            class="btn btn-lg btn-primary btn-block mi-boton"
+                            th:formaction="@{/registerUsuario}"
+                            th:if="${session.usuario.tienePermisoEscritura('personal')}"
+                            th:formmethod="GET" th:text="#{boton.nuevo}">Modificar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

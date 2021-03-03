@@ -1,0 +1,188 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoIscc9" th:hidden="*{!pagina.equals('9')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="3">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.iscc.medios.aseguramiento.carga}"></h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="30%">
+                        <label
+                            th:text="#{formulario.informe.iscc.concepto}">concepto</label>
+                    </td>
+                    <td width="10%">
+                        <label
+                            th:text="#{formulario.informe.iscc.numero.vagones.verificados}">numero
+                            vagones</label>
+                    </td>
+                    <td width="60%">
+                        <label
+                            th:text="#{formulario.informe.iscc.observaciones}">Observaciones</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="mediosCalcesRetencion"
+                            th:text="#{formulario.informe.iscc.medios.calces.rentencion}">
+                            medios calces retencion:</label>
+                        <ul>
+                            <li
+                                th:text="#{formulario.informe.iscc.medios.calces.rentencion.1}"></li>
+                            <li
+                                th:text="#{formulario.informe.iscc.medios.calces.rentencion.2}"></li>
+                            <li
+                                th:text="#{formulario.informe.iscc.medios.calces.rentencion.3}"></li>
+                            <li
+                                th:text="#{formulario.informe.iscc.medios.calces.rentencion.4}"></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('9') and !isLectura}"
+                            th:field="*{mediosCalcesRetencion}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{mediosCalcesRetencionObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="mediosCalcesRodadura"
+                            th:text="#{formulario.informe.iscc.medios.calces.rodadura}">
+                            medios calces rodadura:</label>
+                        <ul>
+                            <li
+                                th:text="#{formulario.informe.iscc.medios.calces.rodadura.1}"></li>
+                            <li
+                                th:text="#{formulario.informe.iscc.medios.calces.rodadura.2}"></li>
+                            <li
+                                th:text="#{formulario.informe.iscc.medios.calces.rodadura.3}"></li>
+                            <li
+                                th:text="#{formulario.informe.iscc.medios.calces.rodadura.4}"></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('9') and !isLectura}"
+                            th:field="*{mediosCalcesRodadura}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{mediosCalcesRodaduraObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="mediosIntercalares"
+                            th:text="#{formulario.informe.iscc.medios.intercalares}">
+                            medios intercalares:</label>
+                        <ul>
+                            <li
+                                th:text="#{formulario.informe.iscc.medios.intercalares.1}"></li>
+                            <li
+                                th:text="#{formulario.informe.iscc.medios.intercalares.2}"></li>
+                            <li
+                                th:text="#{formulario.informe.iscc.medios.intercalares.3}"></li>
+                            <li
+                                th:text="#{formulario.informe.iscc.medios.intercalares.4}"></li>
+                            <li
+                                th:text="#{formulario.informe.iscc.medios.intercalares.5}"></li>
+                            <li
+                                th:text="#{formulario.informe.iscc.medios.intercalares.6}"></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('9') and !isLectura}"
+                            th:field="*{mediosIntercalares}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{mediosIntercalaresObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="mediosAmarres"
+                            th:text="#{formulario.informe.iscc.medios.amarres}">
+                            medios amarres:</label>
+                        <ul>
+                            <li
+                                th:text="#{formulario.informe.iscc.medios.amarres.1}"></li>
+                            <li
+                                th:text="#{formulario.informe.iscc.medios.amarres.2}"></li>
+                            <li
+                                th:text="#{formulario.informe.iscc.medios.amarres.3}"></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('9') and !isLectura}"
+                            th:field="*{mediosAmarres}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{mediosAmarresObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <!-- observaciones -->
+                        <label for="observacionesMedios"
+                            th:text="#{formulario.observaciones}">observaciones:</label>
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesMedios}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.iscc.medidas.cautelares}"></h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{medidasCautelares}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.iscc.lista.anexos}"></h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{listaAnexos}"></textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

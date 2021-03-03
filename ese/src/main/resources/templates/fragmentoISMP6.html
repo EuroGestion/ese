@@ -1,0 +1,112 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoIsmp6" th:hidden="*{!pagina.equals('6')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.ismp.firmas}">Firmas</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.firmas.inspector.seguridad}">inspector
+                            de seguridad</h4>
+                    </td>
+                    <td colspan="2">
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.firmas.responsable.seguridad}">responsable
+                            de seguridad</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <select class="form-control"
+                            style="pointer-events: none;" readonly
+                            th:if="*{idFirmaInspectorSeguridad!=null}"
+                            th:field="*{idFirmaInspectorSeguridad}">
+                            <option th:each="var : ${personal}"
+                                th:value="${var.idPersonal}"
+                                th:text="${var.nombreCompleto}"></option>
+                        </select>
+                        <label for="nombreInspectorSeguridad"
+                            class="labelColumna"
+                            th:if="*{idFirmaInspectorSeguridad==null and idEstadoISMP==2}"
+                            th:text="#{formulario.nombre}">nombre:</label>
+                        <input type="text"
+                            th:field="*{nombreInspectorSeguridad}"
+                            th:if="*{idFirmaInspectorSeguridad==null and idEstadoISMP==2}"
+                            class="form-control" style="width: 100%;"
+                            th:readonly="*{isLectura}" />
+                    </td>
+                    <td colspan="2">
+                        <select class="form-control"
+                            style="pointer-events: none;" readonly
+                            th:if="*{idFirmaResponsableSeguridad!=null}"
+                            th:field="*{idFirmaResponsableSeguridad}">
+                            <option th:each="var : ${personal}"
+                                th:value="${var.idPersonal}"
+                                th:text="${var.nombreCompleto}"></option>
+                        </select>
+                        <label for="nombreResponsableSeguridad"
+                            class="labelColumna"
+                            th:if="*{idFirmaResponsableSeguridad==null and idEstadoISMP==2}"
+                            th:text="#{formulario.nombre}">nombre:</label>
+                        <input type="text"
+                            th:if="*{idFirmaResponsableSeguridad==null and idEstadoISMP==2}"
+                            th:field="*{nombreResponsableSeguridad}"
+                            class="form-control" style="width: 100%;"
+                            th:readonly="*{isLectura}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label for="passwordInspectorSeguridad"
+                            class="labelColumna"
+                            th:if="*{idFirmaInspectorSeguridad==null and idEstadoISMP==2}"
+                            th:text="#{formulario.password}">contraseña:</label>
+                        <input type="password"
+                            th:field="*{passwordInspectorSeguridad}"
+                            class="form-control" style="width: 100%;"
+                            th:if="*{idFirmaInspectorSeguridad==null and idEstadoISMP==2}"
+                            th:readonly="*{isLectura}" />
+                    </td>
+                    <td colspan="2">
+                        <label for="passwordResponsableSeguridad"
+                            class="labelColumna"
+                            th:if="*{idFirmaResponsableSeguridad==null and idEstadoISMP==2}"
+                            th:text="#{formulario.password}">contraseña:</label>
+                        <input type="password"
+                            th:if="*{idFirmaResponsableSeguridad==null and idEstadoISMP==2}"
+                            th:field="*{passwordResponsableSeguridad}"
+                            class="form-control" style="width: 100%;"
+                            th:readonly="*{isLectura}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" th:value="#{boton.firmar}"
+                            value="firmar"
+                            th:if="*{idFirmaInspectorSeguridad==null and idEstadoISMP==2}"
+                            th:formaction="@{/firmaISMPInspectorSeguridad}"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                    <td colspan="2">
+                        <input type="submit" th:value="#{boton.firmar}"
+                            value="firmar"
+                            th:if="*{idFirmaResponsableSeguridad==null and idEstadoISMP==2}"
+                            th:formaction="@{/firmaISMPResponsableSeguridad}"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

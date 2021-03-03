@@ -1,0 +1,459 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.cad}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page" th:text="#{titulo.homologacion}">Homologacion
+                    de proveedores</h1>
+                <form action="#" th:object="${homologacion}"
+                    class="my-box" id="homologacion" th:method="post"
+                    th:action="@{/homologacion}"
+                    enctype="multipart/form-data">
+                    <input type="hidden" th:field="*{idProveedor}" />
+                    <input type="hidden" th:field="*{idEstadoProveedor}" />
+                    <input type="hidden" th:field="*{lectura}" />
+                    <input type="hidden" th:field="*{page}" />
+                    <table class="table-grid">
+                        <tbody>
+                            <tr>
+                                <td class="form-group" colspan="3">
+                                    <label for="idCompaniaHomologacion"
+                                        th:text="#{formulario.compania}">Compania:</label>
+                                    <select class="form-control"
+                                        th:field="*{idCompaniaHomologacion}"
+                                        th:style="*{lectura or (idEstadoProveedor != null and idEstadoProveedor >=1)?'pointer-events: none;':''}"
+                                        th:readonly="*{lectura or (idEstadoProveedor != null and idEstadoProveedor >=1)}"
+                                        required>
+                                        <option
+                                            th:each="var : ${companias}"
+                                            th:value="${var.idCompania}"
+                                            th:text="${var.nombre}">Compania</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idEstadoProveedor != null and idEstadoProveedor >=1}">
+                                <td>
+                                    <label
+                                        th:text="#{formulario.titulo.envio.informacion}">Envio
+                                        informacion:</label>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idEstadoProveedor != null and idEstadoProveedor >=1}">
+                                <td
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor ==1 and !lectura}">
+                                    <label for="evidencia"
+                                        th:text="#{formulario.evidencia}">Evidencia:</label>
+                                    <input class="form-control-file"
+                                        type="file" required
+                                        th:field="*{evidencia}"
+                                        accept=".jpg , .jpeg,.pdf">
+                                </td>
+                                <td colspan="2"
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor ==1 and !lectura}">
+                                    <label for="descripcionEvidencia"
+                                        th:text="#{formulario.descripcion}">Descripcion:</label>
+                                    <input class="form-control"
+                                        type="text" required
+                                        th:field="*{descripcionEvidencia}" />
+                                </td>
+                                <td
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor !=1}">
+                                    <label for="evidencia"
+                                        th:text="#{formulario.evidencia}">Evidencia:</label>
+                                    <input type="text" readonly
+                                        class="form-control"
+                                        th:field="*{descripcionEvidenciaEnvioInformacion}" />
+                                </td>
+                                <td
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor !=1}">
+                                    <input type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.ver}"
+                                        th:formtarget="_blank"
+                                        formnovalidate
+                                        th:formaction="@{/verEvidenciaEnvioInformacion}"
+                                        value="Ver" />
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idEstadoProveedor != null and idEstadoProveedor >=2}">
+                                <td>
+                                    <label
+                                        th:text="#{formulario.titulo.informacion.recibida}">Informacion
+                                        recibida:</label>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idEstadoProveedor != null and idEstadoProveedor >=2}">
+                                <td
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor ==2 and !lectura}">
+                                    <label for="evidencia"
+                                        th:text="#{formulario.evidencia}">Evidencia:</label>
+                                    <input class="form-control-file"
+                                        type="file" required
+                                        th:field="*{evidencia}"
+                                        accept=".jpg , .jpeg,.pdf">
+                                </td>
+                                <td colspan="2"
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor ==2 and !lectura}">
+                                    <label for="descripcionEvidencia"
+                                        th:text="#{formulario.descripcion}">Descripcion:</label>
+                                    <input class="form-control"
+                                        type="text" required
+                                        th:field="*{descripcionEvidencia}" />
+                                </td>
+                                <td
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor !=2}">
+                                    <label for="evidencia"
+                                        th:text="#{formulario.evidencia}">Evidencia:</label>
+                                    <input type="text" readonly
+                                        class="form-control"
+                                        th:field="*{descripcionEvidenciaInformacionRecibida}" />
+                                </td>
+                                <td
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor !=2}">
+                                    <input type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.ver}"
+                                        th:formtarget="_blank"
+                                        formnovalidate
+                                        th:formaction="@{/verEvidenciaInformacionRecibida}"
+                                        value="Ver" />
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idEstadoProveedor != null and idEstadoProveedor >=3}">
+                                <td>
+                                    <label
+                                        th:text="#{formulario.titulo.solicitud.documentacion}">Solicitud
+                                        de Documentacion para
+                                        Homologacion:</label>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idEstadoProveedor != null and idEstadoProveedor >=3}">
+                                <td
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor ==3 and !lectura}">
+                                    <label for="evidencia"
+                                        th:text="#{formulario.evidencia}">Evidencia:</label>
+                                    <input class="form-control-file"
+                                        type="file" required
+                                        th:field="*{evidencia}"
+                                        accept=".jpg , .jpeg,.pdf">
+                                </td>
+                                <td colspan="2"
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor ==3 and !lectura}">
+                                    <label for="descripcionEvidencia"
+                                        th:text="#{formulario.descripcion}">Descripcion:</label>
+                                    <input class="form-control"
+                                        type="text" required
+                                        th:field="*{descripcionEvidencia}" />
+                                </td>
+                                <td
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor !=3}">
+                                    <label for="evidencia"
+                                        th:text="#{formulario.evidencia}">Evidencia:</label>
+                                    <input type="text" readonly
+                                        class="form-control"
+                                        th:field="*{descripcionEvidenciaSolicitudDocumentacion}" />
+                                </td>
+                                <td
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor !=3}">
+                                    <input type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.ver}"
+                                        th:formtarget="_blank"
+                                        formnovalidate
+                                        th:formaction="@{/verEvidenciaSolicitudDocumentacion}"
+                                        value="Ver" />
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idEstadoProveedor != null and idEstadoProveedor >=4}">
+                                <td>
+                                    <label
+                                        th:text="#{formulario.titulo.documentacion.recibida}">Documentacion
+                                        Recibida:</label>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idEstadoProveedor != null and idEstadoProveedor >=4}">
+                                <td
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor ==4 and !lectura}">
+                                    <label for="evidencia"
+                                        th:text="#{formulario.evidencia}">Evidencia:</label>
+                                    <input class="form-control-file"
+                                        type="file" required
+                                        th:field="*{evidencia}"
+                                        accept=".jpg , .jpeg,.pdf">
+                                </td>
+                                <td colspan="1"
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor ==4 and !lectura}">
+                                    <label for="descripcionEvidencia"
+                                        th:text="#{formulario.descripcion}">Descripcion:</label>
+                                    <input class="form-control"
+                                        type="text" required
+                                        th:field="*{descripcionEvidencia}" />
+                                </td>
+                                <td
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor !=4}">
+                                    <label for="evidencia"
+                                        th:text="#{formulario.evidencia}">Evidencia:</label>
+                                    <input type="text" readonly
+                                        class="form-control"
+                                        th:field="*{descripcionEvidenciaDocumentacionRecibida}" />
+                                </td>
+                                <td
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor !=4}">
+                                    <input type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.ver}"
+                                        th:formtarget="_blank"
+                                        formnovalidate
+                                        th:formaction="@{/verEvidenciaDocumentacionRecibida}"
+                                        value="Ver" />
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idEstadoProveedor != null and idEstadoProveedor >=5}">
+                                <td>
+                                    <label
+                                        th:text="#{formulario.titulo.documentos.anexos}">Documentos
+                                        anexos:</label>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idEstadoProveedor != null and idEstadoProveedor ==5 and !lectura}">
+                                <td>
+                                    <label for="evidencia"
+                                        th:text="#{formulario.evidencia}">Evidencia:</label>
+                                    <input class="form-control-file"
+                                        type="file"
+                                        th:field="*{evidencia}"
+                                        accept=".jpg , .jpeg,.pdf">
+                                </td>
+                                <td>
+                                    <label for="descripcionEvidencia"
+                                        th:text="#{formulario.descripcion}">Descripcion:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{descripcionEvidencia}" />
+                                </td>
+                                <td>
+                                    <button
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        onclick="return validarSubidaArchivo('evidencia',true,'descripcionEvidencia')"
+                                        type="submit"
+                                        th:formaction="@{/anadirEvidenciaAnexoHomologacion}">Añadir</button>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idEstadoProveedor != null and idEstadoProveedor >=5}">
+                                <td colspan="3">
+                                    <table class="table-paginacion">
+                                        <thead>
+                                            <tr>
+                                                <th
+                                                    th:text="#{tabla.descripcion}">Documento</th>
+                                                <th
+                                                    th:text="#{tabla.ver}">Ver</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                th:each="anexo : ${anexosProveedor}"
+                                                th:class="${anexoStat.odd}? 'odd':'even'">
+                                                <td>
+                                                    <output
+                                                        th:text="${anexo.descripcion}">Documento</output>
+                                                </td>
+                                                <td>
+                                                    <button
+                                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                                        type="submit"
+                                                        th:formaction="@{/verEvidenciaAnexoProveedor}"
+                                                        th:name="idAnexoProveedor"
+                                                        th:formtarget="_blank"
+                                                        formnovalidate
+                                                        th:value="${anexo.idAnexoProveedor}"><i class="far fa-eye"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div
+                                        th:replace="utiles :: paginacion('paginacionTablaHomologacion', ${anexosProveedor},'page')">...</div>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idEstadoProveedor != null and idEstadoProveedor >=6}">
+                                <td>
+                                    <label
+                                        th:text="#{formulario.titulo.resultado.homologacion}">Resultado
+                                        homologacion:</label>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idEstadoProveedor != null and idEstadoProveedor >=6}">
+                                <td colspan="2">
+                                <div style="margin-bottom: 30px;">
+                                    <input class="customradio"
+                                        th:readonly="*{idEstadoProveedor!= 6 or lectura}"
+                                        th:style="*{idEstadoProveedor!= 6 or lectura?'pointer-events: none;':''}"
+                                        type="radio"
+                                        th:name="resultadoHomologacion"
+                                        id="resultadoHomologacionAceptado"
+                                        th:value="1" th:text="Aceptado"
+                                        th:checked="*{resultadoHomologacion != null and resultadoHomologacion}" />
+                                        </div><div style="margin-bottom: 30px;">
+                                    <input class="customradio"
+                                        th:readonly="*{idEstadoProveedor!= 6 or lectura}"
+                                        th:style="*{idEstadoProveedor!= 6 or lectura?'pointer-events: none;':''}"
+                                        type="radio"
+                                        th:name="resultadoHomologacion"
+                                        id="resultadoHomologacionRechazado"
+                                        th:value="0" th:text="Rechazado"
+                                        th:checked="*{resultadoHomologacion == null or !resultadoHomologacion}" />
+                                        </div>
+                                </td>
+                                <td th:if="*{idEstadoProveedor!= 6}">
+                                    <input class="form-control"
+                                        type="date" readonly="readonly"
+                                        th:field="*{fechaHomologacion}" />
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idEstadoProveedor != null and idEstadoProveedor >=6}">
+                                <td
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor ==6 and !lectura}">
+                                    <label for="evidencia"
+                                        th:text="#{formulario.evidencia}">Evidencia:</label>
+                                    <input class="form-control-file"
+                                        type="file" required
+                                        th:field="*{evidencia}"
+                                        accept=".jpg , .jpeg,.pdf">
+                                </td>
+                                <td colspan="1"
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor ==6 and !lectura}">
+                                    <label for="descripcionEvidencia"
+                                        th:text="#{formulario.descripcion}">Descripcion:</label>
+                                    <input class="form-control"
+                                        type="text" required
+                                        th:field="*{descripcionEvidencia}" />
+                                </td>
+                                <td
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor !=6}">
+                                    <label for="evidencia"
+                                        th:text="#{formulario.evidencia}">Evidencia:</label>
+                                    <input type="text" readonly
+                                        class="form-control"
+                                        th:field="*{descripcionEvidenciaResultadoHomologacion}" />
+                                </td>
+                                <td
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor !=6}">
+                                    <input type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.ver}"
+                                        th:formtarget="_blank"
+                                        formnovalidate
+                                        th:formaction="@{/verEvidenciaResultadoHomologacion}"
+                                        value="Ver" />
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idEstadoProveedor != null and idEstadoProveedor >=8}">
+                                <td>
+                                    <label
+                                        th:text="#{formulario.titulo.comunicacion}">Comunicacion:</label>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idEstadoProveedor != null and idEstadoProveedor >=8}">
+                                <td
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor ==8 and !lectura}">
+                                    <label for="evidencia"
+                                        th:text="#{formulario.evidencia}">Evidencia:</label>
+                                    <input class="form-control-file"
+                                        type="file" required
+                                        th:field="*{evidencia}"
+                                        accept=".jpg , .jpeg,.pdf">
+                                </td>
+                                <td colspan="1"
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor ==8 and !lectura}">
+                                    <label for="descripcionEvidencia"
+                                        th:text="#{formulario.descripcion}">Descripcion:</label>
+                                    <input class="form-control"
+                                        type="text" required
+                                        th:field="*{descripcionEvidencia}" />
+                                </td>
+                                <td
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor !=8}">
+                                    <label for="evidencia"
+                                        th:text="#{formulario.evidencia}">Evidencia:</label>
+                                    <input type="text" readonly
+                                        class="form-control"
+                                        th:field="*{descripcionEvidenciaComunicacion}" />
+                                </td>
+                                <td
+                                    th:if="*{idEstadoProveedor != null and idEstadoProveedor !=8}">
+                                    <input type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.ver}"
+                                        th:formtarget="_blank"
+                                        formnovalidate
+                                        th:formaction="@{/verEvidenciaComunicacion}"
+                                        value="Ver" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="submit"
+                                        th:if="*{idEstadoProveedor!=7 and idEstadoProveedor!=9 and !lectura}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.siguiente}"
+                                        th:formaction="@{/pasoSiguienteHomologacion}"
+                                        value="Siguiente" />
+                                    <input type="submit"
+                                        style="float: right"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.volver}"
+                                        formnovalidate
+                                        th:formmethod="GET"
+                                        th:formaction="@{/buscadorHomologacion}"
+                                        value="Volver" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

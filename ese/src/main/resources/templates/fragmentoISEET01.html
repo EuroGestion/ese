@@ -1,0 +1,104 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoIseet1"
+        th:hidden="*{!pagina.equals('1')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                        <label for="numeroReferencia"
+                            th:text="#{formulario.numero.referencia}">numero
+                            referencia:</label>
+                        <input class="form-control" type="text"
+                            th:required="*{pagina.equals('1') and !isLectura}"
+                            readonly
+                            th:field="*{numeroReferencia}"
+                            maxlength="12" />
+                    </td>
+                    <td colspan="2">
+                        <!-- fecha -->
+                        <label for="fecha" th:text="#{formulario.fecha}">Fecha:</label>
+                        <input type="date" min="1900-01-01"
+                            class="form-control" max="3000-01-01"
+                            th:field="*{fecha}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('1') and !isLectura}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.iseet.circulacion.ferroviaria.personal.inspeccionado}"></h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <!-- personal de conduccion -->
+                        <label for="idPersonalConduccion"
+                            th:text="#{formulario.personal.conduccion}">Personal
+                            de conducción:</label>
+                        <select class="form-control"
+                            th:field="*{idPersonalConduccion}"
+                            th:required="*{pagina.equals('1') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}">
+                            <option th:each="var : ${maquinistas}"
+                                th:value="${var.idPersonal}"
+                                th:text="${var.nombreCompleto}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- nve locomotora -->
+                        <label for="nveLocomotora"
+                            th:text="#{formulario.nve.locomotora}">Nve
+                            Locomotora:</label>
+                        <input class="form-control" type="text"
+                            th:required="*{pagina.equals('1') and !isLectura}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{nveLocomotora}" maxlength="12" />
+                    </td>
+                    <td>
+                        <label for="idTren"
+                            th:text="#{formulario.numero.tren}">numero
+                            tren:</label>
+                        <select class="form-control"
+                            th:field="*{idTren}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}">
+                            <option th:each="var : ${trenes}"
+                                th:value="${var.idTren}"
+                                th:text="${var.numero}"></option>
+                        </select>
+                    </td>
+                    <td colspan="2">
+                        <!-- hora inicio servicio -->
+                        <label for="lugarInspeccion"
+                            th:text="#{formulario.lugar}">lugar:</label>
+                        <input class="form-control" type="text"
+                            th:required="*{pagina.equals('1') and !isLectura}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{lugarInspeccion}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <!-- observaciones -->
+                        <label for="observacionesCirculacionFerroviaria"
+                            th:text="#{formulario.observaciones}">Observaciones:</label>
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesCirculacionFerroviaria}"></textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoIscc7" th:hidden="*{!pagina.equals('7')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="3">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.iscc.acondicionamiento.mercancia}"></h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="30%">
+                        <label
+                            th:text="#{formulario.informe.iscc.concepto}">concepto</label>
+                    </td>
+                    <td width="10%">
+                        <label
+                            th:text="#{formulario.informe.iscc.numero.vagones.verificados}">numero
+                            vagones</label>
+                    </td>
+                    <td width="60%">
+                        <label
+                            th:text="#{formulario.informe.iscc.observaciones}">Observaciones</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h4 class="title-page"
+                            th:text="#{formulario.titulo.informe.iscc.acondicionamiento.mercancias.apiladas}"></h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="acondicionamientoApiladaRepartidas"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.apilada.repartidas}">
+                            apilada repartidas:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('7') and !isLectura}"
+                            th:field="*{acondicionamientoApiladaRepartidas}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoApiladaRepartidasObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="acondicionamientoApiladaAnchura"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.apilada.anchura}">
+                            apilada anchura:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('7') and !isLectura}"
+                            th:field="*{acondicionamientoApiladaAnchura}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoApiladaAnchuraObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="acondicionamientoApiladaCapas"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.apilada.capas}">
+                            apilada capas:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('7') and !isLectura}"
+                            th:field="*{acondicionamientoApiladaCapas}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoApiladaCapasObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="acondicionamientoApiladaRozamiento"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.apilada.rozamiento}">
+                            apilada rozamiento:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('7') and !isLectura}"
+                            th:field="*{acondicionamientoApiladaRozamiento}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoApiladaRozamientoObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="acondicionamientoApiladaBastidores"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.apilada.bastidores}">
+                            apilada bastidores:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('7') and !isLectura}"
+                            th:field="*{acondicionamientoApiladaBastidores}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoApiladaBastidoresObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="acondicionamientoApiladaUnidades"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.apilada.unidades}">
+                            apilada unidades:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('7') and !isLectura}"
+                            th:field="*{acondicionamientoApiladaUnidades}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoApiladaUnidadesObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="acondicionamientoApiladaCintas"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.apilada.cintas}">
+                            apilada cintas:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('7') and !isLectura}"
+                            th:field="*{acondicionamientoApiladaCintas}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoApiladaCintasObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label
+                            for="acondicionamientoApiladaParteInferior"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.apilada.parte.inferior}">
+                            apilada parte inferior:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('7') and !isLectura}"
+                            th:field="*{acondicionamientoApiladaParteInferior}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoApiladaParteInferiorObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label
+                            for="acondicionamientoApiladaIntercalares"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.apilada.intercalares}">
+                            apilada intercalares:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('7') and !isLectura}"
+                            th:field="*{acondicionamientoApiladaIntercalares}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoApiladaIntercalaresObservaciones}" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

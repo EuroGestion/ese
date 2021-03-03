@@ -1,0 +1,233 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.detalle.personal}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page" th:text="#{titulo.crear.libro}">Crear
+                    libro</h1>
+                <form action="#" class="my-box"
+                    th:object="${crearLibro}" id="crearLibro"
+                    th:method="post" th:action="@{/crearLibro}"
+                    enctype="multipart/form-data">
+                    <input type="hidden"
+                        th:field="*{listPersonalesLibro}" />
+                    <input type="hidden"
+                        th:field="*{usuariosSeleccionados}" />
+                    <table class="table-grid">
+                        <tbody>
+                            <tr th:if="*{!usuariosSeleccionados}">
+                                <td>
+                                    <label for="dni"
+                                        th:text="#{formulario.dni}">Nombre:</label>
+                                    <input class="form-control"
+                                        type="text" th:field="*{dni}" />
+                                </td>
+                                <td>
+                                    <label for="nombre"
+                                        th:text="#{formulario.nombre}">nombre:</label>
+                                    <input class="form-control"
+                                        type="text" th:field="*{nombre}" />
+                                </td>
+                                <td>
+                                    <label for="apellido"
+                                        th:text="#{formulario.apellido}">apellido:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{apellido}" />
+                                </td>
+                                <td>
+                                    <label for="idCargo"
+                                        th:text="#{formulario.cargo}">cargo:</label>
+                                    <select class="form-control"
+                                        th:field="*{idCargo}">
+                                        <option
+                                            th:each="var : ${cargos}"
+                                            th:value="${var.idCargo}"
+                                            th:text="${var.descripcion}">Cargos</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr th:if="*{!usuariosSeleccionados}">
+                                <td colspan="3">
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/filtrarBuscadorCrearLibro}"
+                                        th:value="#{boton.filtrar}" />
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/borrarFiltrosBuscadorCrearLibro}"
+                                        th:value="#{boton.borrar.filtros}" />
+                                </td>
+                            </tr>
+                            <tr th:if="*{!usuariosSeleccionados}">
+                                <td colspan="4">
+                                    <table class="table-list display"
+                                        data-page-length='5'>
+                                        <caption
+                                            style="font-size: 24px; font-family: inherit; font-weight: 500; line-height: 1.1; color: inherit;"
+                                            th:text="#{formulario.personales}"></caption>
+                                        <thead>
+                                            <tr>
+                                                <th
+                                                    th:text="#{tabla.nombre}">nombre</th>
+                                                <th
+                                                    th:text="#{tabla.cargo}">cargo</th>
+                                                <th
+                                                    th:text="#{tabla.anadir}">Añadir</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                th:each="personal : ${personalesTotales}">
+                                                <td>
+                                                    <output
+                                                        th:text="${personal.nombreCompleto}">nombre</output>
+                                                </td>
+                                                <td>
+                                                    <output
+                                                        th:text="${personal.cargo.descripcion}">nombre</output>
+                                                </td>
+                                                <td>
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                                        th:formaction="@{/addLibroPersonal}"
+                                                        th:name="idPersonalAdd"
+                                                        th:value="${personal.idPersonal}">
+                                                        <i
+                                                            class="fas fa-plus"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <table class="table-list display"
+                                        data-page-length='5'>
+                                        <caption
+                                            style="font-size: 24px; font-family: inherit; font-weight: 500; line-height: 1.1; color: inherit;"
+                                            th:text="#{formulario.personales.libro}"></caption>
+                                        <thead>
+                                            <tr>
+                                                <th
+                                                    th:text="#{tabla.nombre}">nombre</th>
+                                                <th
+                                                    th:text="#{tabla.cargo}">cargo</th>
+                                                <th
+                                                    th:text="#{tabla.eliminar}"
+                                                    th:if="*{!usuariosSeleccionados}">Eliminar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                th:each="personal : ${personalesLibro}">
+                                                <td>
+                                                    <output
+                                                        th:text="${personal.nombreCompleto}">nombre</output>
+                                                </td>
+                                                <td>
+                                                    <output
+                                                        th:text="${personal.cargo.descripcion}">nombre</output>
+                                                </td>
+                                                <td
+                                                    th:if="*{!usuariosSeleccionados}">
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                                        th:formaction="@{/eliminarLibroPersonal}"
+                                                        th:name="idPersonalEliminar"
+                                                        th:value="${personal.idPersonal}">
+                                                        <i
+                                                            class="fas fa-minus"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr th:if="*{usuariosSeleccionados}">
+                                <td>
+                                    <label for="evidencia"
+                                        th:text="#{formulario.documento}">Documento:</label>
+                                    <input class="form-control"
+                                        type="file"
+                                        th:field="*{documento}"
+                                        accept=".pdf" required>
+                                </td>
+                                <td colspan="3">
+                                    <label for="titulo"
+                                        th:text="#{formulario.titulo}">titulo:</label>
+                                    <input class="form-control"
+                                        type="text" th:field="*{titulo}"
+                                        required />
+                                </td>
+                            <tr>
+                                <td>
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/seleccionarUsuariosLibro}"
+                                        th:if="*{!usuariosSeleccionados}"
+                                        th:value="#{boton.seleccionar.usuarios}" />
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/generarLibro}"
+                                        th:if="*{usuariosSeleccionados}"
+                                        th:value="#{boton.crear.libro}" />
+                                </td>
+                                <td colspan="2"></td>
+                                <td>
+                                    <input type="submit"
+                                        th:formaction="@{/volverbuscadorLibros}"
+                                        th:value="#{boton.volver}"
+                                        formnovalidate value="Volver"
+                                        th:if="*{!usuariosSeleccionados}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton" />
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/volverSeleccionarUsuariosLibro}"
+                                        th:if="*{usuariosSeleccionados}"
+                                        formnovalidate
+                                        th:value="#{boton.volver}" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

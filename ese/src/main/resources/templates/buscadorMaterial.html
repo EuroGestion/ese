@@ -1,0 +1,190 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.buscador.material}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+<script th:inline="javascript">
+    //thymeleaf to javascript variables
+    /*<![CDATA[*/
+    var sortProperty = /*[[${buscadorMaterial.order}]]*/ null;
+    var sortDesc = /*[[${buscadorMaterial.direccion}]]*/ null;
+    var currentPage = /*[[${buscadorMaterial.page}]]*/ 0;
+    /*]]>*/
+
+    $(document).ready(function(){
+     //show up/down arrows
+     $("table#tablaBuscadorMaterial thead th").each(function(){
+        var head = $(this);
+        if(head.attr('data-sort-prop')==sortProperty){
+            head.append(sortDesc=="desc"?'▾':'▴');
+        }
+        });
+
+     //set click action, reload page on clicking with all query params
+     $("table#tablaBuscadorMaterial thead th").click(function() {
+      var headerSortPropName = $(this).attr("data-sort-prop");
+        if(headerSortPropName=="ver" ||headerSortPropName=="eliminar"){
+            return;   
+        }
+         
+
+      $("#order").attr("value",headerSortPropName);
+      if(headerSortPropName==sortProperty){
+       
+          $("#direccion").attr("value",(sortDesc=="desc"?"asc":"desc"));
+      }else{
+          $("#direccion").attr("value","asc");
+          
+      }
+
+      $("#buscadorMaterial").attr("action",getContextPath()+"/ordenTablaBuscadorMaterial");
+      $("#buscadorMaterial").submit();
+      });
+    });
+  </script>
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.buscador.material}">Buscador</h1>
+                <div style="width: 100%">
+                    <form action="#" class="my-box"
+                        th:object="${buscadorMaterial}"
+                        id="buscadorMaterial" th:method="post"
+                        th:action="@{/borrarFiltrosBuscadorMaterial}">
+                        <input type="hidden" th:field="*{page}" />
+                        <input type="hidden" th:field="*{order}" />
+                        <input type="hidden" th:field="*{direccion}" />
+                        <table class="table-grid">
+                            <tr>
+                                <td>
+                                    <label for="idModeloMaterial"
+                                        th:text="#{formulario.modelo.material}">Modelo
+                                        Material:</label>
+                                    <select class="form-control"
+                                        th:field="*{idModeloMaterial}">
+                                        <option
+                                            th:each="var : ${modelosMaterial}"
+                                            th:value="${var.idModeloMaterial}"
+                                            th:text="${var.idModeloMaterial}==null ? ${var.serie} : ${var.serie} + '-' + ${var.subserie}">ModeloMaterial</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="nve"
+                                        th:text="#{formulario.nve}">NVE:</label>
+                                    <input class="form-control"
+                                        type="text" th:field="*{nve}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/filtrarBuscadorMaterial}"
+                                        th:value="#{boton.filtrar}" />
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/borrarFiltrosBuscadorMaterial}"
+                                        th:value="#{boton.borrar.filtros}" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table id="tablaBuscadorMaterial"
+                            class="table-paginacion">
+                            <thead>
+                                <tr>
+                                    <th data-sort-prop="nve"
+                                        th:text="#{tabla.nve}">NVE</th>
+                                    <th data-sort-prop="modeloMaterial"
+                                        th:text="#{tabla.modelo.material}">Modelo</th>
+                                    <th data-sort-prop="ver"
+                                        th:text="#{tabla.ver.modificar}">Ver</th>
+                                    <th data-sort-prop="eliminar"
+                                        th:text="#{tabla.eliminar}">Baja</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="material : ${materiales}"
+                                    th:class="${materialStat.odd}? 'odd':'even'">
+                                    <td>
+                                        <output
+                                            th:text="${material.nve}">NVE</output>
+                                    </td>
+                                    <td>
+                                        <output
+                                            th:text="${material.modeloMaterial.serie} + '-' + ${material.modeloMaterial.subserie}">Modelo</output>
+                                    </td>
+                                    <td>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/verDetalleMaterial}"
+                                            th:if="${!session.usuario.tienePermisoEscritura('materiales')}"
+                                            th:name="idMaterial"
+                                            th:value="${material.idMaterial}">
+                                            <i class="far fa-eye"></i>
+                                        </button>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/modificarDetalleMaterial}"
+                                            th:if="${session.usuario.tienePermisoEscritura('materiales')}"
+                                            th:name="idMaterial"
+                                            th:value="${material.idMaterial}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/bajaMaterial}"
+                                            th:if="${session.usuario.tienePermisoEscritura('materiales')}"
+                                            th:name="idMaterial"
+                                            th:value="${material.idMaterial}">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div
+                            th:replace="utiles :: paginacion('paginacionTablaBuscadorMaterial', ${materiales},'page')">...</div>
+                        <div class="botoneraNuevo">
+                            <button type="submit"
+                                class="btn btn-lg btn-primary btn-block mi-boton"
+                                th:formaction="@{/crearMaterial}"
+                                th:if="${session.usuario.tienePermisoEscritura('materiales')}"
+                                th:formmethod="GET"
+                                th:text="#{boton.nuevo}">Nuevo</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

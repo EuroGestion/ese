@@ -1,0 +1,535 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.cad}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.informe.pasf.actual}">Informe
+                    PASF actual</h1>
+                <form action="#" th:object="${informePasfActual}"
+                    class="my-box" id="informePasfActual"
+                    th:method="post" th:action="@{/informePasfActual}"
+                    enctype="multipart/form-data">
+                    <input type="hidden" th:field="*{idPasf}" />
+                    <table class="table-grid">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label th:text="#{formulario.anno}">Año:</label>
+                                    <input class="form-control" readonly
+                                        type="number" th:field="*{anno}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <h2
+                                        th:text="#{formulario.titulo.accidentes.incidentes}">
+                                        Accidentes e incidentes:</h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.descarrilamiento}">Descarrilamiento:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{descarrilamiento}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.descarrilamiento.actual}">Descarrilamiento
+                                        actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{descarrilamientoActual}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.colision}">Colision:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{colision}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.colision.actual}">Colision
+                                        actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{colisionActual}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.accidente.paso.nivel}">Accidente
+                                        paso a nivel:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{accidentePasoNivel}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.accidente.paso.nivel.actual}">Accidente
+                                        paso a nivel actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{accidentePasoNivelActual}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.incendio}">Incendio:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{incendio}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.incendio.actual}">Incendio
+                                        actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{incendioActual}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.arrollamiento.via}">Arrollamiento
+                                        via:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{arrollamientoVia}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.arrollamiento.via.actual}">Arrollamiento
+                                        via actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{arrollamientoViaActual}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.arrollamiento.interseccion}">Arrollamiento
+                                        interseccion:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{arrollamientoInterseccion}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.arrollamiento.interseccion.actual}">Arrollamiento
+                                        interseccion actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{arrollamientoInterseccionActual}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.caida.personas}">Caida
+                                        personas:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{caidaPersonas}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.caida.personas.actual}">Caida
+                                        personas actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{caidaPersonasActual}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.suicidio}">Suicidio:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{suicidio}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.suicidio.actual}">Suicidio
+                                        actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{suicidioActual}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.descomposicion}">Descomposicion:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{descomposicion}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.descomposicion.actual}">Descomposicion
+                                        actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{descomposicionActual}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.detencion.tren}">Detencion
+                                        Tren:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{detencion}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.detencion.tren.actual}">Detencion
+                                        Tren actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{detencionActual}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.invasion.via}">Invasion
+                                        via:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{invasionVia}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.invasion.via.actual}">Invasion
+                                        via actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{invasionViaActual}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.incidentes.transportes.excepcionales}">Incidentes
+                                        Transportes Excepcionales:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{incidentesTransportesExcepcionales}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.incidentes.transportes.excepcionales.actual}">Incidentes
+                                        Transportes Excepcionales
+                                        actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{incidentesTransportesExcepcionalesActual}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.rebase.sennal}">Rebase
+                                        Señal:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{rebaseSennal}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.rebase.sennal.actual}">Rebase
+                                        Señal actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{rebaseSennalActual}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.conato.colision}">Conato
+                                        Colision:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{conatoColision}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.conato.colision.actual}">Conato
+                                        Colision actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{conatoColisionActual}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.enganche.pantografo}">Enganche
+                                        Pantografo:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{enganchePantografo}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.enganche.pantografo.actual}">Enganche
+                                        Pantografo actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{enganchePantografoActual}" />
+                                </td>
+                                <td>
+                                    <label th:text="#{formulario.otros}">Otros:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{otros}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.otros.actual}">Otros
+                                        actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{otrosActual}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <h2
+                                        th:text="#{formulario.titulo.personal}">Personal:</h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.cursos.formativos}">Cursos
+                                        Formativos:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{cursosFormativos}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.cursos.formativos.actual}">Cursos
+                                        Formativos actuales:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{cursosFormativosActual}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.revisiones.aptitud}">Revisiones
+                                        aptitudPsicofisica:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{revisionesAptitudPsicofisica}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.revisiones.aptitud.actual}">Revisiones
+                                        aptitudPsicofisica actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{revisionesAptitudPsicofisicaActual}" />
+                                </td>
+                            </tr>
+                            <!-- TODO AÑADIR CURSOS -->
+                            <tr>
+                                <td colspan="4">
+                                    <h3
+                                        th:text="#{formulario.titulo.acciones.formativas}">Acciones
+                                        formativas</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.asistentes.curso.material}">Asistentes
+                                        cursos material:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{cursosFormativosMaterial}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.asistentes.curso.material.actual}">Asistentes
+                                        cursos material actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{cursosFormativosMaterialActual}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.asistentes.curso.infraestructura}">Asistentes
+                                        cursos infraestructura:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{cursosFormativosInfraestructura}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.asistentes.curso.infraestructura.actual}">Asistentes
+                                        cursos infraestructura actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{cursosFormativosInfraestructuraActual}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.asistentes.otros.cursos}">Asistentes
+                                        otros cursos:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{cursosFormativosOtros}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.asistentes.otros.cursos.actual}">Asistentes
+                                        otros cursos actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{cursosFormativosOtrosActual}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <h2
+                                        th:text="#{formulario.titulo.inspecciones}">Inspecciones
+                                        y Controles de Seguridad:</h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label th:text="#{formulario.iso}">(ISO)Seguridad
+                                        Operativa:</label>
+                                    <input class="form-control" readonly
+                                        type="number" th:field="*{iso}" />
+                                </td>
+                                <td colspan="2">
+                                    <label
+                                        th:text="#{formulario.iso.actual}">(ISO)Seguridad
+                                        Operativa actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{isoActual}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label th:text="#{formulario.issc}">(ISSC)Estado
+                                        del cargamento y composiciones
+                                        ferroviarias:</label>
+                                    <input class="form-control" readonly
+                                        type="number" th:field="*{issc}" />
+                                </td>
+                                <td colspan="2">
+                                    <label
+                                        th:text="#{formulario.issc.actual}">(ISSC)Estado
+                                        del cargamento y composiciones
+                                        ferroviarias actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{isscActual}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label th:text="#{formulario.ismp}">(ISMP)Transporte
+                                        de mercancias peligrosas:</label>
+                                    <input class="form-control" readonly
+                                        type="number" th:field="*{ismp}" />
+                                </td>
+                                <td colspan="2">
+                                    <label
+                                        th:text="#{formulario.ismp.actual}">(ISMP)Transporte
+                                        de mercancias peligrosas actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{ismpActual}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label th:text="#{formulario.iseet}">(ISEET)Equipoos
+                                        y elementos del material rodante
+                                        de traccion:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{iseet}" />
+                                </td>
+                                <td colspan="2">
+                                    <label
+                                        th:text="#{formulario.iseet.actual}">(ISEET)Equipoos
+                                        y elementos del material rodante
+                                        de traccion actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{iseetActual}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label th:text="#{formulario.cad}">(CAD)Control
+                                        de alcohol y drogas:</label>
+                                    <input class="form-control" readonly
+                                        type="number" th:field="*{cad}" />
+                                </td>
+                                <td colspan="2">
+                                    <label
+                                        th:text="#{formulario.cad.actual}">(CAD)Control
+                                        de alcohol y drogas actual:</label>
+                                    <input class="form-control" readonly
+                                        type="number"
+                                        th:field="*{cadActual}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <input type="submit"
+                                        style="float: right"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.volver}"
+                                        formnovalidate
+                                        th:formmethod="GET"
+                                        th:formaction="@{/buscadorPasf}"
+                                        value="Volver" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

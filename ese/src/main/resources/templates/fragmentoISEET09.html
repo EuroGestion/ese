@@ -1,0 +1,288 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoIseet9"
+        th:hidden="*{!pagina.equals('9')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.iseet.equipos.elementos.seguridad}">Equipos
+                            y elementos de seguridad del material
+                            rodante</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.iseet.freno}">Freno</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.resultado}">
+                            Resultado</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoFreno52"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.freno.freno.directo}">freno
+                            directo:</label>
+                    </td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoFreno52"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.freno.freno.directo.52}">anomalias
+                            en la presion:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('9') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoFreno52}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoFreno53"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.freno.freno.directo.53}">anomalias
+                            en tiempo frenado:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('9') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoFreno53}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoFreno54"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.freno.freno.directo.54}">anomalias
+                            en tiempo afloje:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('9') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoFreno54}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoFreno55"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.freno.freno.directo.55}">falla
+                            de estanqueidad:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('9') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoFreno55}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoFreno56"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.freno.freno.servicio}">freno
+                            servicio:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoFreno56"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.freno.freno.servicio.56}">anomalias
+                            en la presion:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('9') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoFreno56}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoFreno57"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.freno.freno.servicio.57}">anomalias
+                            en frenado:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('9') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoFreno57}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoFreno58"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.freno.freno.servicio.58}">anomalias
+                            en sobrecarga:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('9') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoFreno58}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoFreno59"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.freno.freno.servicio.59}">anomalias
+                            en las presiones:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('9') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoFreno59}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoFreno60"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.freno.freno.servicio.60}">anomalias
+                            en tiempo frenado:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('9') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoFreno60}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoFreno61"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.freno.freno.servicio.61}">anomalias
+                            en tiempo afloje:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('9') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoFreno61}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoFreno62"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.freno.freno.servicio.62}">anomalias
+                            del aflojamiento:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('9') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoFreno62}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.modificar.revision}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+<script th:inline="javascript">
+    //thymeleaf to javascript variables
+    /*<![CDATA[*/
+    var sortProperty = /*[[${buscadorModificarRevision.order}]]*/ null;
+    var sortDesc = /*[[${buscadorModificarRevision.direccion}]]*/ null;
+    var currentPage = /*[[${buscadorModificarRevision.page}]]*/ 0;
+    /*]]>*/
+
+    $(document).ready(function(){
+     //show up/down arrows
+     $("table#tablaBuscadorModificarRevision thead th").each(function(){
+        var head = $(this);
+        if(head.attr('data-sort-prop')==sortProperty){
+            head.append(sortDesc=="desc"?'▾':'▴');
+        }
+        });
+
+     //set click action, reload page on clicking with all query params
+     $("table#tablaBuscadorModificarRevision thead th").click(function() {
+      var headerSortPropName = $(this).attr("data-sort-prop");
+        if(headerSortPropName=="ver"){
+            return;   
+        }
+         
+
+      $("#order").attr("value",headerSortPropName);
+      if(headerSortPropName==sortProperty){
+       
+          $("#direccion").attr("value",(sortDesc=="desc"?"asc":"desc"));
+      }else{
+          $("#direccion").attr("value","asc");
+          
+      }
+
+      $("#buscadorModificarRevision").attr("action",getContextPath()+"/ordenTablaBuscadorModificarRevision");
+      $("#buscadorModificarRevision").submit();
+      });
+    });
+  </script>
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.modificar.revision}">Buscador</h1>
+                <div style="width: 100%">
+                    <form action="#" class="my-box"
+                        th:object="${buscadorModificarRevision}"
+                        id="buscadorModificarRevision" th:method="post"
+                        th:action="@{/borrarFiltrosBuscadorModificarRevision}">
+                        <input type="hidden" th:field="*{page}" />
+                        <input type="hidden" th:field="*{order}" />
+                        <input type="hidden" th:field="*{direccion}" />
+                        <table class="table-grid">
+                            <tr>
+                                <td>
+                                    <label for="idCentroFormacion"
+                                        th:text="#{formulario.centro.medico}">Centro
+                                        Medico:</label>
+                                    <select class="form-control"
+                                        th:field="*{idCentroMedico}">
+                                        <option
+                                            th:each="var : ${centrosMedicos}"
+                                            th:value="${var.idCompania}"
+                                            th:text="${var.nombre}">Centro
+                                            Medico</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="dni"
+                                        th:text="#{formulario.dni}">DNI:</label>
+                                    <input class="form-control"
+                                        type="text" th:field="*{dni}" />
+                                </td>
+                                <td>
+                                    <label for="fechaRevision"
+                                        th:text="#{formulario.fecha.revision}">Fecha
+                                        Revision:</label>
+                                    <input class="form-control"
+                                        type="date" min="1900-01-01"
+                                        max="3000-01-01"
+                                        th:field="*{fechaRevision}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/filtrarBuscadorModificarRevision}"
+                                        th:value="#{boton.filtrar}" />
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/borrarFiltrosBuscadorModificarRevision}"
+                                        th:value="#{boton.borrar.filtros}" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table id="tablaBuscadorModificarRevision"
+                            class="table-paginacion">
+                            <thead>
+                                <tr>
+                                    <th data-sort-prop="nombreCompleto"
+                                        th:text="#{tabla.nombre.completo}">Nombre</th>
+                                    <th data-sort-prop="fechaRealizacion"
+                                        th:text="#{tabla.fecha.realizacion}">Fecha
+                                        realizacion</th>
+                                    <th data-sort-prop="compania.nombre" th:text="#{tabla.centro.medico}">Centro
+                                        medico</th>
+                                    <th data-sort-prop="ver" th:text="#{tabla.modificar}">Modificar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="revision : ${revisiones}"
+                                    th:class="${revisionStat.odd}? 'odd':'even'">
+                                    <td>
+                                        <output
+                                            th:text="${revision.personal.nombreCompleto}">Titulo</output>
+                                    </td>
+                                    <td>
+                                        <output
+                                            th:text="${#dates.format(revision.fechaRealizacion, 'dd-MM-yyyy')}">Fecha
+                                            inicio</output>
+                                    </td>
+                                    <td>
+                                        <output
+                                            th:text="${revision.compania.nombre}">Fecha
+                                            fin</output>
+                                    </td>
+                                    <td>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/modificarRevision}"
+                                            th:name="idRevision"
+                                            th:if="${session.usuario.tienePermisoEscritura('revisiones')}"
+                                            th:value="${revision.idRevisionPsico}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div
+                            th:replace="utiles :: paginacion('paginacionTablaBuscadorModificarRevision', ${revisiones},'page')">...</div>
+                        <div class="botoneraNuevo">
+                            <button type="submit"
+                                class="btn btn-lg btn-primary btn-block mi-boton"
+                                th:formaction="@{/selectUserRevision}"
+                                th:if="${session.usuario.tienePermisoEscritura('revisiones')}"
+                                th:formmethod="GET"
+                                th:text="#{boton.planificar}">Modificar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

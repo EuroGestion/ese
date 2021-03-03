@@ -1,0 +1,183 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoIseet6"
+        th:hidden="*{!pagina.equals('6')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.iseet.equipos.elementos.seguridad}">Equipos
+                            y elementos de seguridad del material
+                            rodante</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.iseet.suspension}">Suspension</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.resultado}">
+                            Resultado</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoSuspension29"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.suspension.suspension.primaria}">suspension.primaria:</label>
+                    </td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoSuspension29"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.suspension.suspension.primaria.29}">existencia
+                            de fisuras:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('6') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoSuspension29}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoSuspension30"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.suspension.topes.transversales}">topes
+                            transversales:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoSuspension30"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.suspension.topes.transversales.30}">falta
+                            fijacion:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('6') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoSuspension30}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoSuspension31"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.suspension.suspension.secundaria}">suspension
+                            secundaria:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoSuspension31"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.suspension.suspension.secundaria.31}">existencia
+                            de fisuras:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('6') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoSuspension31}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoSuspension32"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.suspension.topes.verticales}">topes
+                            verticales:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoSuspension32"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.suspension.topes.verticales.32}">existencia
+                            de deformaciones:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('6') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoSuspension32}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoSuspension33"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.suspension.amortiguadores}">amortiguadores:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoSuspension33"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.suspension.amortiguadores.33}">falta
+                            fijacion:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('6') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoSuspension33}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="bordeInformeISEET">
+                        <!-- observaciones -->
+                        <label for="observacionesSuspension"
+                            th:text="#{formulario.observaciones}">Observaciones:</label>
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesSuspension}"></textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

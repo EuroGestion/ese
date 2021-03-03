@@ -1,0 +1,181 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.revocar.titulo}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.revocar.titulo}">Revocar
+                    titulo</h1>
+                <form action="#" th:object="${revocarTitulo}"
+                    class="my-box" id="revocarTitulo" th:method="post"
+                    th:action="@{/aceptarRevocarTitulo}">
+                    <input type="hidden" th:field="*{idTitulo}" />
+                    <input type="hidden" th:field="*{isSuspension}" />
+                    <input type="hidden" th:field="*{idPersonal}" />
+                    <input type="hidden"
+                        th:field="*{causaResolucionSuspension}" />
+                    <input type="hidden"
+                        th:field="*{fechaResolucionSuspension}" />
+                    <input type="hidden"
+                        th:field="*{observacionesSuspension}" />
+                    <table class="table-grid">
+                        <tbody>
+                            <tr>
+                                <td colspan="2">
+                                    <label for="nombre"
+                                        th:text="#{formulario.nombre}">Nombre:</label>
+                                    <input type="text"
+                                        class="form-control"
+                                        th:field="*{nombre}" readonly />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="titulo"
+                                        th:text="#{formulario.titulo}">Titulo:</label>
+                                    <input type="text"
+                                        class="form-control"
+                                        th:field="*{titulo}" readonly />
+                                </td>
+                                <td>
+                                    <label for="titulo"
+                                        th:text="#{formulario.fecha.caducidad}">Fecha
+                                        caducidad:</label>
+                                    <input type="date"
+                                        class="form-control"
+                                        th:field="*{fechaCaducidad}"
+                                        readonly>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="idCausaRevocacion"
+                                        th:text="#{formulario.causa}">Causa:</label>
+                                    <select class="form-control"
+                                        th:field="*{idCausaRevocacion}"
+                                        required>
+                                        <option
+                                            th:each="var : ${causasRevocacion}"
+                                            th:value="${var.idCausaRevocacion}"
+                                            th:text="${var.valor}">CausaRevocacion</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="fecha"
+                                        th:text="#{formulario.fecha.revocacion}">Fecha
+                                        revocacion:</label>
+                                    <input type="date" min="1900-01-01"
+                                        class="form-control"
+                                        max="3000-01-01"
+                                        th:field="*{fechaRevocacion}"
+                                        required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label for="sancionesEmpresariales"
+                                        th:text="#{formulario.sanciones.empresariales}">Sanciones
+                                        empresariales:</label>
+                                    <textarea rows="4" cols="50"
+                                        class="form-control"
+                                        maxlength="200"
+                                        style="resize: none"
+                                        th:field="*{sancionesEmpresariales}"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label for="observaciones"
+                                        th:text="#{formulario.observaciones}">Observaciones:</label>
+                                    <textarea rows="4" cols="50"
+                                        class="form-control"
+                                        maxlength="200"
+                                        style="resize: none"
+                                        th:field="*{observaciones}"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <h3 class="title-page"
+                                        th:text="#{titulo.firma.responsable.seguridad}">Firma
+                                        responsable seguridad</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label
+                                        for="nombreResponsableSeguridad"
+                                        class="labelColumna"
+                                        th:text="#{formulario.nombre}">nombre:</label>
+                                    <input type="text"
+                                        th:field="*{nombreResponsableSeguridad}"
+                                        class="form-control"
+                                        style="width: 100%;" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label
+                                        for="passwordResponsableSeguridad"
+                                        class="labelColumna"
+                                        th:text="#{formulario.password}">contraseña:</label>
+                                    <input type="password"
+                                        th:field="*{passwordResponsableSeguridad}"
+                                        class="form-control"
+                                        style="width: 100%;" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.firmar}"
+                                        th:formaction="@{/firmarRevocarTitulo}" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <input type="submit" th:if="*{isSuspension}"
+                            class="btn btn-lg btn-primary btn-block mi-boton"
+                            th:formaction="@{/volverRevocarTituloSuspensionActiva}"
+                            th:value="#{boton.volver}" value="Volver"
+                            formnovalidate />
+                        <input type="submit"
+                            class="btn btn-lg btn-primary btn-block mi-boton"
+                            th:if="*{!isSuspension}"
+                            th:formaction="@{/volverRevocarTitulo}"
+                            th:value="#{boton.volver}" value="Volver"
+                            formnovalidate />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

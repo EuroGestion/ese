@@ -1,0 +1,249 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.anexo.investigacion}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.anexo.investigacion}">Anexo
+                    investigacion</h1>
+                <form action="#" class="my-box"
+                    th:object="${anexosInvestigacion}"
+                    id="anexoInvestigacion" th:method="post"
+                    th:action="@{/anexoInvestigacion}"
+                    enctype="multipart/form-data">
+                    <input type="hidden"
+                        th:field="*{idEstadoInvestigacion}" />
+                    <input type="hidden" th:field="*{idInvestigacion}" />
+                    <input type="hidden" th:field="*{pageAnexos}" />
+                    <input type="hidden"
+                        th:field="*{pageMedidasAdoptadas}" />
+                    <table class="table-grid">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="numIdentificacion"
+                                        th:text="#{formulario.numero.identificacion}">Numero
+                                        identificacion:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{numIdentificacion}"
+                                        readonly />
+                                </td>
+                                <td>
+                                    <label for="lugar"
+                                        th:text="#{formulario.lugar}">Lugar:</label>
+                                    <input class="form-control"
+                                        type="text" th:field="*{lugar}"
+                                        readonly />
+                                </td>
+                                <td>
+                                    <label for="fechaInspeccion"
+                                        th:text="#{formulario.fecha.inspeccion}">Fecha:</label>
+                                    <input class="form-control"
+                                        type="date" min="1900-01-01"
+                                        max="3000-01-01"
+                                        th:field="*{fechaInspeccion}"
+                                        readonly />
+                                </td>
+                                <td>
+                                    <label for="hora"
+                                        th:text="#{formulario.hora}">Hora:</label>
+                                    <input class="form-control"
+                                        type="text" th:field="*{hora}"
+                                        readonly />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <label for="causa"
+                                        th:text="#{formulario.causa}">Causa:</label>
+                                    <input class="form-control"
+                                        th:field="*{causa}" readonly />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <h3
+                                        th:text="#{formulario.documentos.anexos}">Documentos
+                                        anexos:</h3>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="${anexosInvestigacion.idEstadoInvestigacion == 4 and session.usuario.tienePermisoEscritura('accidentes')}">
+                                <td>
+                                    <label for="evidencia"
+                                        th:text="#{formulario.evidencia}">Evidencia:</label>
+                                    <input class="form-control-file"
+                                        type="file"
+                                        th:field="*{evidenciaDocAnexo}"
+                                        accept=".jpg , .jpeg,.pdf">
+                                </td>
+                                <td colspan="2">
+                                    <label for="descripcionEvidencia"
+                                        th:text="#{formulario.descripcion}">Descripcion:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{descripcionEvidenciaDocAnexo}" />
+                                </td>
+                                <td>
+                                    <button
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        onclick="limpiarCamposValidacionJS(['evidenciaMedidasAdoptadas','descripcionEvidenciaMedidasAdoptadas','evidenciaDocAnexo','descripcionEvidenciaDocAnexo']);return validarSubidaArchivo('evidenciaDocAnexo',true,'descripcionEvidenciaDocAnexo')"
+                                        th:formaction="@{/anadirEvidenciaDocAnexo}">
+                                        Añadir</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <table class="table-paginacion">
+                                        <thead>
+                                            <tr>
+                                                <th
+                                                    th:text="#{tabla.descripcion}">descripcion</th>
+                                                <th
+                                                    th:text="#{tabla.ver}">Ver</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                th:each="anexo :${listAnexos}"
+                                                th:class="${anexoStat.odd}? 'odd':'even'">
+                                                <td>
+                                                    <output
+                                                        th:text="${anexo.descripcion}">descripcion</output>
+                                                </td>
+                                                <td>
+                                                    <button
+                                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                                        type="submit"
+                                                        th:formaction="@{/verEvidenciaDocAnexo}"
+                                                        th:name="idAnexo"
+                                                        th:formtarget="_blank"
+                                                        onclick="limpiarCamposValidacionJS(['evidenciaMedidasAdoptadas','descripcionEvidenciaMedidasAdoptadas','evidenciaDocAnexo','descripcionEvidenciaDocAnexo'])"
+                                                        th:value="${anexo.idAnexoAccidente}">
+                                                        <i
+                                                            class="far fa-eye"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div
+                                        th:replace="utiles :: paginacion('paginacionTablaAnexosInvestigacionAnexos', ${listAnexos},'pageAnexos')">...</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <h3
+                                        th:text="#{formulario.titulo.medidas.adoptadas}">Medidas
+                                        adoptadas:</h3>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="${anexosInvestigacion.idEstadoInvestigacion == 4 and session.usuario.tienePermisoEscritura('accidentes')}">
+                                <td>
+                                    <label for="evidencia"
+                                        th:text="#{formulario.evidencia}">Evidencia:</label>
+                                    <input class="form-control-file"
+                                        type="file"
+                                        th:field="*{evidenciaMedidasAdoptadas}"
+                                        accept=".jpg , .jpeg,.pdf">
+                                </td>
+                                <td colspan="2">
+                                    <label for="descripcionEvidencia"
+                                        th:text="#{formulario.descripcion}">Descripcion:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{descripcionEvidenciaMedidasAdoptadas}" />
+                                </td>
+                                <td>
+                                    <button
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        onclick="limpiarCamposValidacionJS(['evidenciaMedidasAdoptadas','descripcionEvidenciaMedidasAdoptadas','evidenciaDocAnexo','descripcionEvidenciaDocAnexo']);return validarSubidaArchivo('evidenciaMedidasAdoptadas',true,'descripcionEvidenciaMedidasAdoptadas')"
+                                        th:formaction="@{/anadirEvidenciaMedidaAdoptadas}">
+                                        Añadir</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <table class="table-paginacion">
+                                        <thead>
+                                            <tr>
+                                                <th
+                                                    th:text="#{tabla.descripcion}">descripcion</th>
+                                                <th
+                                                    th:text="#{tabla.ver}">Ver</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                th:each="anexo :${listMedidasAdoptadas}"
+                                                th:class="${anexoStat.odd}? 'odd':'even'">
+                                                <td>
+                                                    <output
+                                                        th:text="${anexo.descripcion}">descripcion</output>
+                                                </td>
+                                                <td>
+                                                    <button
+                                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                                        type="submit"
+                                                        th:formaction="@{/verEvidenciaMedidasAdoptadas}"
+                                                        th:name="idMedidasAdoptadas"
+                                                        th:formtarget="_blank"
+                                                        onclick="limpiarCamposValidacionJS(['evidenciaMedidasAdoptadas','descripcionEvidenciaMedidasAdoptadas','evidenciaDocAnexo','descripcionEvidenciaDocAnexo'])"
+                                                        th:value="${anexo.idMedidaAccidente}">
+                                                        <i
+                                                            class="far fa-eye"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div
+                                        th:replace="utiles :: paginacion('paginacionTablaAnexosInvestigacionMediasAdoptadas', ${listMedidasAdoptadas},'pageMedidasAdoptadas')">...</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/volverAnexosInvestigacion}"
+                                        th:value="#{boton.volver}"
+                                        formnovalidate />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

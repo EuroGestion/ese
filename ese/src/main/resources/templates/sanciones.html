@@ -1,0 +1,168 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.sanciones}">Sanciones</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page" th:text="#{titulo.sanciones}">Sanciones</h1>
+                <form action="#" class="my-box" th:object="${sanciones}"
+                    id="sanciones" th:method="post"
+                    th:action="@{/sanciones}">
+                    <input type="hidden" th:field="*{idPersonal}" />
+                    <input type="hidden" th:field="*{pageSuspensiones}" />
+                    <input type="hidden" th:field="*{pageRevocaciones}" />
+                    <table class="table-paginacion">
+                        <caption
+                            style="font-size: 24px; font-family: inherit; font-weight: 500; line-height: 1.1; color: inherit;"
+                            th:text="#{formulario.suspensiones}"></caption>
+                        <thead>
+                            <tr>
+                                <th th:text="#{tabla.titulo}">Titulo</th>
+                                <th th:text="#{tabla.tipo.titulo}">Tipo
+                                    titulo</th>
+                                <th th:text="#{tabla.causa.suspension}">Causa
+                                    suspension</th>
+                                <th th:text="#{tabla.fecha.suspension}">Fecha
+                                    suspension</th>
+                                <th th:text="#{tabla.causa.resolucion}">Causa
+                                    resolucion</th>
+                                <th th:text="#{tabla.fecha.resolucion}">Fecha
+                                    resolucion</th>
+                                <th th:text="#{tabla.ver.evidencia}">Ver
+                                    evidencia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="suspension : ${suspensiones}"
+                                th:class="${suspensionStat.odd}? 'odd':'even'">
+                                <td>
+                                    <output
+                                        th:text="${suspension.titulo.nombre}">Titulo</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${suspension.titulo.tipoTitulo.valor}">Tipo
+                                        titulo</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${suspension.causaSuspension.valor}">Causa
+                                        suspension</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${#dates.format(suspension.fechaSuspension, 'dd-MM-yyyy')}">Fecha
+                                        Suspension</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${suspension.causaResolucion}">Causa
+                                        resolucion</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${#dates.format(suspension.fechaResolucion, 'dd-MM-yyyy')}">Fecha
+                                        resolucion</output>
+                                </td>
+                                <td>
+                                    <button type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:formaction="@{/verEvidenciaSuspensionTitulo}"
+                                        th:name="idSuspension"
+                                        th:formtarget="_blank"
+                                        th:value="${suspension.idSuspension}"
+                                        th:text="#{boton.ver}"><i class="far fa-eye"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div
+                        th:replace="utiles :: paginacion('paginacionTablaSancionesSuspension', ${suspensiones},'pageSuspensiones')">...</div>
+                    <table class="table-paginacion">
+                        <caption
+                            style="font-size: 24px; font-family: inherit; font-weight: 500; line-height: 1.1; color: inherit;"
+                            th:text="#{formulario.revocaciones}"></caption>
+                        <thead>
+                            <tr>
+                                <th th:text="#{tabla.titulo}">Titulo</th>
+                                <th th:text="#{tabla.tipo.titulo}">Tipo
+                                    titulo</th>
+                                <th th:text="#{tabla.causa.revocacion}">Causa
+                                    revocacion</th>
+                                <th th:text="#{tabla.fecha.revocacion}">Fecha
+                                    revocacion</th>
+                                <th th:text="#{tabla.ver}">Ver</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="revocacion : ${revocaciones}"
+                                th:class="${revocacionStat.odd}? 'odd':'even'">
+                                <td>
+                                    <output
+                                        th:text="${revocacion.titulo.nombre}">Titulo</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${revocacion.titulo.tipoTitulo.valor}">Tipo
+                                        titulo</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${revocacion.causaRevocacion.valor}">Causa
+                                        revocacion</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${#dates.format(revocacion.fechaRevocacion, 'dd-MM-yyyy')}">Fecha
+                                        revocacion</output>
+                                </td>
+                                <td>
+                                    <button type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:formaction="@{/verEvidenciaRevocacionTitulo}"
+                                        th:name="idRevocacion"
+                                        th:formtarget="_blank"
+                                        th:value="${revocacion.idRevocacion}"
+                                        th:text="#{boton.ver}"><i class="far fa-eye"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div
+                        th:replace="utiles :: paginacion('paginacionTablaSancionesRevocaciones', ${revocaciones},'pageRevocaciones')">...</div>
+                    <div class="botoneraNuevo">
+                        <input
+                            class="btn btn-lg btn-primary btn-block mi-boton"
+                            type="submit" th:value="#{boton.volver}"
+                            value="Volver" formnovalidate
+                            th:formaction="@{/volverVerSanciones}" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.modificar.formacion}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.programar.inspeccion}">Programar
+                    Inspeccion</h1>
+                <form action="#" class="my-box"
+                    th:object="${programarInspeccion}"
+                    id="programarInspeccion" th:method="post"
+                    th:action="@{/programarInspeccion}">
+                    <table class="table-grid">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="idTipoInspeccion"
+                                        th:text="#{formulario.tipo.inspeccion}">Tipo
+                                        inspeccion:</label>
+                                    <select class="form-control"
+                                        th:field="*{idTipoInspeccion}"
+                                        onchange="recargarProgramarInspeccion()"
+                                        required>
+                                        <option
+                                            th:each="var : ${tipoInspecciones}"
+                                            th:value="${var.idTipoInspeccion}"
+                                            th:text="${var.valor}">tipoInspeccion</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="referencia"
+                                        th:text="#{formulario.referencia}">Referencia:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{referencia}"
+                                        required />
+                                </td>
+                                <td>
+                                    <label for="fechaInspeccion"
+                                        th:text="#{formulario.fecha.inspeccion}">Fecha
+                                        inspeccion:</label>
+                                    <input class="form-control"
+                                        type="date" min="1900-01-01"
+                                        max="3000-01-01"
+                                        th:field="*{fechaInspeccion}"
+                                        required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="idInspectorAsignado"
+                                        th:text="#{formulario.inspector.asignado}">Inspector
+                                        asignado:</label>
+                                    <select class="form-control"
+                                        th:field="*{idInspectorAsignado}"
+                                        required>
+                                        <option
+                                            th:each="var : ${inspectores}"
+                                            th:value="${var.idPersonal}"
+                                            th:text="${var.nombre}">inspector</option>
+                                    </select>
+                                </td>
+                               
+                                <td th:if="*{idTipoInspeccion != '7'}">
+                                    <label for="idTren"
+                                        th:text="#{formulario.numero.tren}">Numero
+                                        de tren:</label>
+                                    <select class="form-control"
+                                        th:field="*{idtren}">
+                                        <option
+                                            th:each="var : ${trenes}"
+                                            th:value="${var.idTren}"
+                                            th:text="${var.numero}">numeroTren</option>
+                                    </select>
+                                </td>
+                                 <td>
+                                    <label for="lugar"
+                                        th:text="#{formulario.lugar}">lugar:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{lugar}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/aceptarProgramarInspeccion}"
+                                        th:value="#{boton.aceptar}" />
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formmethod="GET"
+                                        th:formaction="@{/buscadorInspeccion}"
+                                        th:value="#{boton.volver}"
+                                        formnovalidate />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

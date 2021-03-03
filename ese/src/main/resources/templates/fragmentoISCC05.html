@@ -1,0 +1,268 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoIscc5" th:hidden="*{!pagina.equals('5')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="3">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.iscc.acondicionamiento.mercancia}"></h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="30%">
+                        <label
+                            th:text="#{formulario.informe.iscc.concepto}">concepto</label>
+                    </td>
+                    <td width="10%">
+                        <label
+                            th:text="#{formulario.informe.iscc.numero.vagones.verificados}">numero
+                            vagones</label>
+                    </td>
+                    <td width="60%">
+                        <label
+                            th:text="#{formulario.informe.iscc.observaciones}">Observaciones</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h4 class="title-page"
+                            th:text="#{formulario.titulo.informe.iscc.acondicionamiento.mercancias.granel}"></h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="acondicionamientoReparto"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.reparto}">reparto:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('5') and !isLectura}"
+                            th:field="*{acondicionamientoReparto}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoRepartoObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="acondicionamientoMercancias"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.mercancias}">mercancias:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('5') and !isLectura}"
+                            th:field="*{acondicionamientoMercancias}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoMercanciasObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="acondicionamientoPesadas"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.pesadas}">pesadas:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('5') and !isLectura}"
+                            th:field="*{acondicionamientoPesadas}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoPesadasObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h4 class="title-page"
+                            th:text="#{formulario.titulo.informe.iscc.acondicionamiento.mercancias.pulverulento}"></h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="acondicionamientoSusceptibles"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.susceptibles}">susceptibles:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('5') and !isLectura}"
+                            th:field="*{acondicionamientoSusceptibles}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoSusceptiblesObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h4 class="title-page"
+                            th:text="#{formulario.titulo.informe.iscc.acondicionamiento.mercancias.cajas.moviles}"></h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="acondicionamientoSolidamenteSujeta"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.solidamente.sujeta}">solidamente
+                            sujeta:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('5') and !isLectura}"
+                            th:field="*{acondicionamientoSolidamenteSujeta}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoSolidamenteSujetaObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="acondicionamientoLonaProxima"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.lona.proxima}">lona
+                            proxima:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('5') and !isLectura}"
+                            th:field="*{acondicionamientoLonaProxima}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoLonaProximaObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="acondicionamientoLonaSeparacion"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.lona.separacion}">lona
+                            separacion:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('5') and !isLectura}"
+                            th:field="*{acondicionamientoLonaSeparacion}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoLonaSeparacionObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h4 class="title-page"
+                            th:text="#{formulario.titulo.informe.iscc.acondicionamiento.mercancias.cargadas.compacta}"></h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="acondicionamientoVerificarParedes"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.verificar.paredes}">verificar
+                            paredes:</label>
+                        <ul>
+                            <li
+                                th:text="#{formulario.informe.iscc.acondicionamiento.verificar.paredes.1}"></li>
+                            <li
+                                th:text="#{formulario.informe.iscc.acondicionamiento.verificar.paredes.2}"></li>
+                            <li
+                                th:text="#{formulario.informe.iscc.acondicionamiento.verificar.paredes.3}"></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('5') and !isLectura}"
+                            th:field="*{acondicionamientoVerificarParedes}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoVerificarParedesObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="acondicionamientoVerificarCalces"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.verificar.calces}">verificar
+                            calces:</label>
+                        <ul>
+                            <li
+                                th:text="#{formulario.informe.iscc.acondicionamiento.verificar.calces.1}"></li>
+                            <li
+                                th:text="#{formulario.informe.iscc.acondicionamiento.verificar.calces.2}"></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('5') and !isLectura}"
+                            th:field="*{acondicionamientoVerificarCalces}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoVerificarCalcesObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="acondicionamientoVerificarAmarre"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.verificar.amarre}">verificar
+                            amarre:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('5') and !isLectura}"
+                            th:field="*{acondicionamientoVerificarAmarre}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoVerificarAmarreObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label
+                            for="acondicionamientoVerificarDosAmarras"
+                            th:text="#{formulario.informe.iscc.acondicionamiento.verificar.dos.amarras}">dos
+                            amarras:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('5') and !isLectura}"
+                            th:field="*{acondicionamientoVerificarDosAmarras}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{acondicionamientoVerificarDosAmarrasObservaciones}" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

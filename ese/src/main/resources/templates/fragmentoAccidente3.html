@@ -1,0 +1,408 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoAccidente3"
+        th:hidden="*{!pagina.equals('3')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="4">
+                        <h3
+                            th:text="#{formulario.titulo.hechos.inmediatos.suceso}">Hechos
+                            inmediatos del suceso</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label for="numeroInformeFinal"
+                            th:text="#{formulario.numero.informe.final}">Numero
+                            informe final:</label>
+                        <input class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            th:required="*{pagina.equals('3') and !lectura}"
+                            type="text" th:field="*{numeroInformeFinal}" />
+                    </td>
+                    <td colspan="2">
+                        <label for="fechaInformeFinal"
+                            th:text="#{formulario.fecha}">fecha:</label>
+                        <input class="form-control"
+                            th:style="*{((idEstadoAccidente>4) or lectura or firmadoInformeFinal)?'pointer-events: none;':''}"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            th:required="*{pagina.equals('3') and !lectura}"
+                            type="date" th:field="*{fechaInformeFinal}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="sucesoInformeFinal"
+                            th:text="#{formulario.suceso}">suceso:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            rows="4" cols="113" maxlength="450"
+                            style="resize: none"
+                            th:field="*{sucesoInformeFinal}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="circunstanciasSucesoInformeFinal"
+                            th:text="#{formulario.circunstancias.suceso}">circunstancias
+                            suceso:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            rows="4" cols="113" maxlength="450"
+                            style="resize: none"
+                            th:field="*{circunstanciasSucesoInformeFinal}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="danosInformeFinal"
+                            th:text="#{formulario.danos}">Daños:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            rows="4" cols="113" maxlength="450"
+                            style="resize: none"
+                            th:field="*{danosInformeFinal}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="circunstanciasExternasInformeFinal"
+                            th:text="#{formulario.circunstancias.externas}">circunstancias
+                            externas:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            rows="4" cols="113" maxlength="450"
+                            style="resize: none"
+                            th:field="*{circunstanciasExternasInformeFinal}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3
+                            th:text="#{formulario.titulo.resumen.investigaciones}">Resumen
+                            de Investigaciones e indagaciones:</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label
+                            for="resumenDeclaracionesTestigosInformeFinal"
+                            th:text="#{formulario.resumen.declaraciones.testigos}">Resumen
+                            declaraciones testigos:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            rows="4" cols="113" maxlength="450"
+                            style="resize: none"
+                            th:field="*{resumenDeclaracionesTestigosInformeFinal}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="sistemaGestionSeguridadInformeFinal"
+                            th:text="#{formulario.sistema.gestion.seguridad}">Sistema
+                            gestion seguridad:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            rows="4" cols="113" maxlength="450"
+                            style="resize: none"
+                            th:field="*{sistemaGestionSeguridadInformeFinal}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="normativaInformeFinal"
+                            th:text="#{formulario.normativa}">Normativa:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            rows="4" cols="113" maxlength="450"
+                            style="resize: none"
+                            th:field="*{normativaInformeFinal}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label
+                            for="funcionamientoMaterialRodanteInformeFinal"
+                            th:text="#{formulario.funcionamiento.material.rodante}">Funcionamiento
+                            material rodante:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            rows="4" cols="113" maxlength="450"
+                            style="resize: none"
+                            th:field="*{funcionamientoMaterialRodanteInformeFinal}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label
+                            for="documentacionGestionCirculacionInformeFinal"
+                            th:text="#{formulario.documentacion.gestion.circulacion}">Documentacion
+                            gestion circulacion:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            rows="4" cols="113" maxlength="450"
+                            style="resize: none"
+                            th:field="*{documentacionGestionCirculacionInformeFinal}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="interfazHombreMaquinaInformeFinal"
+                            th:text="#{formulario.interfaz.hombre.maquina}">Interfaz
+                            hombre-maquina:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            rows="4" cols="113" maxlength="450"
+                            style="resize: none"
+                            th:field="*{interfazHombreMaquinaInformeFinal}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="otrosSucesosAnterioresInformeFinal"
+                            th:text="#{formulario.otros.sucesos.anteriores}">Otros
+                            sucesos anteriores:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            rows="4" cols="113" maxlength="450"
+                            style="resize: none"
+                            th:field="*{otrosSucesosAnterioresInformeFinal}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3
+                            th:text="#{formulario.titulo.analisis.conclusiones}">Analisis
+                            conclusiones:</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="descripcionDefinitivaInformeFinal"
+                            th:text="#{formulario.descripcion.definitiva}">Descripcion
+                            definitiva:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            rows="4" cols="113" maxlength="450"
+                            style="resize: none"
+                            th:field="*{descripcionDefinitivaInformeFinal}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="deliberacionInformeFinal"
+                            th:text="#{formulario.deliberacion}">deliberacion:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            rows="4" cols="113" maxlength="450"
+                            style="resize: none"
+                            th:field="*{deliberacionInformeFinal}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="conclusionesInformeFinal"
+                            th:text="#{formulario.conclusiones}">conclusiones:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            rows="4" cols="113" maxlength="450"
+                            style="resize: none"
+                            th:field="*{conclusionesInformeFinal}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label
+                            for="observacionesAdicionalesInformeFinal"
+                            th:text="#{formulario.observaciones.adicionales}">Observaciones
+                            adicionales:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            rows="4" cols="113" maxlength="450"
+                            style="resize: none"
+                            th:field="*{observacionesAdicionalesInformeFinal}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3
+                            th:text="#{formulario.titulo.medidas.adoptadas}">medidas
+                            adoptadas:</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            rows="4" cols="113" maxlength="450"
+                            style="resize: none"
+                            th:field="*{medidasAdoptadasInformeFinal}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3
+                            th:text="#{formulario.titulo.recomendaciones}">recomendaciones:</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            rows="4" cols="113" maxlength="450"
+                            style="resize: none"
+                            th:field="*{recomendacionesInformeFinal}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3
+                            th:text="#{formulario.titulo.datos.complementarios}">datos
+                            complementarios:</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente>4) or lectura or firmadoInformeFinal}"
+                            rows="4" cols="113" maxlength="450"
+                            style="resize: none"
+                            th:field="*{datosComplementariosInformeFinal}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.firmas}">Firmas</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h4 class="title-page"
+                            th:text="#{formulario.responsable.seguridad}">responsable
+                            de seguridad</h4>
+                    </td>
+                    <td colspan="2">
+                        <h4 class="title-page"
+                            th:text="#{formulario.delegado.seguridad}">delegado
+                            de seguridad</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <select class="form-control"
+                            style="pointer-events: none;" readonly
+                            th:if="*{idFirmaInformeFinalResponsableSeguridad!=null}"
+                            th:field="*{idFirmaInformeFinalResponsableSeguridad}">
+                            <option th:each="var : ${personal}"
+                                th:value="${var.idPersonal}"
+                                th:text="${var.nombreCompleto}"></option>
+                        </select>
+                        <label
+                            for="nombreFirmaInformeFinalResponsableSeguridad"
+                            class="labelColumna"
+                            th:if="*{idFirmaInformeFinalResponsableSeguridad==null and idEstadoAccidente==4}"
+                            th:text="#{formulario.nombre}">nombre:</label>
+                        <input type="text"
+                            th:field="*{nombreFirmaInformeFinalResponsableSeguridad}"
+                            th:if="*{idFirmaInformeFinalResponsableSeguridad==null and idEstadoAccidente==4}"
+                            class="form-control" style="width: 100%;"
+                            th:readonly="*{lectura}" />
+                    </td>
+                    <td colspan="2">
+                        <select class="form-control"
+                            style="pointer-events: none;" readonly
+                            th:if="*{idFirmaInformeFinalDelegadoSeguridad!=null}"
+                            th:field="*{idFirmaInformeFinalDelegadoSeguridad}">
+                            <option th:each="var : ${personal}"
+                                th:value="${var.idPersonal}"
+                                th:text="${var.nombreCompleto}"></option>
+                        </select>
+                        <label
+                            for="nombreFirmaInformeFinalDelegadoSeguridad"
+                            class="labelColumna"
+                            th:if="*{idFirmaInformeFinalDelegadoSeguridad==null and idEstadoAccidente==4}"
+                            th:text="#{formulario.nombre}">nombre:</label>
+                        <input type="text"
+                            th:field="*{nombreFirmaInformeFinalDelegadoSeguridad}"
+                            th:if="*{idFirmaInformeFinalDelegadoSeguridad==null and idEstadoAccidente==4}"
+                            class="form-control" style="width: 100%;"
+                            th:readonly="*{lectura}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label
+                            for="passwordFirmaInformeFinalResponsableSeguridad"
+                            class="labelColumna"
+                            th:if="*{idFirmaInformeFinalResponsableSeguridad==null and idEstadoAccidente==4}"
+                            th:text="#{formulario.password}">contraseña:</label>
+                        <input type="password"
+                            th:field="*{passwordFirmaInformeFinalResponsableSeguridad}"
+                            class="form-control" style="width: 100%;"
+                            th:if="*{idFirmaInformeFinalResponsableSeguridad==null and idEstadoAccidente==4}"
+                            th:readonly="*{lectura}" />
+                    </td>
+                    <td colspan="2">
+                        <label
+                            for="passwordFirmaInformeFinalDelegadoSeguridad"
+                            class="labelColumna"
+                            th:if="*{idFirmaInformeFinalDelegadoSeguridad==null and idEstadoAccidente==4}"
+                            th:text="#{formulario.password}">contraseña:</label>
+                        <input type="password"
+                            th:field="*{passwordFirmaInformeFinalDelegadoSeguridad}"
+                            class="form-control" style="width: 100%;"
+                            th:if="*{idFirmaInformeFinalDelegadoSeguridad==null and idEstadoAccidente==4}"
+                            th:readonly="*{lectura}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" th:value="#{boton.firmar}"
+                            value="firmar"
+                            th:if="*{idFirmaInformeFinalResponsableSeguridad==null and idEstadoAccidente==4}"
+                            th:formaction="@{/firmaAccidenteInformeFinalResponsableSeguridad}"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                    <td colspan="2">
+                        <input type="submit" th:value="#{boton.firmar}"
+                            value="firmar"
+                            th:if="*{idFirmaInformeFinalDelegadoSeguridad==null and idEstadoAccidente==4}"
+                            th:formaction="@{/firmaAccidenteInformeFinalDelegadoSeguridad}"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit"
+                            th:value="#{boton.anterior}"
+                            th:formaction="@{/paginaAnteriorAccidente}"
+                            formnovalidate value="anterior"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                    <td>
+                        <input type="submit"
+                            th:value="#{boton.siguiente}"
+                            th:if="*{idEstadoAccidente>4}"
+                            th:formaction="@{/paginaSiguienteAccidente}"
+                            value="Siguiente"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

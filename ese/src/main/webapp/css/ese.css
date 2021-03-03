@@ -1,0 +1,486 @@
+@charset "UTF-8";
+
+/* CSS Document */
+body {
+	background: #f9f9fa;
+	overflow-x: hidden;
+	-webkit-text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+}
+
+.header {
+	background: #fff;
+	padding: 15px 25px;
+}
+
+.menu .fas {
+	font-size: 22px;
+}
+
+.menu {
+	background: #004c93;
+	padding: 15px 25px;
+	color: #fff;
+	font-size: 18px;
+}
+
+.left {
+	text-align: left;
+}
+
+.right {
+	text-align: right;
+}
+
+.float-left {
+	float: left;
+}
+
+.float-right {
+	float: right;
+}
+
+.title-page {
+	text-align: left;
+	color: #000;
+	font-size: 25px;
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 5px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.mi-boton {
+	background: #1d60ae;
+	border-radius: 30px;
+	color: #fff;
+	border: 1px solid #1d60ae;
+	padding: 8px 10px;
+	width: 200px !important;
+	float: left;
+	margin-right: 30px;
+	margin-top: 0px !important;
+}
+
+.separar-derecha {
+	margin-right: 30px;
+}
+
+.my-box {
+	background: #fff;
+	border: 1px solid #bcc3ce;
+	padding: 50px;
+	border-radius: 30px;
+	padding-bottom: 75px;
+}
+
+.title-label {
+	font-size: 14px;
+	color: #000;
+	display: -webkit-box;
+}
+
+.my-input {
+	background: #fff !important;
+	border: 1px solid #a9a9a9 !important;
+	padding: 10px 15px !important;
+	border-radius: 30px;
+	margin-bottom: 30px;
+	min-width: 200px;
+}
+
+/* table td {
+    display: block;
+    clear: both;
+} */
+table.table-grid {
+	width: 100%;
+	margin-bottom: 30px;
+}
+
+table.table-grid td {
+	padding: 0 10px;
+}
+
+.form-control, .form-control-file, .form-check-input {
+	margin-bottom: 30px !important;
+}
+
+.table-list {
+	width: 100%;
+	margin-top: 75px;
+	margin-bottom: 30px;
+}
+
+.table-list td {
+	display: table-cell;
+	width: 10% !important;
+	padding: 15px 15px;
+}
+
+.table-list thead {
+	background: #004c93;
+	color: #fff;
+}
+
+.table-list th {
+	text-align: left;
+	padding: 15px 15px;
+	border-top: 1px solid #bcc3ce;
+	border-bottom: 1px solid #bcc3ce;
+	text-transform: uppercase;
+	font-size: 14px;
+}
+
+.table-list tr {
+	border-bottom: 1px solid #bcc3ce;
+}
+
+.enlaces a:hover {
+	text-decoration: none;
+	background: #bcc3ce;
+	border: 1px solid #bcc3ce;
+	color: #000;
+}
+
+.enlaces .fas, .enlaces .far {
+	font-size: 80px;
+	margin-bottom: 4px;
+}
+
+.enlaces a {
+	border: 1px solid #004c93;
+	padding: 10px;
+	margin-right: 50px;
+	width: 250px;
+	height: 140px;
+	display: inline-grid;
+	background: #004c93;
+	color: #fff;
+	font-weight: 900;
+	text-align: center;
+	border-radius: 30px;
+	font-size: 16px;
+	line-height: 20px;
+}
+
+.opcionDesplegable {
+	margin-top: 30px;
+}
+
+.opcionDesplegable .botonDesplegable {
+	display: none;
+}
+
+/* The side navigation menu */
+.sidenav {
+	height: 100%;
+	/* 100% Full-height */
+	width: 0;
+	/* 0 width - change this with JavaScript */
+	position: fixed;
+	/* Stay in place */
+	z-index: 1;
+	/* Stay on top */
+	top: 0;
+	/* Stay at the top */
+	left: 0;
+	background-color: #1d60ae;
+	/* Black*/
+	overflow-x: hidden;
+	/* Disable horizontal scroll */
+	padding-top: 60px;
+	/* Place content 60px from the top */
+	transition: 0.5s;
+	/* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+	padding: 8px 8px 8px 0px;
+	text-decoration: none;
+	font-size: 15px;
+	color: #fff;
+	display: block;
+	transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+	color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+	margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+	transition: margin-left .5s;
+	padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+	.sidenav {
+		padding-top: 15px;
+	}
+	.sidenav a {
+		font-size: 18px;
+	}
+}
+
+.radio input[type="radio"] {
+	font-size: 12px !important;
+	transform: scale(1) !important;
+}
+
+/* Custom Radio Button */
+.radiotextsty {
+	color: #A5A4BF;
+	font-size: 18px;
+}
+
+.customradio {
+	position: relative;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.customradio input {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 19px;
+	width: 19px;
+	background-color: white;
+	border-radius: 50%;
+	border: 1px solid #BEBEBE;
+}
+
+.customradio:hover input ~.checkmark {
+	background-color: transparent;
+}
+
+.customradio input:checked ~.checkmark {
+	background-color: white;
+	border: 1px solid #BEBEBE;
+}
+
+.checkmark:after {
+	content: "";
+	position: absolute;
+	display: none;
+}
+
+.customradio input:checked ~.checkmark:after {
+	display: block;
+}
+
+.customradio .checkmark:after {
+	top: 2px;
+	left: 2px;
+	width: 13px;
+	height: 13px;
+	border-radius: 50%;
+	background: #004c93;
+}
+
+.customradio span.cr-text {
+	margin-left: 5px;
+}
+
+/* CSS PROPIOS */
+.botonEnlace {
+	margin-bottom: 30px;
+}
+
+.error {
+	margin: 10px 0px;
+	padding: 12px;
+	color: #D8000C;
+	background-color: #FFD2D2;
+}
+
+.info {
+	margin: 10px 0px;
+	padding: 12px;
+	color: #4F8A10;
+	background-color: #DFF2BF;
+}
+
+.error i {
+	margin: 10px 22px;
+	font-size: 2em;
+	vertical-align: middle;
+}
+
+.info i {
+	margin: 10px 22px;
+	font-size: 2em;
+	vertical-align: middle;
+}
+
+.imagen {
+	vertical-align: middle;
+	display: block;
+	margin: auto;
+	max-width: 200px;
+	max-height: 200px;
+	width: 100%;
+	height: auto;
+}
+
+.logo {
+	vertical-align: middle;
+	display: block;
+	margin: auto;
+	max-width: 75px;
+	max-height: 75px;
+	width: 100%;
+	height: auto;
+}
+
+.botoneraNuevo {
+	margin-bottom: 10px;
+	margin-top: 10px;
+	float: left;
+}
+
+.labelColumna {
+	margin-bottom: 30px !important;
+}
+
+.bordeInformeISEET {
+	border-top: 1pt dashed #ddd;
+}
+
+.table-paginacion {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.table-paginacion td {
+	display: table-cell;
+	width: 10% !important;
+	padding: 15px 15px;
+}
+
+.table-paginacion tbody td {
+	padding: 8px 10px;
+}
+
+.table-paginacion thead {
+	background: #004c93;
+	color: #fff;
+}
+
+.table-paginacion th {
+	text-align: center;
+	padding: 15px 15px;
+	border-top: 1px solid #bcc3ce;
+	border-bottom: 1px solid #bcc3ce;
+	text-transform: uppercase;
+	font-size: 14px;
+}
+
+.table-paginacion tr {
+	border-bottom: 1px solid #bcc3ce;
+}
+
+.table-paginacion tbody tr.odd {
+	background-color: #f9f9f9;
+}
+
+.disabled {
+	color: #6c757d;
+	pointer-events: none;
+	cursor: auto;
+	background-color: #fff;
+	border-color: #dee2e6;
+}
+
+.botonNavegacionTabla {
+	margin-top: 3;
+	height: 17;
+}
+
+.justify-content-center {
+	-ms-flex-pack: center !important;
+	justify-content: center !important;
+}
+
+.center {
+	text-align: center;
+}
+
+.pagination>li>button {
+	position: relative;
+	float: left;
+	padding: 6px 12px;
+	margin-left: -1px;
+	line-height: 1.42857143;
+	color: #337ab7;
+	text-decoration: none;
+	background-color: #fff;
+	border: 1px solid #ddd;
+}
+
+.pagination>.disabled>button, .pagination>.disabled>button:focus,
+	.pagination>.disabled>button:hover {
+	color: #777;
+	cursor: not-allowed;
+	background-color: #fff;
+	border-color: #ddd;
+}
+
+.pagination>.active>button, .pagination>.active>button:focus,
+	.pagination>.active>button:hover {
+	z-index: 3;
+	color: #fff;
+	cursor: default;
+	background-color: #337ab7;
+	border-color: #337ab7;
+}
+
+.table-paginacion .mi-boton {
+	width: auto !important;
+	margin: auto;
+	display: block;
+	float: none;
+	padding: 8px 20px;
+}
+
+.boton-menu {
+	background: #004c93;
+	color: #fff;
+}
+
+.boton-menu:hover {
+	background: #004c93;
+	color: #fff;
+}
+
+.caja-icono {
+	width: 75px;
+	height: 75px;
+	display: flex;
+	align-items: center;
+}
+
+.table-paginacion th {
+	user-select: none;
+}

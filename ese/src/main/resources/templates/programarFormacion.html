@@ -1,0 +1,187 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.programar.formacion}">Registro</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.programar.formacion}">Programar
+                    formacion</h1>
+                <form action="#" class="my-box"
+                    th:object="${programarFormacion}"
+                    id="programarFormacion" th:method="post"
+                    th:action="@{/programarFormacion}"
+                    enctype="multipart/form-data">
+                    <input type="hidden" th:field="*{idCargoSelect}" />
+                    <input type="hidden" th:field="*{nombreSelect}" />
+                    <input type="hidden" th:field="*{apellidoSelect}" />
+                    <input type="hidden" th:field="*{dniSelect}" />
+                    <input type="hidden" th:field="*{isFormacionSelect}" />
+                    <input type="hidden" th:field="*{isRevisionSelect}" />
+                    <input type="hidden"
+                        th:field="*{listaPersonalTotalSelect}" />
+                    <input type="hidden" th:field="*{isPersonal}" />
+                    <input type="hidden" th:field="*{isSelectUser}" />
+                    <input type="hidden" th:field="*{isNormativa}" />
+                    <input type="hidden" th:field="*{isInfraestructura}" />
+                    <input type="hidden" th:field="*{isMaterial}" />
+                    <table class="table-grid">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="idCentroFormacion"
+                                        th:text="#{formulario.centro.formacion}">Centro
+                                        formacion:</label>
+                                    <select class="form-control"
+                                        th:field="*{idCentroFormacion}"
+                                        required>
+                                        <option
+                                            th:each="var : ${centrosFormacion}"
+                                            th:value="${var.idCompania}"
+                                            th:text="${var.nombre}">Centro
+                                            formacion</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="idTipoCurso"
+                                        th:text="#{formulario.tipo.curso}">Tipo
+                                        Curso:</label>
+                                    <select class="form-control"
+                                        th:field="*{idTipoCurso}"
+                                        required
+                                        onchange="seleccionarCurso()">
+                                        <option
+                                            th:each="var : ${tiposCursos}"
+                                            th:value="${var.idTipoCurso}"
+                                            th:text="${var.valor}">Tipo
+                                            Curso</option>
+                                    </select>
+                                </td>
+                                <td th:if="*{isNormativa}">
+                                    <label for="normativa"
+                                        th:text="#{formulario.normativa}">Normativa:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{normativa}" required />
+                                </td>
+                                <td th:if="*{isInfraestructura}">
+                                    <label for="infraestructura"
+                                        th:text="#{formulario.infraestructura}">Infraestructura:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{infraestructura}"
+                                        required />
+                                </td>
+                                <td th:if="*{isMaterial}">
+                                    <label for="idMaterial"
+                                        th:text="#{formulario.material}">Material:</label>
+                                    <select class="form-control"
+                                        th:field="*{idMaterial}"
+                                        required>
+                                        <option
+                                            th:each="var : ${materiales}"
+                                            th:value="${var.idModeloMaterial}"
+                                            th:text="${var.serie}">Material</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="fechaInicio"
+                                        th:text="#{formulario.fecha.inicio}">Fecha
+                                        Inicio:</label>
+                                    <input class="form-control"
+                                        type="date" min="1900-01-01"
+                                        max="3000-01-01"
+                                        th:field="*{fechaInicio}" />
+                                </td>
+                                <td>
+                                    <label for="fechaFin"
+                                        th:text="#{formulario.fecha.fin}">Fecha
+                                        fin:</label>
+                                    <input class="form-control"
+                                        type="date" min="1900-01-01"
+                                        max="3000-01-01"
+                                        th:field="*{fechaFin}" />
+                                </td>
+                                <td>
+                                    <label for="titulo"
+                                        th:text="#{formulario.titulo}">Titulo:</label>
+                                    <input class="form-control"
+                                        type="text" th:field="*{titulo}"
+                                        required />
+                                </td>
+                                <td>
+                                    <label for="horas"
+                                        th:text="#{formulario.horas}">Horas:</label>
+                                    <input class="form-control"
+                                        type="number"
+                                        th:field="*{horas}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <label for="observaciones"
+                                        th:text="#{formulario.observaciones}">Observaciones:</label>
+                                    <textarea class="form-control"
+                                        rows="4" cols="50"
+                                        maxlength="200"
+                                        style="resize: none"
+                                        th:field="*{observaciones}"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="nAsistentes"
+                                        th:text="#{formulario.numero.asistentes}">Asistentes:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{nAsistentes}"
+                                        readonly />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <input type="submit" th:value="#{boton.aceptar}"
+                        value="Aceptar"
+                        class="btn btn-lg btn-primary btn-block mi-boton" />
+                    <input type="submit" th:value="#{boton.volver}"
+                        th:if="*{isPersonal}"
+                        class="btn btn-lg btn-primary btn-block mi-boton"
+                        value="Volver" formnovalidate
+                        th:formaction="@{/volverFormacionPersonal}" />
+                    <input type="submit" th:value="#{boton.volver}"
+                        th:if="*{isSelectUser}"
+                        class="btn btn-lg btn-primary btn-block mi-boton"
+                        value="Volver" formnovalidate
+                        th:formaction="@{/volverFormacionSelectUser}" />
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

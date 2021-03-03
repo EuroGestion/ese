@@ -1,0 +1,247 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoIseet15"
+        th:hidden="*{!pagina.equals('15')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.iseet.equipos.elementos.seguridad}">Equipos
+                            y elementos de seguridad del material
+                            rodante</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.iseet.compartimiento.motor}">Compartimiento
+                            motor</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.resultado}">
+                            Resultado</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCompartimientoMotor114"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.compartimiento.motor.combustible}">combustible:</label>
+                    </td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCompartimientoMotor114"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.compartimiento.motor.combustible.114}">existencia
+                            fugas:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('15') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoCompartimientoMotor114}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCompartimientoMotor115"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.compartimiento.motor.combustible.115}">nivel
+                            incorrecto:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('15') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoCompartimientoMotor115}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCompartimientoMotor116"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.compartimiento.motor.agua}">agua:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCompartimientoMotor116"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.compartimiento.motor.agua.116}">existencia
+                            fugas:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('15') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoCompartimientoMotor116}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCompartimientoMotor117"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.compartimiento.motor.agua.117}">incorrecto
+                            nivel:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('15') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoCompartimientoMotor117}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCompartimientoMotor118"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.compartimiento.motor.aceite}">aceite:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCompartimientoMotor118"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.compartimiento.motor.aceite.118}">existencia
+                            fugas:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('15') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoCompartimientoMotor118}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCompartimientoMotor119"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.compartimiento.motor.aceite.119}">incorrecto
+                            nivel aceite:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('15') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoCompartimientoMotor119}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCompartimientoMotor120"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.compartimiento.motor.mandos}">mandos:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCompartimientoMotor120"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.compartimiento.motor.mandos.120}">fallo:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('15') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoCompartimientoMotor120}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCompartimientoMotor121"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.compartimiento.motor.aparatos}">aparatos
+                            de medida:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCompartimientoMotor21"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.compartimiento.motor.aparatos.121}">no
+                            funciona:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('15') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoCompartimientoMotor121}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="bordeInformeISEET">
+                        <!-- observaciones -->
+                        <label for="observacionesCompartimientoMotor"
+                            th:text="#{formulario.observaciones}">Observaciones:</label>
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesCompartimientoMotor}"></textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

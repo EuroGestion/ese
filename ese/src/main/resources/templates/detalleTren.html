@@ -1,0 +1,292 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.detalle.tren}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page" th:text="#{titulo.detalle.tren}">Detalle
+                    Tren</h1>
+                <form action="#" th:object="${detalleTren}"
+                    class="my-box" id="detalleTren" th:method="post"
+                    th:action="@{/detalleTren}"
+                    enctype="multipart/form-data">
+                    <input type="hidden" th:field="*{idTren}" />
+                    <input type="hidden" th:field="*{lectura}" />
+                    <input type="hidden" th:field="*{page}" />
+                    <table class="table-grid">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="numeroTren"
+                                        th:text="#{formulario.numero.tren}">numero
+                                        tren:</label>
+                                    <input type="text"
+                                        th:field="*{numeroTren}"
+                                        class="form-control"
+                                        style="width: 100%;"
+                                        th:readonly="*{lectura}"
+                                        required />
+                                </td>
+                                <td>
+                                    <label for="horaInicio"
+                                        th:text="#{formulario.hora.inicio}">Hora
+                                        inicio:</label>
+                                    <input type="time"
+                                        class="form-control"
+                                        th:field="*{horaInicio}"
+                                        th:readonly="*{lectura}"
+                                        required />
+                                </td>
+                                <td>
+                                    <label for="horaFin"
+                                        th:text="#{formulario.hora.fin}">Hora
+                                        inicio:</label>
+                                    <input type="time"
+                                        class="form-control"
+                                        th:readonly="*{lectura}"
+                                        th:field="*{horaFin}" required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="esEspecial"
+                                        th:text="#{formulario.especial}">especial:</label>
+                                    <input type="checkbox"
+                                        th:style="*{idTren !=null?'pointer-events: none;':''}"
+                                        th:readonly="*{idTren !=null}"
+                                        th:field="*{esEspecial}" onclick="seleccionarEspecialTren()"/>
+                                </td>
+                                <td th:if="*{!esEspecial}">
+                                    <label for="idTramo"
+                                        th:text="#{formulario.tramo}">numero
+                                        tren:</label>
+                                    <select class="form-control"
+                                        th:field="*{idTramo}"
+                                        th:style="*{lectura?'pointer-events: none;':''}"
+                                        th:readonly="*{lectura}"
+                                        required>
+                                        <option
+                                            th:each="var : ${tramos}"
+                                            th:value="${var.idTramo}"
+                                            th:text="${var.nombre}">Tramo</option>
+                                    </select>
+                                </td>
+                                <td th:if="*{esEspecial}">
+                                    <label for="idOrigen"
+                                        th:text="#{formulario.origen}">origen:</label>
+                                    <select class="form-control"
+                                        th:field="*{idOrigen}"
+                                        th:style="*{lectura?'pointer-events: none;':''}"
+                                        th:readonly="*{lectura}"
+                                        required>
+                                        <option
+                                            th:each="var : ${puntosInfraestructura}"
+                                            th:value="${var.idPuntoInfraestructura}"
+                                            th:text="${var.nombre}">PuntoInfraestructura</option>
+                                    </select>
+                                </td>
+                                <td th:if="*{esEspecial}">
+                                    <label for="idDestino"
+                                        th:text="#{formulario.destino}">destino:</label>
+                                    <select class="form-control"
+                                        th:field="*{idDestino}"
+                                        th:style="*{lectura?'pointer-events: none;':''}"
+                                        th:readonly="*{lectura}"
+                                        required>
+                                        <option
+                                            th:each="var : ${puntosInfraestructura}"
+                                            th:value="${var.idPuntoInfraestructura}"
+                                            th:text="${var.nombre}">PuntoInfraestructura</option>
+                                    </select>
+                                </td>
+                                <td th:if="*{esEspecial}">
+                                    <label for="nombre"
+                                        th:text="#{formulario.nombre}">nombre:</label>
+                                    <input type="text"
+                                        th:field="*{nombre}"
+                                        class="form-control"
+                                        style="width: 100%;"
+                                        th:readonly="*{lectura}"
+                                        required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <label for="observaciones"
+                                        th:text="#{formulario.observaciones}">observaciones:</label>
+                                    <textarea class="form-control"
+                                        rows="4" cols="50"
+                                        maxlength="200"
+                                        style="resize: none"
+                                        th:readonly="*{lectura}"
+                                        th:field="*{observaciones}"></textarea>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idTren !=null and !tieneDocumento}">
+                                <td colspan="3">
+                                    <label for="documento"
+                                        th:text="#{formulario.hoja.ruta}">hoja de ruta:</label>
+                                    <input class="form-control-file"
+                                        type="file"
+                                        th:field="*{documento}"
+                                        accept=".jpg , .jpeg, .pdf">
+                                </td>
+                                <td>
+                                    <button
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        onclick="return validarSubidaArchivo('documento',true,'')"
+                                        type="submit"
+                                        th:formaction="@{/anadirDocumentoTren}">Añadir</button>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idTren !=null and tieneDocumento}">
+                                <td>
+                                    <label for="documento"
+                                        th:text="#{formulario.hoja.ruta}">hoja de ruta:</label>
+                                </td>
+                                <td>
+                                    <button
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit" formnovalidate
+                                        th:formtarget="_blank"
+                                        th:formaction="@{/verDocumentoTren}">Ver
+                                        documento</button>
+                                </td>
+                            </tr>
+                            <tr th:if="*{idTren !=null}">
+                                <td colspan="4">
+                                    <table class="table-paginacion">
+                                        <thead>
+                                            <tr>
+                                                <th
+                                                    th:text="#{tabla.fecha}">nve</th>
+                                                <th
+                                                    th:text="#{tabla.tipo.material}">tipo
+                                                    material</th>
+                                                <th
+                                                    th:text="#{tabla.ver.modificar}">modificar</th>
+                                                <th
+                                                    th:text="#{tabla.eliminar}">eliminar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                th:each="composicion : ${composiciones}">
+                                                <td>
+                                                    <output
+                                                        th:text="${#dates.format(composicion.fecha, 'dd-MM-yyyy')}">nve</output>
+                                                </td>
+                                                <td>
+                                                    <output
+                                                        th:text="${composicion.tren.numero}">tipoMaterial</output>
+                                                </td>
+                                                <td>
+                                                    <button
+                                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                                        type="submit"
+                                                        th:formaction="@{/verDetalleComposicionTren}"
+                                                        th:if="${session.usuario.tienePermiso('composicion') and !session.usuario.tienePermisoEscritura('composicion')}"
+                                                        th:name="idComposicion"
+                                                        th:value="${composicion.idComposicion}">
+                                                        <i
+                                                            class="far fa-eye"></i>
+                                                    </button>
+                                                    <button
+                                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                                        type="submit"
+                                                        th:formaction="@{/modificarDetalleComposicionTren}"
+                                                        th:name="idComposicion"
+                                                        th:if="${session.usuario.tienePermiso('composicion') and session.usuario.tienePermisoEscritura('composicion') and !detalleTren.lectura}"
+                                                        th:value="${composicion.idComposicion}">
+                                                        <i
+                                                            class="fas fa-edit"></i>
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <button
+                                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                                        type="submit"
+                                                        th:formaction="@{/elimiarComposicionTren}"
+                                                        th:name="idComposicion"
+                                                        th:if="${session.usuario.tienePermiso('composicion') and session.usuario.tienePermisoEscritura('composicion')and !detalleTren.lectura}"
+                                                        th:value="${composicion.idComposicion}">
+                                                        <i
+                                                            class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div
+                                        th:replace="utiles :: paginacion('paginacionTablaDetalleTren', ${composiciones},'page')">...</div>
+                                </td>
+                            </tr>
+                            <tr th:if="*{!lectura and idTren !=null}">
+                                <td>
+                                    <input type="submit"
+                                        th:value="#{boton.crear.composicion}"
+                                        value="Crear composicion"
+                                        th:formaction="@{/crearComposicionTren}"
+                                        th:if="${session.usuario.tienePermiso('composicion') and session.usuario.tienePermisoEscritura('composicion')}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td colspan="2">
+                                    <input type="submit"
+                                        th:value="#{boton.crear.tren}"
+                                        th:if="*{!lectura and idTren ==null}"
+                                        value="Crear"
+                                        th:formaction="@{/crearTren}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton" />
+                                    <input type="submit"
+                                        th:value="#{boton.guardar}"
+                                        th:if="*{!lectura and idTren !=null}"
+                                        value="Guardar"
+                                        th:formaction="@{/guardarDetalleTren}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton" />
+                                </td>
+                                <td>
+                                    <input type="submit"
+                                        th:formaction="@{/buscadorTren}"
+                                        th:formmethod="GET"
+                                        th:value="#{boton.volver}"
+                                        formnovalidate value="Volver"
+                                        class="btn btn-lg btn-primary btn-block mi-boton" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

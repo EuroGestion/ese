@@ -1,0 +1,247 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoIsmp4" th:hidden="*{!pagina.equals('4')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="4">
+                        <h2 class="title-page"
+                            th:text="#{titulo.informe.ismp.reconocimiento.material.transporte}">reconocimineto
+                            del material de transporte</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.ismp.reconocimiento.materia.ciclo.transporte}">del
+                            material por ciclo de transporte</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.reconocimientos}">reconocimiento</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.si.no}">
+                            si/no</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.observaciones}">
+                            observaciones</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label for="reconocimientoRealizaTerminalCiclo"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.reconocimiento.realiza.terminal}">se
+                            realiza en la terminal:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="checkbox"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{reconocimientoRealizaTerminalCiclo}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{reconocimientoRealizaTerminalCicloObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label for="reconocimientoArchivaModeloCiclo"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.reconocimiento.archiva.modelo}">se
+                            activa el modelo:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="checkbox"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{reconocimientoArchivaModeloCiclo}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{reconocimientoArchivaModeloCicloObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label for="reconocimientoTerminalMMPP"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.reconocimiento.terminal.mmpp}">terminal
+                            origen MMPP:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="checkbox"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{reconocimientoTerminalMMPP}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{reconocimientoTerminalMMPPObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.ismp.reconocimiento.posterior.carga}">posterior
+                            carga</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.reconocimientos}">reconocimiento</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.si.no}">
+                            si/no</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.observaciones}">
+                            observaciones</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label
+                            for="reconocimientoRealizaTerminalPosteriorCarga"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.reconocimiento.realiza.terminal}">se
+                            realiza en la terminal:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="checkbox"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{reconocimientoRealizaTerminalPosteriorCarga}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{reconocimientoRealizaTerminalPosteriorCargaObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label
+                            for="reconocimientoArchivaModeloPosteriorCarga"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.reconocimiento.archiva.modelo}">se
+                            activa el modelo:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="checkbox"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{reconocimientoArchivaModeloPosteriorCarga}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{reconocimientoArchivaModeloPosteriorCargaObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.ismp.reconocimiento.inspeccion.visual}">inspeccion
+                            visual</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.reconocimientos}">reconocimiento</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.si.no}">
+                            si/no</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.observaciones}">
+                            observaciones</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label for="reconocimientoDepositoNoEstanco"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.reconocimiento.deposito.no.estanco}">deposito
+                            no estanco:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="checkbox"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{reconocimientoDepositoNoEstanco}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{reconocimientoDepositoNoEstancoObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label for="reconocimientoDefectosManifiestos"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.reconocimiento.defectos.manifiestos}">defectos
+                            manifiestos:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="checkbox"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{reconocimientoDefectosManifiestos}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{reconocimientoDefectosManifiestosObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label for="reconocimientoSobrepasaNivel"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.reconocimiento.sobrepasa.nivel}">sobrepasa
+                            nivel:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="checkbox"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{reconocimientoSobrepasaNivel}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{reconocimientoSobrepasaNivelObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <!-- observaciones -->
+                        <label for="reconocimientoObservaciones"
+                            th:text="#{formulario.observaciones}">Observaciones:</label>
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{reconocimientoObservaciones}"></textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

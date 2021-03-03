@@ -1,0 +1,243 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.modificar.revision}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+    <script th:inline="javascript">
+    //thymeleaf to javascript variables
+    /*<![CDATA[*/
+    var sortProperty = /*[[${buscadorInvestigacion.order}]]*/ null;
+    var sortDesc = /*[[${buscadorInvestigacion.direccion}]]*/ null;
+    var currentPage = /*[[${buscadorInvestigacion.page}]]*/ 0;
+    /*]]>*/
+
+    $(document).ready(function(){
+     //show up/down arrows
+     $("table#tablaBuscadorInvestigacion thead th").each(function(){
+        var head = $(this);
+        if(head.attr('data-sort-prop')==sortProperty){
+            head.append(sortDesc=="desc"?'▾':'▴');
+        }
+        });
+
+     //set click action, reload page on clicking with all query params
+     $("table#tablaBuscadorInvestigacion thead th").click(function() {
+      var headerSortPropName = $(this).attr("data-sort-prop");
+        if(headerSortPropName=="ver" || headerSortPropName=="anexo" || headerSortPropName=="evidencia"){
+            return;   
+        }
+         
+
+      $("#order").attr("value",headerSortPropName);
+      if(headerSortPropName==sortProperty){
+       
+          $("#direccion").attr("value",(sortDesc=="desc"?"asc":"desc"));
+      }else{
+          $("#direccion").attr("value","asc");
+          
+      }
+
+      $("#buscadorInvestigacion").attr("action",getContextPath()+"/ordenTablaBuscadorInvestigacion");
+      $("#buscadorInvestigacion").submit();
+      });
+    });
+  </script>
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.buscador.investigacion}">Buscador</h1>
+                <div style="width: 100%">
+                    <form action="#" class="my-box"
+                        th:object="${buscadorInvestigacion}"
+                        id="buscadorInvestigacion" th:method="post"
+                        th:action="@{/borrarFiltrosBuscadorInvestigacion}">
+                        <input type="hidden" th:field="*{page}" />
+                        <input type="hidden" th:field="*{order}" />
+                        <input type="hidden" th:field="*{direccion}" />
+                        <table class="table-grid">
+                            <tr>
+                                <td>
+                                    <label for="idTipoInspeccion"
+                                        th:text="#{formulario.tipo.investigacion}">Tipo
+                                        Investigacion:</label>
+                                    <select class="form-control"
+                                        th:field="*{idTipoInvestigacion}">
+                                        <option
+                                            th:each="var : ${tiposInvestigacion}"
+                                            th:value="${var.idTipoAccidente}"
+                                            th:text="${var.valor}">Tipo
+                                            Investigacion</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="idCausa"
+                                        th:text="#{formulario.causa}">Causa:</label>
+                                    <select class="form-control"
+                                        th:field="*{idCausa}">
+                                        <option
+                                            th:each="var : ${causas}"
+                                            th:value="${var.idCausaAccidente}"
+                                            th:text="${var.valor}">Causa</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="nIdentificacion"
+                                        th:text="#{formulario.numero.identificacion}">num.
+                                        Identificacion:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{nIdentificacion}" />
+                                </td>
+                                <td>
+                                    <label for="fecha"
+                                        th:text="#{formulario.fecha}">Fecha:</label>
+                                    <input class="form-control"
+                                        type="date" min="1900-01-01"
+                                        max="3000-01-01"
+                                        th:field="*{fecha}" />
+                                </td>
+                                <td>
+                                    <label for="lugar"
+                                        th:text="#{formulario.lugar}">Lugar:</label>
+                                    <input class="form-control"
+                                        type="text" th:field="*{lugar}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/filtrarBuscadorInvestigacion}"
+                                        th:value="#{boton.filtrar}" />
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/borrarFiltrosBuscadorInvestigacion}"
+                                        th:value="#{boton.borrar.filtros}" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table id="tablaBuscadorInvestigacion" class="table-paginacion">
+                            <thead>
+                                <tr>
+                                    <th data-sort-prop="numeroSuceso"
+                                        th:text="#{tabla.numero.identificacion}">num.
+                                        Identificacion</th>
+                                    <th data-sort-prop="fechaAccidente" th:text="#{tabla.fecha}">fecha</th>
+                                    <th data-sort-prop="lugarAccidente" th:text="#{tabla.lugar}">lugar</th>
+                                    <th data-sort-prop="tipoAccidente.valor" th:text="#{tabla.tipo}">tipo</th>
+                                    <th data-sort-prop="causaAccidente.valor" th:text="#{tabla.causa}">causa</th>
+                                    <th data-sort-prop="ver" th:text="#{tabla.ver.modificar}">Ver</th>
+                                    <th data-sort-prop="anexo" th:text="#{tabla.anexos}">Anexos</th>
+                                    <th data-sort-prop="evidencia" th:text="#{tabla.evidencias}">Evidencias</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    th:each="investigacion : ${investigaciones}"
+                                    th:class="${investigacionStat.odd}? 'odd':'even'">
+                                    <td>
+                                        <output
+                                            th:text="${investigacion.numeroSuceso}">num.
+                                            identificacion</output>
+                                    </td>
+                                    <td>
+                                        <output
+                                            th:text="${#dates.format(investigacion.fechaAccidente, 'dd-MM-yyyy')}">Fecha
+                                            inicio</output>
+                                    </td>
+                                    <td>
+                                        <output
+                                            th:text="${investigacion.lugarAccidente}">lugar</output>
+                                    </td>
+                                    <td>
+                                        <output
+                                            th:text="${investigacion.tipoAccidente.valor}">tipo</output>
+                                    </td>
+                                    <td>
+                                        <output
+                                            th:text="${investigacion.causaAccidente.valor}">causa</output>
+                                    </td>
+                                    <td>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/verAccidente}"
+                                            th:if="${!session.usuario.tienePermisoEscritura('accidentes') or(session.usuario.tienePermisoEscritura('accidentes') and investigacion.estadoAccidente.idEstadoAccidente==8)}"
+                                            th:name="idInvestigacion"
+                                            th:value="${investigacion.idAccidente}">
+                                            <i class="far fa-eye"></i>
+                                        </button>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:if="${session.usuario.tienePermisoEscritura('accidentes') and investigacion.estadoAccidente.idEstadoAccidente!=8}"
+                                            th:formaction="@{/modificarAccidente}"
+                                            th:name="idInvestigacion"
+                                            th:value="${investigacion.idAccidente}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/verAnexosInvestigacionBuscador}"
+                                            th:name="idInvestigacion"
+                                            th:value="${investigacion.idAccidente}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/verEvidenciasAccidente}"
+                                            th:name="idInvestigacion"
+                                            th:value="${investigacion.idAccidente}">
+                                            <i class="far fa-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div
+                            th:replace="utiles :: paginacion('paginacionTablaBuscadorInvestigacion', ${investigaciones},'page')">...</div>
+                        <div class="botoneraNuevo">
+                            <button type="submit"
+                                class="btn btn-lg btn-primary btn-block mi-boton"
+                                th:formaction="@{/generarAccidente}"
+                                th:if="${session.usuario.tienePermisoEscritura('accidentes')}"
+                                th:formmethod="GET"
+                                th:text="#{boton.nuevo}">Modificar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

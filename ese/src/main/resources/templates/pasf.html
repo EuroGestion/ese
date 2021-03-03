@@ -1,0 +1,617 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.cad}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page" th:text="#{titulo.pasf}">Objetivos
+                    de seguridad ferroviaria</h1>
+                <form action="#" th:object="${pasf}" class="my-box"
+                    id="pasf" th:method="post" th:action="@{/pasf}"
+                    enctype="multipart/form-data">
+                    <input type="hidden" th:field="*{idPasf}" />
+                    <input type="hidden" th:field="*{idEstadoPasf}" />
+                    <input type="hidden" th:field="*{lectura}" />
+                    <input type="hidden"
+                        th:field="*{pageAccionesFormativas}" />
+                    <input type="hidden"
+                        th:field="*{pageAccionesSeguridad}" />
+                    <input type="hidden"
+                        th:field="*{pageIniciativasSeguridad}" />
+                    <table class="table-grid">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label th:text="#{formulario.anno}">Año:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{idEstadoPasf != null}"
+                                        type="number" required
+                                        th:field="*{anno}" />
+                                </td>
+                            </tr>
+                            <tr th:if="*{idPasf != null}">
+                                <td colspan="4">
+                                    <h2
+                                        th:text="#{formulario.titulo.accidentes.incidentes}">
+                                        Accidentes e incidentes:</h2>
+                                </td>
+                            </tr>
+                            <tr th:if="*{idPasf != null}">
+                                <td>
+                                    <label
+                                        th:text="#{formulario.descarrilamiento}">Descarrilamiento:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{descarrilamiento}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.colision}">Colision:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{colision}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.accidente.paso.nivel}">Accidente
+                                        paso a nivel:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{accidentePasoNivel}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.incendio}">Incendio:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{incendio}" />
+                                </td>
+                            </tr>
+                            <tr th:if="*{idPasf != null}">
+                                <td>
+                                    <label
+                                        th:text="#{formulario.arrollamiento.via}">Arrollamiento
+                                        via:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{arrollamientoVia}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.arrollamiento.interseccion}">Arrollamiento
+                                        interseccion:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{arrollamientoInterseccion}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.caida.personas}">Caida
+                                        personas:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{caidaPersonas}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.suicidio}">Suicidio:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{suicidio}" />
+                                </td>
+                            </tr>
+                            <tr th:if="*{idPasf != null}">
+                                <td>
+                                    <label
+                                        th:text="#{formulario.descomposicion}">Descomposicion:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{descomposicion}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.detencion.tren}">Detencion
+                                        Tren:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{detencion}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.invasion.via}">Invasion
+                                        via:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{invasionVia}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.incidentes.transportes.excepcionales}">Incidentes
+                                        Transportes Excepcionales:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{incidentesTransportesExcepcionales}" />
+                                </td>
+                            </tr>
+                            <tr th:if="*{idPasf != null}">
+                                <td>
+                                    <label
+                                        th:text="#{formulario.rebase.sennal}">Rebase
+                                        Señal:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{rebaseSennal}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.conato.colision}">Conato
+                                        Colision:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{conatoColision}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.enganche.pantografo}">Enganche
+                                        Pantografo:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{enganchePantografo}" />
+                                </td>
+                                <td>
+                                    <label th:text="#{formulario.otros}">Otros:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{otros}" />
+                                </td>
+                            </tr>
+                            <tr th:if="*{idPasf != null}">
+                                <td colspan="4">
+                                    <h2
+                                        th:text="#{formulario.titulo.personal}">Personal:</h2>
+                                </td>
+                            </tr>
+                            <tr th:if="*{idPasf != null}">
+                                <td>
+                                    <label
+                                        th:text="#{formulario.cursos.formativos}">Cursos
+                                        Formativos:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{cursosFormativos}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.revisiones.aptitud}">Revisiones
+                                        aptitudPsicofisica:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{revisionesAptitudPsicofisica}" />
+                                </td>
+                            </tr>
+                            <!-- TODO AÑADIR CURSOS -->
+                            <tr th:if="*{idPasf != null}">
+                                <td colspan="4">
+                                    <h3
+                                        th:text="#{formulario.titulo.acciones.formativas}">Acciones
+                                        formativas</h3>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{!lectura and (idPasf != null and idEstadoPasf == 1)}">
+                                <td>
+                                    <label
+                                        th:text="#{formulario.categoria}">Categoria:</label>
+                                    <select class="form-control"
+                                        th:field="*{cursoCategoria}">
+                                        <option
+                                            th:each="var : ${categorias}"
+                                            th:value="${var.idTipoCurso}"
+                                            th:text="${var.valor}">Categoria</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label th:text="#{formulario.cargo}">Cargo:</label>
+                                    <select class="form-control"
+                                        th:field="*{cursoCargo}">
+                                        <option
+                                            th:each="var : ${cargos}"
+                                            th:value="${var.idCargo}"
+                                            th:text="${var.nombre}">Cargo</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.descripcion}">Descripcion:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{cursoDescripcion}" />
+                                </td>
+                                <td rowspan="2">
+                                    <input type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.annadir}"
+                                        onclick="return validarAddCursoCamposObligatoriosPASF()"
+                                        th:formaction="@{/guardarCursoPasf}"
+                                        value="Add" />
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{!lectura and (idPasf != null and idEstadoPasf == 1)}">
+                                <td>
+                                    <label
+                                        th:text="#{formulario.asistentes}">Asistentes:</label>
+                                    <input class="form-control"
+                                        type="number"
+                                        th:field="*{cursoAsistentes}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.duracion.horas}">Duracion:</label>
+                                    <input class="form-control"
+                                        type="number"
+                                        th:field="*{cursoDuracion}" />
+                                </td>
+                            </tr>
+                            <tr th:if="*{idPasf != null}">
+                                <td colspan="4">
+                                    <table class="table-paginacion">
+                                        <thead>
+                                            <tr>
+                                                <th
+                                                    th:text="#{tabla.categoria}">Categoria</th>
+                                                <th
+                                                    th:text="#{tabla.cargo}">Cargo</th>
+                                                <th
+                                                    th:text="#{tabla.descripcion}">Descripcion</th>
+                                                <th
+                                                    th:text="#{tabla.asistentes}">Asistentes</th>
+                                                <th
+                                                    th:text="#{tabla.duracion.horas}">Duracion/horas</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                th:each="cursoPasf : ${cursosPasf}"
+                                                th:class="${cursoPasfStat.odd}? 'odd':'even'">
+                                                <td>
+                                                    <output
+                                                        th:text="${cursoPasf.categoria.valor}">Categoria</output>
+                                                </td>
+                                                <td>
+                                                    <output
+                                                        th:text="${cursoPasf.cargo.nombre}">Cargo</output>
+                                                </td>
+                                                <td>
+                                                    <output
+                                                        th:text="${cursoPasf.descripcion}">Descripcion</output>
+                                                </td>
+                                                <td>
+                                                    <output
+                                                        th:text="${cursoPasf.numAsistentes}">Asistentes</output>
+                                                </td>
+                                                <td>
+                                                    <output
+                                                        th:text="${cursoPasf.duracion}">Duracion/horas</output>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div
+                                        th:replace="utiles :: paginacion('paginacionTablaPASFAccionesFormativas', ${cursosPasf},'pageAccionesFormativas')">...</div>
+                                </td>
+                            </tr>
+                            <tr th:if="*{idPasf != null}">
+                                <td colspan="4">
+                                    <h2
+                                        th:text="#{formulario.titulo.inspecciones}">Inspecciones
+                                        y Controles de Seguridad:</h2>
+                                </td>
+                            </tr>
+                            <tr th:if="*{idPasf != null}">
+                                <td colspan="2">
+                                    <label th:text="#{formulario.iso}">(ISO)Seguridad
+                                        Operativa:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number" th:field="*{iso}" />
+                                </td>
+                                <td colspan="2">
+                                    <label th:text="#{formulario.issc}">(ISSC)Estado
+                                        del cargamento y composiciones
+                                        ferroviarias:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number" th:field="*{issc}" />
+                                </td>
+                            </tr>
+                            <tr th:if="*{idPasf != null}">
+                                <td colspan="2">
+                                    <label th:text="#{formulario.ismp}">(ISMP)Transporte
+                                        de mercancias peligrosas:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number" th:field="*{ismp}" />
+                                </td>
+                                <td colspan="2">
+                                    <label th:text="#{formulario.iseet}">(ISEET)Equipoos
+                                        y elementos del material rodante
+                                        de traccion:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{iseet}" />
+                                </td>
+                            </tr>
+                            <tr th:if="*{idPasf != null}">
+                                <td colspan="2">
+                                    <label th:text="#{formulario.cad}">(CAD)Control
+                                        de alcohol y drogas:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number" th:field="*{cad}" />
+                                </td>
+                            </tr>
+                            <!-- TODO AÑADIR INSPECCIONES -->
+                            <tr th:if="*{idPasf != null}">
+                                <td colspan="4">
+                                    <h3
+                                        th:text="#{formulario.titulo.acciones.seguridad}">Acciones
+                                        de seguridad</h3>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{!lectura and (idPasf != null and idEstadoPasf == 1)}">
+                                <td>
+                                    <label th:text="#{formulario.tipo}">Tipo:</label>
+                                    <select class="form-control"
+                                        th:field="*{inspeccionTipo}">
+                                        <option th:each="var : ${tipos}"
+                                            th:value="${var.idTipoInspeccion}"
+                                            th:text="${var.valor}">Tipo</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.descripcion}">Descripcion:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{inspeccionDescripcion}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.numero.inspecciones}">Nº
+                                        Inspecciones:</label>
+                                    <input class="form-control"
+                                        type="number"
+                                        th:field="*{inspeccionNumero}" />
+                                </td>
+                                <td rowspan="2">
+                                    <input type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.annadir}"
+                                        onclick="return validarAddInspeccionCamposObligatoriosPASF()"
+                                        th:formaction="@{/guardarInspeccionPasf}"
+                                        value="Add" />
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{!lectura and (idPasf != null and idEstadoPasf == 1)}">
+                                <td>
+                                    <label
+                                        th:text="#{formulario.duracion.media}">Duracion
+                                        media:</label>
+                                    <input class="form-control"
+                                        type="number"
+                                        th:field="*{inspeccionDuracion}" />
+                                </td>
+                            </tr>
+                            <tr th:if="*{idPasf != null}">
+                                <td colspan="4">
+                                    <table class="table-paginacion">
+                                        <thead>
+                                            <tr>
+                                                <th
+                                                    th:text="#{tabla.tipo}">Tipo</th>
+                                                <th
+                                                    th:text="#{tabla.descripcion}">Descripcion</th>
+                                                <th
+                                                    th:text="#{tabla.numero.inspecciones}">Nº
+                                                    Inspecciones</th>
+                                                <th
+                                                    th:text="#{tabla.duracion.media}">Duracion
+                                                    media</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                th:each="inspeccionPasf : ${inspeccionesPasf}"
+                                                th:class="${inspeccionPasfStat.odd}? 'odd':'even'">
+                                                <td>
+                                                    <output
+                                                        th:text="${inspeccionPasf.tipoInspeccion.valor}">Tipo</output>
+                                                </td>
+                                                <td>
+                                                    <output
+                                                        th:text="${inspeccionPasf.descripcion}">Descripcion</output>
+                                                </td>
+                                                <td>
+                                                    <output
+                                                        th:text="${inspeccionPasf.numInspecciones}">Nº
+                                                        Inspecciones</output>
+                                                </td>
+                                                <td>
+                                                    <output
+                                                        th:text="${inspeccionPasf.duracion}">Duracion
+                                                        media</output>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div
+                                        th:replace="utiles :: paginacion('paginacionTablaPASFAccionesSeguridad', ${inspeccionesPasf},'pageAccionesSeguridad')">...</div>
+                                </td>
+                            </tr>
+                            <tr th:if="*{idPasf != null}">
+                                <td colspan="4">
+                                    <h2
+                                        th:text="#{formulario.titulo.gestion.seguridad.ferroviaria}">Gestion
+                                        de la seguridad ferroviaria:</h2>
+                                </td>
+                            </tr>
+                            <tr th:if="*{idPasf != null}">
+                                <td>
+                                    <label
+                                        th:text="#{formulario.auditorias}">Auditorias
+                                        internas del SGS:</label>
+                                    <input class="form-control"
+                                        th:readonly="*{lectura or (idEstadoPasf != null and idEstadoPasf >=2)}"
+                                        type="number"
+                                        th:field="*{auditorias}" />
+                                </td>
+                            </tr>
+                            <!-- TODO AÑADIR AUDITORIA -->
+                            <tr th:if="*{idPasf != null}">
+                                <td colspan="4">
+                                    <h3
+                                        th:text="#{formulario.titulo.iniciativas.seguridad}">Iniciativas
+                                        de seguridad</h3>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{!lectura and (idPasf != null and idEstadoPasf == 1)}">
+                                <td>
+                                    <label
+                                        th:text="#{formulario.descripcion}">Descripcion:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{auditoriaDescripcion}" />
+                                </td>
+                                <td>
+                                    <label
+                                        th:text="#{formulario.duracion}">Duracion:</label>
+                                    <input class="form-control"
+                                        type="number"
+                                        th:field="*{auditoriaDuracion}" />
+                                </td>
+                                <td></td>
+                                <td>
+                                    <input type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.annadir}"
+                                        onclick="return validarAddAuditoriaCamposObligatoriosPASF()"
+                                        th:formaction="@{/guardarAuditoriaPasf}"
+                                        value="Add" />
+                                </td>
+                            </tr>
+                            <tr th:if="*{idPasf != null}">
+                                <td colspan="4">
+                                    <table class="table-paginacion">
+                                        <thead>
+                                            <tr>
+                                                <th
+                                                    th:text="#{tabla.descripcion}">Descripcion</th>
+                                                <th
+                                                    th:text="#{tabla.duracion}">Duracion</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                th:each="auditoriaPasf : ${auditoriasPasf}"
+                                                th:class="${auditoriaPasfStat.odd}? 'odd':'even'">
+                                                <td>
+                                                    <output
+                                                        th:text="${auditoriaPasf.descripcion}">Descripcion</output>
+                                                </td>
+                                                <td>
+                                                    <output
+                                                        th:text="${auditoriaPasf.duracion}">Duracion</output>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div
+                                        th:replace="utiles :: paginacion('paginacionTablaPASFIniciativasSeguridad', ${auditoriasPasf},'pageIniciativasSeguridad')">...</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="submit"
+                                        th:if="*{!lectura and (idPasf == null or idEstadoPasf == 1)}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.guardar}"
+                                        onclick="return validarGuardarCamposObligatoriosPASF()"
+                                        th:formaction="@{/guardarPasf}"
+                                        value="Guardar" />
+                                </td>
+                                <td>
+                                    <input type="submit"
+                                        th:if="*{!lectura and (idPasf != null and idEstadoPasf == 1)}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.aprobar}"
+                                        onclick="return validarAprovarCamposObligatoriosPASF()"
+                                        th:formaction="@{/aprobarPasf}"
+                                        value="Aprobar" />
+                                </td>
+                                <td></td>
+                                <td>
+                                    <input type="submit"
+                                        style="float: right"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.volver}"
+                                        formnovalidate
+                                        th:formmethod="GET"
+                                        th:formaction="@{/buscadorPasf}"
+                                        value="Volver" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

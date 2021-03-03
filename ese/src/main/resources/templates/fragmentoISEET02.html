@@ -1,0 +1,223 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoIseet2"
+        th:hidden="*{!pagina.equals('2')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.iseet.equipos.elementos.seguridad}">Equipos
+                            y elementos de seguridad del material
+                            rodante</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.iseet.caja}">Caja</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.resultado}">
+                            Resultado</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCaja1"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.caja.general}">general:</label>
+                    </td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCaja1"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.caja.general.1}">general:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoCaja1}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCaja2"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.caja.elemento.sujecion}">elementos
+                            de sujecion:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCaja2"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.caja.elemento.sujecion.2}">elementos
+                            de sujecion:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoCaja2}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCaja3"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.caja.estructura}">estructura:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCaja3"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.caja.estructura.3}">estructura:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoCaja3}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCaja4"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.caja.bastidor}">bastidor:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCaja4"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.caja.bastidor.4}">incorrecta
+                            posicion:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoCaja4}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCaja5"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.caja.bastidor.5}">mal
+                            estado:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoCaja5}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCaja6"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.caja.ventanas}">ventanas:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCaja4"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.caja.ventanas.6}">estado
+                            defectuoso:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoCaja6}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="idResultadoCaja7"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.caja.ventanas.7}">cristales
+                            rotos:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoCaja7}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="bordeInformeISEET">
+                        <!-- observaciones -->
+                        <label for="observacionesCaja"
+                            th:text="#{formulario.observaciones}">Observaciones:</label>
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesCaja}"></textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

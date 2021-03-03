@@ -1,0 +1,50 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.error}">Error</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:if="${session.usuario!=null}">
+        <div th:replace="menu :: menu">...</div>
+    </div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page" th:text="#{titulo.error}">error</h1>
+                <div th:if="${session.usuario!=null}">
+                    <h3 th:text="#{formulario.error.inesperado}">Ha
+                        ocurrido un error inesperado</h3>
+                </div>
+                <div th:if="${session.usuario==null}">
+                    <h3 th:text="#{formulario.error.sesion}">No
+                        tiene una sesion activa,porfavor inicie sesion</h3>
+                </div>
+                <br>
+                <div>
+                    <a th:if="${session.usuario==null}"
+                        class="btn btn-lg btn-primary btn-block mi-boton"
+                        th:href="@{/}" th:text="#{boton.inicio}">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

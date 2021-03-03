@@ -1,0 +1,321 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoAccidente2"
+        th:hidden="*{!pagina.equals('2')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                        <h3 th:text="#{formulario.interviene.ciaf}">Interviene
+                            CIAF:</h3>
+                    </td>
+                    <td>
+                        <input type="checkbox" class="form-control"
+                            th:field="*{intervieneCIAF}"
+                            th:readonly="*{(idEstadoAccidente> 2) or lectura or confirmadoIntervieneCIAF}"
+                            th:style="*{((idEstadoAccidente> 2) or lectura or confirmadoIntervieneCIAF)?'pointer-events: none;cursor: not-allowed;':''}">
+                    </td>
+                    <td>
+                        <input type="submit"
+                            th:value="#{boton.confirmar}"
+                            value="confirmar"
+                            th:if="*{!confirmadoIntervieneCIAF}"
+                            th:formaction="@{/confirmarIntervieneCIAF}"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                </tr>
+                <tr th:if="*{intervieneCIAF!= null and intervieneCIAF}"
+                    id="intervieneCIAFSeleccion">
+                    <td>
+                        <label for="nombreResponsableCIAF"
+                            th:text="#{formulario.responsable.ciaf.nombre}">Nombre
+                            responsable ciaf:</label>
+                        <input class="form-control"
+                            th:readonly="*{(idEstadoAccidente!= 2) or lectura}"
+                            type="text"
+                            th:field="*{nombreResponsableCIAF}" />
+                    </td>
+                    <td>
+                        <label for="telefonoResponsableCIAF"
+                            th:text="#{formulario.responsable.ciaf.telefono}">Telefono
+                            responsable ciaf:</label>
+                        <input class="form-control"
+                            th:readonly="*{(idEstadoAccidente!= 2) or lectura}"
+                            type="text" maxlength="9"
+                            th:field="*{telefonoResponsableCIAF}" />
+                    </td>
+                    <td>
+                        <label for="correoResponsableCIAF"
+                            th:text="#{formulario.responsable.ciaf.correo}">correo
+                            responsable ciaf:</label>
+                        <input class="form-control"
+                            th:readonly="*{(idEstadoAccidente!= 2) or lectura}"
+                            type="text"
+                            th:field="*{correoResponsableCIAF}" />
+                    </td>
+                    <td>
+                        <label for="idResponsableSeguridad"
+                            th:text="#{formulario.responsable.seguridad}">Responsable
+                            seguridad:</label>
+                        <select class="form-control"
+                            th:field="*{idResponsableSeguridad}"
+                            th:style="*{((idEstadoAccidente!= 2) or lectura)?'pointer-events: none;':''}"
+                            th:readonly="*{(idEstadoAccidente!= 2) or lectura}">
+                            <option
+                                th:each="var : ${responsablesSeguridad}"
+                                th:value="${var.idPersonal}"
+                                th:text="${var.nombre}">Responsable
+                                seguridad</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr th:if="*{intervieneCIAF!= null and intervieneCIAF}">
+                    <td colspan="4">
+                        <label for="observacionesIntervieneCIAF"
+                            th:text="#{formulario.observaciones}">observaciones:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idEstadoAccidente!= 2) or lectura}"
+                            rows="4" cols="125" maxlength="500"
+                            style="resize: none"
+                            th:field="*{observacionesIntervieneCIAF}"></textarea>
+                    </td>
+                </tr>
+                <tr th:if="*{intervieneCIAF!= null and intervieneCIAF}">
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.firmas}">Firmas</h3>
+                    </td>
+                </tr>
+                <tr th:if="*{intervieneCIAF!= null and intervieneCIAF}">
+                    <td colspan="2">
+                        <h4 class="title-page"
+                            th:text="#{formulario.responsable.seguridad}">responsable
+                            de seguridad</h4>
+                    </td>
+                </tr>
+                <tr th:if="*{intervieneCIAF!= null and intervieneCIAF}">
+                    <td colspan="2">
+                        <select class="form-control"
+                            style="pointer-events: none;" readonly
+                            th:if="*{idFirmaFichaEstructura!=null}"
+                            th:field="*{idFirmaFichaEstructura}">
+                            <option th:each="var : ${personal}"
+                                th:value="${var.idPersonal}"
+                                th:text="${var.nombreCompleto}"></option>
+                        </select>
+                        <label for="nombreFirmaFichaEstructura"
+                            class="labelColumna"
+                            th:if="*{idFirmaFichaEstructura==null and idEstadoAccidente==2}"
+                            th:text="#{formulario.nombre}">nombre:</label>
+                        <input type="text"
+                            th:field="*{nombreFirmaFichaEstructura}"
+                            th:if="*{idFirmaFichaEstructura==null and idEstadoAccidente==2}"
+                            class="form-control" style="width: 100%;"
+                            th:readonly="*{lectura}" />
+                    </td>
+                </tr>
+                <tr th:if="*{intervieneCIAF!= null and intervieneCIAF}">
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="passwordFirmaFichaEstructura"
+                            class="labelColumna"
+                            th:if="*{idFirmaFichaEstructura==null and idEstadoAccidente==2}"
+                            th:text="#{formulario.password}">contraseña:</label>
+                        <input type="password"
+                            th:field="*{passwordFirmaFichaEstructura}"
+                            class="form-control" style="width: 100%;"
+                            th:if="*{idFirmaFichaEstructura==null and idEstadoAccidente==2}"
+                            th:readonly="*{lectura}" />
+                    </td>
+                </tr>
+                <tr th:if="*{intervieneCIAF!= null and intervieneCIAF}">
+                    <td colspan="2">
+                        <input type="submit" th:value="#{boton.firmar}"
+                            value="firmar"
+                            th:if="*{idFirmaFichaEstructura==null and idEstadoAccidente==2}"
+                            th:formaction="@{/firmaAccidenteFichaEstructura}"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                </tr>
+                <tr
+                    th:if="*{intervieneCIAF!= null and intervieneCIAF and idEstadoAccidente>2 }">
+                    <td colspan="2">
+                        <h3 for="delegaInvestigacion"
+                            th:text="#{formulario.delega.investigacion}">Delega
+                            investigacion:</h3>
+                    </td>
+                    <td>
+                        <input type="checkbox" class="form-control"
+                            th:field="*{delegaInvestigacion}"
+                            th:readonly="*{(idEstadoAccidente!= 3) or lectura or confirmadoDelegaInvestigacion}"
+                            th:style="*{((idEstadoAccidente!= 3) or lectura or confirmadoDelegaInvestigacion)?'pointer-events: none;cursor: not-allowed;':''}">
+                    </td>
+                    <td>
+                        <input type="submit"
+                            th:value="#{boton.confirmar}"
+                            value="confirmar"
+                            th:if="*{!confirmadoDelegaInvestigacion}"
+                            th:formaction="@{/confirmarDelegaInvestigacion}"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                </tr>
+                <tr
+                    th:if="*{delegaInvestigacion!= null and delegaInvestigacion}"
+                    id="delegaInvestigacionSeleccion">
+                    <td>
+                        <label for="idDelegadoInvestigacion"
+                            th:text="#{formulario.delegado.investigacion}">Delegado
+                            investigacion:</label>
+                        <select class="form-control"
+                            th:field="*{idDelegadoInvestigacion}"
+                            th:style="*{((idEstadoAccidente!= 3) or lectura or firmadoFichaNotificacion)?'pointer-events: none;':''}"
+                            th:readonly="*{(idEstadoAccidente!= 3) or lectura or firmadoFichaNotificacion}"
+                            th:required="*{pagina.equals('2') and !lectura}">
+                            <option
+                                th:each="var : ${delegadosInvestigacion}"
+                                th:value="${var.idPersonal}"
+                                th:text="${var.nombre}">Delegado
+                                investigacion</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr
+                    th:if="*{delegaInvestigacion!= null and delegaInvestigacion}">
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.firmas}">Firmas</h3>
+                    </td>
+                </tr>
+                <tr
+                    th:if="*{delegaInvestigacion!= null and delegaInvestigacion}">
+                    <td colspan="2">
+                        <h4 class="title-page"
+                            th:text="#{formulario.responsable.seguridad}">responsable
+                            de seguridad</h4>
+                    </td>
+                    <td colspan="2">
+                        <h4 class="title-page"
+                            th:text="#{formulario.delegado.seguridad}">delegado
+                            de seguridad</h4>
+                    </td>
+                </tr>
+                <tr
+                    th:if="*{delegaInvestigacion!= null and delegaInvestigacion}">
+                    <td colspan="2">
+                        <select class="form-control"
+                            style="pointer-events: none;" readonly
+                            th:if="*{idFirmaFichaNotificacionResponsableSeguridad!=null}"
+                            th:field="*{idFirmaFichaNotificacionResponsableSeguridad}">
+                            <option th:each="var : ${personal}"
+                                th:value="${var.idPersonal}"
+                                th:text="${var.nombreCompleto}"></option>
+                        </select>
+                        <label
+                            for="nombreFirmaFichaNotificacionResponsableSeguridad"
+                            class="labelColumna"
+                            th:if="*{idFirmaFichaNotificacionResponsableSeguridad==null and idEstadoAccidente==3}"
+                            th:text="#{formulario.nombre}">nombre:</label>
+                        <input type="text"
+                            th:field="*{nombreFirmaFichaNotificacionResponsableSeguridad}"
+                            th:if="*{idFirmaFichaNotificacionResponsableSeguridad==null and idEstadoAccidente==3}"
+                            class="form-control" style="width: 100%;"
+                            th:readonly="*{lectura}" />
+                    </td>
+                    <td colspan="2">
+                        <select class="form-control"
+                            style="pointer-events: none;" readonly
+                            th:if="*{idFirmaFichaNotificacionDelegadoSeguridad!=null}"
+                            th:field="*{idFirmaFichaNotificacionDelegadoSeguridad}">
+                            <option th:each="var : ${personal}"
+                                th:value="${var.idPersonal}"
+                                th:text="${var.nombreCompleto}"></option>
+                        </select>
+                        <label
+                            for="nombreFirmaFichaNotificacionDelegadoSeguridad"
+                            class="labelColumna"
+                            th:if="*{idFirmaFichaNotificacionDelegadoSeguridad==null and idEstadoAccidente==3}"
+                            th:text="#{formulario.nombre}">nombre:</label>
+                        <input type="text"
+                            th:field="*{nombreFirmaFichaNotificacionDelegadoSeguridad}"
+                            th:if="*{idFirmaFichaNotificacionDelegadoSeguridad==null and idEstadoAccidente==3}"
+                            class="form-control" style="width: 100%;"
+                            th:readonly="*{lectura}" />
+                    </td>
+                </tr>
+                <tr
+                    th:if="*{delegaInvestigacion!= null and delegaInvestigacion}">
+                    <td colspan="2">
+                        <label
+                            for="passwordFirmaFichaNotificacionResponsableSeguridad"
+                            class="labelColumna"
+                            th:if="*{idFirmaFichaNotificacionResponsableSeguridad==null and idEstadoAccidente==3}"
+                            th:text="#{formulario.password}">contraseña:</label>
+                        <input type="password"
+                            th:field="*{passwordFirmaFichaNotificacionResponsableSeguridad}"
+                            class="form-control" style="width: 100%;"
+                            th:if="*{idFirmaFichaNotificacionResponsableSeguridad==null and idEstadoAccidente==3}"
+                            th:readonly="*{lectura}" />
+                    </td>
+                    <td colspan="2">
+                        <label
+                            for="passwordFirmaFichaNotificacionDelegadoSeguridad"
+                            class="labelColumna"
+                            th:if="*{idFirmaFichaNotificacionDelegadoSeguridad==null and idEstadoAccidente==3}"
+                            th:text="#{formulario.password}">contraseña:</label>
+                        <input type="password"
+                            th:field="*{passwordFirmaFichaNotificacionDelegadoSeguridad}"
+                            class="form-control" style="width: 100%;"
+                            th:if="*{idFirmaFichaNotificacionDelegadoSeguridad==null and idEstadoAccidente==3}"
+                            th:readonly="*{lectura}" />
+                    </td>
+                </tr>
+                <tr
+                    th:if="*{delegaInvestigacion!= null and delegaInvestigacion}">
+                    <td colspan="2">
+                        <input type="submit" th:value="#{boton.firmar}"
+                            value="firmar"
+                            th:if="*{idFirmaFichaNotificacionResponsableSeguridad==null and idEstadoAccidente==3}"
+                            th:formaction="@{/firmaAccidenteFichaNotificacionResponsableSeguridad}"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                    <td colspan="2">
+                        <input type="submit" th:value="#{boton.firmar}"
+                            value="firmar"
+                            th:if="*{idFirmaFichaNotificacionDelegadoSeguridad==null and idEstadoAccidente==3}"
+                            th:formaction="@{/firmaAccidenteFichaNotificacionDelegadoSeguridad}"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit"
+                            th:value="#{boton.anterior}"
+                            th:formaction="@{/paginaAnteriorAccidente}"
+                            formnovalidate value="anterior"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                    <td>
+                        <input type="submit"
+                            th:value="#{boton.siguiente}"
+                            th:if="*{idEstadoAccidente>3}"
+                            th:formaction="@{/paginaSiguienteAccidente}"
+                            value="Siguiente"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

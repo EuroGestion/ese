@@ -1,0 +1,150 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.suspension.activa.titulo}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.suspension.activa.titulo}">Suspencion
+                    activa</h1>
+                <form action="#" th:object="${suspensionActiva}"
+                    class="my-box" id="suspensionActiva"
+                    th:method="post" th:action="@{/suspensionActiva}"
+                    enctype="multipart/form-data">
+                    <input type="hidden" th:field="*{idPersonal}" />
+                    <input type="hidden" th:field="*{idTitulo}" />
+                    <input type="hidden" th:field="*{idSuspension}" />
+                    <div></div>
+                    <table class="table-grid">
+                        <tbody>
+                            <tr>
+                                <td colspan="2">
+                                    <label for="nombre"
+                                        th:text="#{formulario.nombre}">Nombre:</label>
+                                    <input type="text"
+                                        th:field="*{nombre}"
+                                        class="form-control"
+                                        style="width: 100%;" readonly />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="titulo"
+                                        th:text="#{formulario.titulo}">Titulo:</label>
+                                    <input type="text"
+                                        th:field="*{titulo}"
+                                        class="form-control"
+                                        style="width: 100%;" readonly />
+                                </td>
+                                <td>
+                                    <label for="fechaCaducidad"
+                                        th:text="#{formulario.fecha.caducidad}">Fecha
+                                        caducidad:</label>
+                                    <input type="date"
+                                        th:field="*{fechaCaducidad}"
+                                        class="form-control" readonly />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="causa"
+                                        th:text="#{formulario.causa}">Causa:</label>
+                                    <input type="text"
+                                        th:field="*{causa}"
+                                        class="form-control"
+                                        style="width: 100%;" readonly />
+                                </td>
+                                <td>
+                                    <label for="fechaSuspension"
+                                        th:text="#{formulario.fecha.suspension}">Fecha
+                                        suspension:</label>
+                                    <input type="date"
+                                        th:field="*{fechaSuspension}"
+                                        class="form-control" readonly />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label for="causaResolucion"
+                                        th:text="#{formulario.causa.resolucion}">Causa
+                                        Resolucion:</label>
+                                    <input type="text"
+                                        class="form-control"
+                                        th:field="*{causaResolucion}"
+                                        style="width: 100%;" required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="fechaResolucion"
+                                        th:text="#{formulario.fecha.resolucion}">Fecha
+                                        resolucion:</label>
+                                    <input type="date" min="1900-01-01"
+                                        class="form-control"
+                                        max="3000-01-01"
+                                        th:field="*{fechaResolucion}"
+                                        required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label for="observaciones"
+                                        th:text="#{formulario.observaciones}">Observaciones:</label>
+                                    <textarea rows="4" cols="50"
+                                        maxlength="200"
+                                        class="form-control"
+                                        style="width: 100%; resize: none"
+                                        th:field="*{observaciones}"></textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <div>
+                        <input type="submit"
+                            class="btn btn-lg btn-primary btn-block mi-boton"
+                            th:formaction="@{/recuperarSuspensionActivaTitulo}"
+                            th:value="#{boton.recuperar.titulo}" />
+                        <input type="submit"
+                            class="btn btn-lg btn-primary btn-block mi-boton"
+                            th:formaction="@{/revocarTituloSuspension}"
+                            th:value="#{boton.revocar.titulo}" />
+                        <input type="submit"
+                            class="btn btn-lg btn-primary btn-block mi-boton"
+                            th:formaction="@{/caducarSuspensionActivaTitulo}"
+                            th:value="#{boton.caducar.titulo}" />
+                        <input type="submit"
+                            class="btn btn-lg btn-primary btn-block mi-boton"
+                            th:formaction="@{/volverSuspensionActiva}"
+                            th:value="#{boton.volver}" formnovalidate />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

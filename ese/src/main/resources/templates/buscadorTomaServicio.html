@@ -1,0 +1,189 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.buscador.toma.servicio}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+    <script th:inline="javascript">
+    //thymeleaf to javascript variables
+    /*<![CDATA[*/
+    var sortProperty = /*[[${buscadorTomaServicio.order}]]*/ null;
+    var sortDesc = /*[[${buscadorTomaServicio.direccion}]]*/ null;
+    var currentPage = /*[[${buscadorTomaServicio.page}]]*/ 0;
+    /*]]>*/
+
+    $(document).ready(function(){
+     //show up/down arrows
+     $("table#tablaBuscadorTomaServicio thead th").each(function(){
+        var head = $(this);
+        if(head.attr('data-sort-prop')==sortProperty){
+            head.append(sortDesc=="desc"?'▾':'▴');
+        }
+        });
+
+     //set click action, reload page on clicking with all query params
+     $("table#tablaBuscadorTomaServicio thead th").click(function() {
+      var headerSortPropName = $(this).attr("data-sort-prop");
+        if(headerSortPropName=="ver"){
+            return;   
+        }
+         
+
+      $("#order").attr("value",headerSortPropName);
+      if(headerSortPropName==sortProperty){
+       
+          $("#direccion").attr("value",(sortDesc=="desc"?"asc":"desc"));
+      }else{
+          $("#direccion").attr("value","asc");
+          
+      }
+
+      $("#buscadorTomaServicio").attr("action",getContextPath()+"/ordenTablaBuscadorTomaServicio");
+      $("#buscadorTomaServicio").submit();
+      });
+    });
+  </script>
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.buscador.toma.servicio}">Buscador</h1>
+                <div style="width: 100%">
+                    <form action="#" class="my-box"
+                        th:object="${buscadorTomaServicio}"
+                        id="buscadorTomaServicio" th:method="post"
+                        th:action="@{/borrarFiltrosBuscadorTomaServicio}">
+                        <input type="hidden" th:field="*{page}" />
+                        <input type="hidden" th:field="*{order}" />
+                        <input type="hidden" th:field="*{direccion}" />
+                        <table class="table-grid">
+                            <tr>
+                                <td>
+                                    <label for="idMaquinista"
+                                        th:text="#{formulario.maquinista}">Maquinista:</label>
+                                    <select class="form-control"
+                                        th:field="*{idMaquinista}">
+                                        <option
+                                            th:each="var : ${maquinistas}"
+                                            th:value="${var.idPersonal}"
+                                            th:text="${var.nombreCompleto}">Maquinista</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="numeroTren"
+                                        th:text="#{formulario.tren}">Documento:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{numeroTren}" />
+                                </td>
+                                <td>
+                                    <label for="idEstadoTomaServicio"
+                                        th:text="#{formulario.estado}">Estado:</label>
+                                    <select class="form-control"
+                                        th:field="*{idEstadoTomaServicio}">
+                                        <option
+                                            th:each="var : ${estadosTomaServicio}"
+                                            th:value="${var.idEstadoHistorico}"
+                                            th:text="${var.valor}">estado</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/filtrarBuscadorTomaServicio}"
+                                        th:value="#{boton.filtrar}" />
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/borrarFiltrosBuscadorTomaServicio}"
+                                        th:value="#{boton.borrar.filtros}" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table id="tablaBuscadorTomaServicio" class="table-paginacion">
+                            <thead>
+                                <tr>
+                                    <th data-sort-prop="nombreCompleto" th:text="#{tabla.maquinista}">Tipo</th>
+                                    <th data-sort-prop="tren.numero" th:text="#{tabla.numero.tren}">Documento</th>
+                                    <th data-sort-prop="fecha" th:text="#{tabla.fecha}">Nombre</th>
+                                    <th data-sort-prop="ver" th:text="#{tabla.ver.modificar}">Ver</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="toma : ${tomaServicios}"
+                                    th:class="${tomaStat.odd}? 'odd':'even'">
+                                    <td>
+                                        <output
+                                            th:text="${toma.personal.nombreCompleto}">Documento</output>
+                                    </td>
+                                    <td>
+                                        <output
+                                            th:text="${toma.tren.numero}">Nombre</output>
+                                    </td>
+                                    <td>
+                                        <output
+                                            th:text="${#dates.format(toma.fecha, 'dd-MM-yyyy')}">fecha</output>
+                                    </td>
+                                    <td>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/verDetalleTomaServicio}"
+                                            th:if="${!session.usuario.tienePermisoEscritura('toma de servicio') or (session.usuario.tienePermisoEscritura('toma de servicio') and toma.estadoToma.idEstadoHistorico==2)}"
+                                            th:name="idTomaServicio"
+                                            th:value="${toma.idTomaServicio}">
+                                            <i class="far fa-eye"></i>
+                                        </button>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/modificarDetalleTomaServicio}"
+                                            th:if="${session.usuario.tienePermisoEscritura('toma de servicio') and toma.estadoToma.idEstadoHistorico!=2}"
+                                            th:name="idTomaServicio"
+                                            th:value="${toma.idTomaServicio}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div
+                            th:replace="utiles :: paginacion('paginacionTablaBuscadorCompaniaTomaServicio', ${tomaServicios},'page')">...</div>
+                        <div class="botoneraNuevo">
+                            <button type="submit"
+                                class="btn btn-lg btn-primary btn-block mi-boton"
+                                th:formaction="@{/nuevoDetalleTomaServicio}"
+                                th:if="${session.usuario.tienePermisoEscritura('toma de servicio')}"
+                                th:formmethod="GET"
+                                th:text="#{boton.nuevo}">Nuevo</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

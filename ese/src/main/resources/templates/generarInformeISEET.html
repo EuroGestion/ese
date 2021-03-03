@@ -1,0 +1,141 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.informe.iso}">Acceso a eSe</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page" th:text="#{titulo.informe.iseet}">Acceso</h1>
+                <form action="#" th:object="${generarInformeISEET}"
+                    id="generarInformeISEET" th:method="post"
+                    th:action="@{/generarInformeISEET}" class="my-box">
+                    <input type="hidden" th:field="*{pagina}">
+                    <input type="hidden" th:field="*{idISEET}">
+                    <input type="hidden" th:field="*{isLectura}">
+                    <input type="hidden" th:field="*{isFirmado}">
+                    <input type="hidden" th:field="*{paginaVuelta}">
+                    <input type="hidden" th:field="*{idEstadoISEET}">
+                    <input type="hidden"
+                        th:field="*{idFirmaInspectorSeguridad}">
+                    <input type="hidden"
+                        th:field="*{idFirmaResponsableSeguridad}">
+                    <input type="hidden" th:field="*{idPersonal}">
+                    <div
+                        th:replace="fragmentoISEET01 :: fragmentoIseet1">...</div>
+                    <div
+                        th:replace="fragmentoISEET02 :: fragmentoIseet2">...</div>
+                    <div
+                        th:replace="fragmentoISEET03 :: fragmentoIseet3">...</div>
+                    <div
+                        th:replace="fragmentoISEET04 :: fragmentoIseet4">...</div>
+                    <div
+                        th:replace="fragmentoISEET05 :: fragmentoIseet5">...</div>
+                    <div
+                        th:replace="fragmentoISEET06 :: fragmentoIseet6">...</div>
+                    <div
+                        th:replace="fragmentoISEET07 :: fragmentoIseet7">...</div>
+                    <div
+                        th:replace="fragmentoISEET08 :: fragmentoIseet8">...</div>
+                    <div
+                        th:replace="fragmentoISEET09 :: fragmentoIseet9">...</div>
+                    <div
+                        th:replace="fragmentoISEET10 :: fragmentoIseet10">...</div>
+                    <div
+                        th:replace="fragmentoISEET11 :: fragmentoIseet11">...</div>
+                    <div
+                        th:replace="fragmentoISEET12 :: fragmentoIseet12">...</div>
+                    <div
+                        th:replace="fragmentoISEET13 :: fragmentoIseet13">...</div>
+                    <div
+                        th:replace="fragmentoISEET14 :: fragmentoIseet14">...</div>
+                    <div
+                        th:replace="fragmentoISEET15 :: fragmentoIseet15">...</div>
+                    <div
+                        th:replace="fragmentoISEET16 :: fragmentoIseet16">...</div>
+                    <div
+                        th:replace="fragmentoISEET17 :: fragmentoIseet17">...</div>
+                    <div>
+                        <input type="submit"
+                            th:value="#{boton.ver.planificacion}"
+                            th:formaction="@{/verEvidenciaPlanificarInformeISEET}"
+                            value="Ver planificacion"
+                            th:formtarget="_blank" formnovalidate
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                        <input type="submit"
+                            th:value="#{boton.ver.ficha}"
+                            th:if="*{idEstadoISEET==5}"
+                            th:formaction="@{/verEvidenciaGenerarInformeISEET}"
+                            value="Ver ficha" th:formtarget="_blank"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                        <input type="submit"
+                            th:value="#{boton.anterior}"
+                            th:if="*{!pagina.equals('1')}"
+                            th:formaction="@{/paginaAnteriorISEET}"
+                            formnovalidate value="anterior"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                        <input type="submit"
+                            th:value="#{boton.siguiente}"
+                            th:if="*{!pagina.equals('17')}"
+                            th:formaction="@{/paginaSiguienteISEET}"
+                            value="Siguiente"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                        <input type="submit" th:value="#{boton.guardar}"
+                            th:if="*{pagina.equals('17') and !isLectura and idEstadoISEET!=5}"
+                            th:formaction="@{/guardarGenerarInformeISEET}"
+                            value="Guardar"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                        <input type="submit" th:value="#{boton.volver}"
+                            th:formaction="@{/volverGenerarInformeISEET}"
+                            value="Volver" formnovalidate
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </div>
+                    <div style="clear: both; margin-top: 100px;">
+                        <h5
+                            th:text="#{formulario.informe.iseet.pie.pagina.notas}"></h5>
+                        <p
+                            th:text="#{formulario.informe.iseet.pie.pagina.1}"></p>
+                        <ul>
+                            <li
+                                th:text="#{formulario.informe.iseet.pie.pagina.lista.1}"></li>
+                            <li
+                                th:text="#{formulario.informe.iseet.pie.pagina.lista.2}"></li>
+                            <li
+                                th:text="#{formulario.informe.iseet.pie.pagina.lista.3}"></li>
+                            <li
+                                th:text="#{formulario.informe.iseet.pie.pagina.lista.4}"></li>
+                            <li
+                                th:text="#{formulario.informe.iseet.pie.pagina.lista.5}"></li>
+                        </ul>
+                        <p
+                            th:text="#{formulario.informe.iseet.pie.pagina.2}"></p>
+                        <p
+                            th:text="#{formulario.informe.iseet.pie.pagina.3}"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,503 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.informe.anomalia}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.informe.anomalia}">Buscador</h1>
+                <div style="width: 100%">
+                    <form action="#" class="my-box"
+                        th:object="${crearInformeAnomalias}"
+                        id="crearInformeAnomalias" th:method="post"
+                        th:action="@{/crearInformeAnomalias}"
+                        enctype="multipart/form-data">
+                        <input type="hidden"
+                            th:field="*{idInformeAnomalias}">
+                        <input type="hidden"
+                            th:field="*{anexosInformesAnomalias}">
+                        <input type="hidden"
+                            th:field="*{anomaliasInformesAnomalias}">
+                        <input type="hidden" th:field="*{lectura}">
+                        <input type="hidden"
+                            th:field="*{idTipoInspeccion}">
+                        <input type="hidden" th:field="*{idPersonal}">
+                        <input type="hidden" th:field="*{paginaVuelta}">
+                        <input type="hidden" th:field="*{firmado}">
+                        <input type="hidden"
+                            th:field="*{idFirmaInspectorSeguridad}">
+                        <input type="hidden"
+                            th:field="*{idFirmaResponsableSeguridad}">
+                        <input type="hidden"
+                            th:field="*{tieneEvidencia}">
+                        <input type="hidden" th:field="*{pageAnexos}">
+                        <input type="hidden" th:field="*{pageAnomalias}">
+                        <table class="table-grid">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <label for="numeroInspeccion"
+                                            th:text="#{formulario.numero.inspeccion}">Nº
+                                            Inspeccion:</label>
+                                        <input class="form-control"
+                                            type="text"
+                                            th:field="*{numeroInspeccion}"
+                                            readonly />
+                                    </td>
+                                    <td>
+                                        <label for="fechaInspeccion"
+                                            th:text="#{formulario.fecha}">Fecha:</label>
+                                        <input class="form-control"
+                                            type="text"
+                                            id="fechaInspeccion"
+                                            name="fechaInspeccion"
+                                            th:value="*{fechaInspeccion}"
+                                            readonly />
+                                    </td>
+                                    <td>
+                                        <label for="nombreInspector"
+                                            th:text="#{formulario.inspector}">Inspector:</label>
+                                        <input class="form-control"
+                                            type="text"
+                                            th:field="*{nombreInspector}"
+                                            readonly />
+                                    </td>
+                                    <td>
+                                        <label for="codigoInforme"
+                                            th:text="#{formulario.codigo.informe}">codigo
+                                            Informe:</label>
+                                        <input class="form-control"
+                                            type="text"
+                                            th:readonly="*{lectura or firmado}"
+                                            th:field="*{codigoInforme}" />
+                                    </td>
+                                </tr>
+                                <tr class="error"
+                                    th:if="${errorCodigoInforme}">
+                                    <td colspan="3">
+                                        <span>
+                                            <i
+                                                class="fa fa-times-circle"></i>
+                                            <span
+                                                th:text="${errorCodigoInforme}"></span>
+                                            <br />
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <h3
+                                            th:text="#{formulario.titulo.datos.inspeccion}">Datos
+                                            de la Inspeccion</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <label
+                                            for="descripcionDatosInspeccion"
+                                            th:text="#{formulario.descripcion}">Descripcion:</label>
+                                        <textarea class="form-control"
+                                            rows="4" cols="50"
+                                            maxlength="200"
+                                            style="resize: none"
+                                            th:readonly="*{lectura or firmado}"
+                                            th:field="*{descripcionDatosInspeccion}"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <label
+                                            for="observacionesnDatosInspeccion"
+                                            th:text="#{formulario.observaciones}">Observaciones:</label>
+                                        <textarea class="form-control"
+                                            rows="4" cols="50"
+                                            maxlength="200"
+                                            style="resize: none"
+                                            th:readonly="*{lectura or firmado}"
+                                            th:field="*{observacionesDatosInspeccion}"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <h3
+                                            th:text="#{formulario.titulo.medidas.cautelares}">Medidas
+                                            cautelares</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <textarea class="form-control"
+                                            rows="4" cols="50"
+                                            maxlength="200"
+                                            style="resize: none"
+                                            th:readonly="*{lectura or firmado}"
+                                            th:field="*{medidasCautelares}"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <h3
+                                            th:text="#{formulario.titulo.documentos.anexos}">Documentos
+                                            anexos:</h3>
+                                    </td>
+                                </tr>
+                                <tr th:if="*{!lectura and !firmado}">
+                                    <td>
+                                        <label for="evidencia"
+                                            th:text="#{formulario.evidencia}">Evidencia:</label>
+                                        <input class="form-control-file"
+                                            type="file"
+                                            th:field="*{evidencia}"
+                                            accept=".jpg , .jpeg,.pdf">
+                                    </td>
+                                    <td colspan="2">
+                                        <label
+                                            for="descripcionEvidencia"
+                                            th:text="#{formulario.descripcion}">Descripcion:</label>
+                                        <input class="form-control"
+                                            type="text"
+                                            th:field="*{descripcionEvidencia}" />
+                                    </td>
+                                    <td>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            onclick="return validarSubidaArchivo('evidencia',true,'descripcionEvidencia')"
+                                            th:formaction="@{/anadirEvidenciaInformeAnomalia}">
+                                            Añadir</button>
+                                    </td>
+                                </tr>
+                                <tr class="error"
+                                    th:if="${erroresEvidencia}">
+                                    <td colspan="4">
+                                        <span
+                                            th:each="errorEvidencia :${erroresEvidencia}">
+                                            <i
+                                                class="fa fa-times-circle"></i>
+                                            <span
+                                                th:text="${errorEvidencia}"></span>
+                                            <br />
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <table class="table-paginacion">
+                                            <thead>
+                                                <tr>
+                                                    <th
+                                                        th:text="#{tabla.descripcion}">descripcion</th>
+                                                    <th
+                                                        th:text="#{tabla.ver}">Ver</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr
+                                                    th:each="anexo :${listAnexosInformesAnomalias}"
+                                                    th:class="${anexoStat.odd}? 'odd':'even'">
+                                                    <td>
+                                                        <output
+                                                            th:text="${anexo.descripcion}">descripcion</output>
+                                                    </td>
+                                                    <td>
+                                                        <button
+                                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                                            type="submit"
+                                                            onclick="limpiarCamposValidacionJS(['descripcionEvidencia','evidencia'])"
+                                                            th:formaction="@{/verEvidenciaInformeAnomalia}"
+                                                            th:name="idAnexo"
+                                                            th:formtarget="_blank"
+                                                            th:value="${anexo.idAnexoInformeAnomalia}">
+                                                            <i
+                                                                class="far fa-eye"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div
+                                            th:replace="utiles :: paginacion('paginacionTablaCrearInformeAnomaliaAnexos', ${listAnexosInformesAnomalias},'pageAnexos')">...</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <h3
+                                            th:text="#{formulario.titulo.anomalias}">Anomalias:</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td>
+                                        <label
+                                            for="descripcionEvidencia"
+                                            th:text="#{formulario.anomalias.abiertas}">Abiertas:</label>
+                                        <input class="form-control"
+                                            type="text"
+                                            th:field="*{anomaliasAbiertas}"
+                                            readonly />
+                                    </td>
+                                    <td>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:if="*{!lectura and !firmado}"
+                                            onclick="limpiarCamposValidacionJS(['descripcionEvidencia','evidencia'])"
+                                            th:formaction="@{/addAnomalia}">
+                                            Añadir</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <table class="table-paginacion">
+                                            <thead>
+                                                <tr>
+                                                    <th
+                                                        th:text="#{tabla.tipo}">Tipo</th>
+                                                    <th
+                                                        th:text="#{tabla.estado}">Estado</th>
+                                                    <th
+                                                        th:text="#{tabla.fecha.apertura}">Fecha
+                                                        apertura</th>
+                                                    <th
+                                                        th:text="#{tabla.ver.modificar}">Ver/modificar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr
+                                                    th:each="anomalia :${listAnomaliasInformesAnomalias}"
+                                                    th:class="${anomaliaStat.odd}? 'odd':'even'">
+                                                    <td>
+                                                        <output
+                                                            th:text="${anomalia.tipoAnomalia.valor}">tipo
+                                                            anomalia</output>
+                                                    </td>
+                                                    <td>
+                                                        <output
+                                                            th:text="${anomalia.estadoAnomalia.valor}">estado
+                                                            anomalia</output>
+                                                    </td>
+                                                    <td>
+                                                        <output
+                                                            th:text="${#dates.format(anomalia.fechaApertura, 'dd-MM-yyyy')}">Fecha
+                                                            apertura</output>
+                                                    </td>
+                                                    <td>
+                                                        <button
+                                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                                            type="submit"
+                                                            th:formaction="@{/verAnomaliaInformeAnomalia}"
+                                                            th:name="idAnomalia"
+                                                            th:if="${crearInformeAnomalias.lectura or (!crearInformeAnomalias.lectura and anomalia.estadoAnomalia.idEstadoAnomalia ==2 )or crearInformeAnomalias.firmado }"
+                                                            onclick="limpiarCamposValidacionJS(['descripcionEvidencia','evidencia'])"
+                                                            th:value="${anomalia.idAnomalia}">
+                                                            <i
+                                                                class="far fa-eye"></i>
+                                                        </button>
+                                                        <button
+                                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                                            type="submit"
+                                                            th:formaction="@{/modificarAnomaliaInformeAnomalia}"
+                                                            th:if="${!crearInformeAnomalias.lectura and anomalia.estadoAnomalia.idEstadoAnomalia !=2 and !crearInformeAnomalias.firmado}"
+                                                            th:name="idAnomalia"
+                                                            onclick="limpiarCamposValidacionJS(['descripcionEvidencia','evidencia'])"
+                                                            th:value="${anomalia.idAnomalia}">
+                                                            <i
+                                                                class="fas fa-edit"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div
+                                            th:replace="utiles :: paginacion('paginacionTablaCrearInformeAnomaliaAnomalias', ${listAnomaliasInformesAnomalias},'pageAnomalias')">...</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <h3 class="title-page"
+                                            th:text="#{titulo.informe.iseet.firmas}">Firmas</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h4 class="title-page"
+                                            th:text="#{formulario.informe.iseet.firmas.inspector.seguridad}">inspector
+                                            de seguridad</h4>
+                                    </td>
+                                    <td colspan="2">
+                                        <h4 class="title-page"
+                                            th:text="#{formulario.informe.iseet.firmas.responsable.seguridad}">responsable
+                                            de seguridad</h4>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <select class="form-control"
+                                            style="pointer-events: none;"
+                                            readonly
+                                            th:if="*{idFirmaInspectorSeguridad!=null}"
+                                            th:field="*{idFirmaInspectorSeguridad}">
+                                            <option
+                                                th:each="var : ${personal}"
+                                                th:value="${var.idPersonal}"
+                                                th:text="${var.nombreCompleto}"></option>
+                                        </select>
+                                        <!-- libro de normas del maquinista (LNM) -->
+                                        <label
+                                            for="nombreInspectorSeguridad"
+                                            class="labelColumna"
+                                            th:if="*{idFirmaInspectorSeguridad==null}"
+                                            th:text="#{formulario.nombre}">nombre:</label>
+                                        <input type="text"
+                                            th:field="*{nombreInspectorSeguridad}"
+                                            th:if="*{idFirmaInspectorSeguridad==null}"
+                                            class="form-control"
+                                            style="width: 100%;"
+                                            th:readonly="*{lectura}" />
+                                    </td>
+                                    <td colspan="2">
+                                        <select class="form-control"
+                                            style="pointer-events: none;"
+                                            readonly
+                                            th:if="*{idFirmaResponsableSeguridad!=null}"
+                                            th:field="*{idFirmaResponsableSeguridad}">
+                                            <option
+                                                th:each="var : ${personal}"
+                                                th:value="${var.idPersonal}"
+                                                th:text="${var.nombreCompleto}"></option>
+                                        </select>
+                                        <!-- libro de normas del maquinista (LNM) -->
+                                        <label
+                                            for="nombreResponsableSeguridad"
+                                            class="labelColumna"
+                                            th:if="*{idFirmaResponsableSeguridad==null}"
+                                            th:text="#{formulario.nombre}">nombre:</label>
+                                        <input type="text"
+                                            th:if="*{idFirmaResponsableSeguridad==null}"
+                                            th:field="*{nombreResponsableSeguridad}"
+                                            class="form-control"
+                                            style="width: 100%;"
+                                            th:readonly="*{lectura}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <!-- libro de normas del maquinista (LNM) -->
+                                        <label
+                                            for="passwordInspectorSeguridad"
+                                            class="labelColumna"
+                                            th:if="*{idFirmaInspectorSeguridad==null}"
+                                            th:text="#{formulario.password}">contraseña:</label>
+                                        <input type="password"
+                                            th:field="*{passwordInspectorSeguridad}"
+                                            class="form-control"
+                                            style="width: 100%;"
+                                            th:if="*{idFirmaInspectorSeguridad==null}"
+                                            th:readonly="*{lectura}" />
+                                    </td>
+                                    <td colspan="2">
+                                        <label
+                                            for="passwordResponsableSeguridad"
+                                            class="labelColumna"
+                                            th:if="*{idFirmaResponsableSeguridad==null}"
+                                            th:text="#{formulario.password}">contraseña:</label>
+                                        <input type="password"
+                                            th:if="*{idFirmaResponsableSeguridad==null}"
+                                            th:field="*{passwordResponsableSeguridad}"
+                                            class="form-control"
+                                            style="width: 100%;"
+                                            th:readonly="*{lectura}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <input type="submit"
+                                            th:value="#{boton.firmar}"
+                                            value="firmar"
+                                            th:if="*{idFirmaInspectorSeguridad==null}"
+                                            th:formaction="@{/firmaCrearInformeAnomaliasInspectorSeguridad}"
+                                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                                    </td>
+                                    <td colspan="2">
+                                        <input type="submit"
+                                            th:value="#{boton.firmar}"
+                                            value="firmar"
+                                            th:if="*{idFirmaResponsableSeguridad==null}"
+                                            th:formaction="@{/firmaCrearInformeAnomaliasResponsableSeguridad}"
+                                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td colspan="2"
+                                        style="text-align: center">
+                                        <input type="submit"
+                                            th:value="#{boton.ver}"
+                                            value="ver"
+                                            th:formtarget="_blank"
+                                            th:if="*{tieneEvidencia}"
+                                            th:formaction="@{/verEvidenciaCrearInformeAnomalias}"
+                                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:if="*{!lectura and !firmado}"
+                                            onclick="limpiarCamposValidacionJS(['descripcionEvidencia','evidencia'])"
+                                            th:formaction="@{/guardarAnomaliaInformeAnomalia}">Guardar</button>
+                                    </td>
+                                    <td>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit" formnovalidate
+                                            th:formaction="@{/volverInformeAnomalia}">Volver</button>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

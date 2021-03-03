@@ -1,0 +1,110 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoIsmp5" th:hidden="*{!pagina.equals('5')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="4">
+                        <h2 class="title-page"
+                            th:text="#{titulo.informe.ismp.prescripcion.circulacion}">prescripcion
+                            circulacion</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.ismp.prescripcion.terminal.origen}">terminal
+                            de origen</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.reconocimientos}">reconocimiento</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.si.no}">
+                            si/no</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.observaciones}">
+                            observaciones</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label for="prescripcionNotificaPersonal"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.prescipcion.notifica.personal}">se
+                            notifica al personal:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="checkbox"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{prescripcionNotificaPersonal}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{prescripcionNotificaPersonalObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label for="prescripcionCorrespondeTexto"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.prescipcion.corresponde.texto}">corresponde
+                            el texto:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="checkbox"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{prescripcionCorrespondeTexto}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{prescripcionCorrespondeTextoObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h2 class="title-page"
+                            th:text="#{titulo.informe.ismp.medidas.cautelares}">medidas
+                            cautelares</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{medidasCautelares}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h2 class="title-page"
+                            th:text="#{titulo.informe.ismp.lista.documentos.anexos}">documentos
+                            anexos</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{listaAnexos}"></textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

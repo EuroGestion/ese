@@ -1,0 +1,245 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoIso3" th:hidden="*{!pagina.equals('3')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="4">
+                        <!-- suficiente practica e idoneidad -->
+                        <label class="labelColumna"
+                            th:text="#{formulario.idoneidad}">Tiene
+                            la suficiente práctica e idoneidad durante
+                            las operaciones:</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td ></td>
+                    <td >
+                        <!-- verificado -->
+                        <label th:text="#{formulario.verificado}">Verificado</label>
+                    </td>
+                    <td colspan="2">
+                        <!-- observaciones tabla -->
+                        <label th:text="#{formulario.observaciones}">Observaciones</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- antes del servicio -->
+                        <label for="verificadoAntesServicio"
+                            class="labelColumna"
+                            th:text="#{formulario.antes.servicio}">Antes
+                            del servicio:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('3') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{verificadoAntesServicio}">
+                            <option th:each="var : ${verificaciones}"
+                                th:value="${var.idEstadoVerificacion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesAntesServicio}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- tras el servicio -->
+                        <label for="verificadoTrasServicio"
+                            class="labelColumna"
+                            th:text="#{formulario.tras.servicio}">Tras
+                            el servicio:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('3') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{verificadoTrasServicio}">
+                            <option th:each="var : ${verificaciones}"
+                                th:value="${var.idEstadoVerificacion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesTrasServicio}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- en el relevo -->
+                        <label for="verificadoRelevo"
+                            class="labelColumna"
+                            th:text="#{formulario.relevo}">En el
+                            relevo:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('3') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{verificadoRelevo}">
+                            <option th:each="var : ${verificaciones}"
+                                th:value="${var.idEstadoVerificacion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesRelevo}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <!-- observaciones -->
+                        <label for="observacionesIdoneidad"
+                            th:text="#{formulario.observaciones}">Observaciones:</label>
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesIdoneidad}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <!-- medidas cautelares -->
+                        <label for="observacionesCautelares"
+                            th:text="#{formulario.medidas.cautelares}">Medidas
+                            cautelares adoptadas:</label>
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesMedidasCautelares}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <!-- documentos anexos -->
+                        <label for="observacionesAnexos"
+                            th:text="#{formulario.anexos}">Documentos
+                            anexos:</label>
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesDocumentoAnexo}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.iseet.firmas}">Firmas</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.iseet.firmas.inspector.seguridad}">inspector
+                            de seguridad</h4>
+                    </td>
+                    <td colspan="2">
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.iseet.firmas.responsable.seguridad}">responsable
+                            de seguridad</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <select class="form-control"
+                            style="pointer-events: none;" readonly
+                            th:if="*{idFirmaInspectorSeguridad!=null}"
+                            th:field="*{idFirmaInspectorSeguridad}">
+                            <option th:each="var : ${personal}"
+                                th:value="${var.idPersonal}"
+                                th:text="${var.nombreCompleto}"></option>
+                        </select>
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="nombreInspectorSeguridad"
+                            class="labelColumna"
+                            th:if="*{idFirmaInspectorSeguridad==null and idEstadoISO==2}"
+                            th:text="#{formulario.nombre}">nombre:</label>
+                        <input type="text"
+                            th:field="*{nombreInspectorSeguridad}"
+                            th:if="*{idFirmaInspectorSeguridad==null and idEstadoISO==2}"
+                            class="form-control" style="width: 100%;"
+                            th:readonly="*{isLectura}" />
+                    </td>
+                    <td colspan="2">
+                        <select class="form-control"
+                            style="pointer-events: none;" readonly
+                            th:if="*{idFirmaResponsableSeguridad!=null}"
+                            th:field="*{idFirmaResponsableSeguridad}">
+                            <option th:each="var : ${personal}"
+                                th:value="${var.idPersonal}"
+                                th:text="${var.nombreCompleto}"></option>
+                        </select>
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="nombreResponsableSeguridad"
+                            class="labelColumna"
+                            th:if="*{idFirmaResponsableSeguridad==null and idEstadoISO==2}"
+                            th:text="#{formulario.nombre}">nombre:</label>
+                        <input type="text"
+                            th:if="*{idFirmaResponsableSeguridad==null and idEstadoISO==2}"
+                            th:field="*{nombreResponsableSeguridad}"
+                            class="form-control" style="width: 100%;"
+                            th:readonly="*{isLectura}"  />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="passwordInspectorSeguridad"
+                            class="labelColumna"
+                            th:if="*{idFirmaInspectorSeguridad==null and idEstadoISO==2}"
+                            th:text="#{formulario.password}">contraseña:</label>
+                        <input type="password"
+                            th:field="*{passwordInspectorSeguridad}"
+                            class="form-control" style="width: 100%;"
+                            th:if="*{idFirmaInspectorSeguridad==null and idEstadoISO==2}"
+                            th:readonly="*{isLectura}"  />
+                    </td>
+                    <td colspan="2">
+                        <label for="passwordResponsableSeguridad"
+                            class="labelColumna"
+                            th:if="*{idFirmaResponsableSeguridad==null and idEstadoISO==2}"
+                            th:text="#{formulario.password}">contraseña:</label>
+                        <input type="password"
+                            th:if="*{idFirmaResponsableSeguridad==null and idEstadoISO==2}"
+                            th:field="*{passwordResponsableSeguridad}"
+                            class="form-control" style="width: 100%;"
+                            th:readonly="*{isLectura}"  />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" th:value="#{boton.firmar}"
+                            value="firmar"
+                            th:if="*{idFirmaInspectorSeguridad==null and idEstadoISO==2}"
+                            th:formaction="@{/firmaISOInspectorSeguridad}"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                    <td colspan="2">
+                        <input type="submit" th:value="#{boton.firmar}"
+                            value="firmar"
+                            th:if="*{idFirmaResponsableSeguridad==null and idEstadoISO==2}"
+                            th:formaction="@{/firmaISOResponsableSeguridad}"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

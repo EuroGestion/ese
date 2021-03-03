@@ -1,0 +1,560 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.reporte.fin.servicio}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.reporte.fin.servicio}">Detalle
+                    Tren</h1>
+                <form action="#" th:object="${reporteFinServicio}"
+                    class="my-box" id="reporteFinServicio"
+                    th:method="post" th:action="@{/reporteFinServicio}"
+                    enctype="multipart/form-data">
+                    <input type="hidden"
+                        th:field="*{idReporteFinServicio}" />
+                    <input type="hidden" th:field="*{lectura}" />
+                    <input type="hidden"
+                        th:field="*{idEstadoReporteFinServicio}" />
+                    <input type="hidden" th:field="*{paginaVuelta}" />
+                    <input type="hidden" th:field="*{idPersonal}" />
+                    <table class="table-grid">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="fecha"
+                                        th:text="#{formulario.fecha}">fecha:</label>
+                                    <input type="date"
+                                        th:field="*{fecha}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}"
+                                        required />
+                                </td>
+                                <td>
+                                    <label for="nveLocomotora"
+                                        th:text="#{formulario.nve.locomotora}">numero
+                                        tren:</label>
+                                    <input type="text"
+                                        th:field="*{nveLocomotora}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}"
+                                        required />
+                                </td>
+                                <td>
+                                    <label for="idTren"
+                                        th:text="#{formulario.tren}">Tren:</label>
+                                    <select class="form-control"
+                                        th:field="*{idTren}"
+                                        th:style="*{((idEstadoReporteFinServicio== 2) or lectura)?'pointer-events: none;':''}"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}"
+                                        required>
+                                        <option
+                                            th:each="var : ${trenes}"
+                                            th:value="${var.idTren}"
+                                            th:text="${var.numero}">Tramo</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="practico"
+                                        th:text="#{formulario.practico}">practico:</label>
+                                    <input type="checkbox"
+                                        th:field="*{practico}"
+                                        th:style="*{((idEstadoReporteFinServicio== 2) or lectura)?'pointer-events: none;':''}"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="idMaquinistaPredecesor"
+                                        th:text="#{formulario.releva.a}">Releva
+                                        a:</label>
+                                    <select class="form-control"
+                                        th:field="*{idMaquinistaPredecesor}"
+                                        th:style="*{((idEstadoReporteFinServicio== 2) or lectura)?'pointer-events: none;':''}"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}">
+                                        <option
+                                            th:each="var : ${maquinistas}"
+                                            th:value="${var.idPersonal}"
+                                            th:text="${var.nombreCompleto}">maquinista</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="idMaquinistaSucesor"
+                                        th:text="#{formulario.relevado.por}">Relevado
+                                        por:</label>
+                                    <select class="form-control"
+                                        th:field="*{idMaquinistaSucesor}"
+                                        th:style="*{((idEstadoReporteFinServicio== 2) or lectura)?'pointer-events: none;':''}"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}">
+                                        <option
+                                            th:each="var : ${maquinistas}"
+                                            th:value="${var.idPersonal}"
+                                            th:text="${var.nombreCompleto}">maquinista</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="idPuntoOrigen"
+                                        th:text="#{formulario.punto.origen}">Punto
+                                        origen:</label>
+                                    <select class="form-control"
+                                        th:field="*{idPuntoOrigen}"
+                                        th:style="*{((idEstadoReporteFinServicio== 2) or lectura)?'pointer-events: none;':''}"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}"
+                                        required>
+                                        <option
+                                            th:each="var : ${puntosInfraestructura}"
+                                            th:value="${var.idPuntoInfraestructura}"
+                                            th:text="${var.nombreLargo}">punto
+                                            origen</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="idPuntoFin"
+                                        th:text="#{formulario.punto.fin}">Punto
+                                        fin:</label>
+                                    <select class="form-control"
+                                        th:field="*{idPuntoFin}"
+                                        th:style="*{((idEstadoReporteFinServicio== 2) or lectura)?'pointer-events: none;':''}"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}"
+                                        required>
+                                        <option
+                                            th:each="var : ${puntosInfraestructura}"
+                                            th:value="${var.idPuntoInfraestructura}"
+                                            th:text="${var.nombreLargo}">punto
+                                            origen</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <h3
+                                        th:text="#{formulario.titulo.informacion.jornada}">Informacion
+                                        de la jornada</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="fechaToma"
+                                        th:text="#{formulario.fecha.toma}">fecha
+                                        toma:</label>
+                                    <input type="datetime-local"
+                                        th:field="*{fechaToma}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}"
+                                        required />
+                                </td>
+                                <td>
+                                    <label for="fechaSalida"
+                                        th:text="#{formulario.fecha.salida}">fecha
+                                        salida:</label>
+                                    <input type="datetime-local"
+                                        th:field="*{fechaSalida}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}"
+                                        required />
+                                </td>
+                                <td>
+                                    <label for="fechaLlegada"
+                                        th:text="#{formulario.fecha.llegada}">fecha
+                                        llegada:</label>
+                                    <input type="datetime-local"
+                                        th:field="*{fechaLlegada}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}"
+                                        required />
+                                </td>
+                                <td>
+                                    <label for="fechaDeje"
+                                        th:text="#{formulario.fecha.deje}">fecha
+                                        deje:</label>
+                                    <input type="datetime-local"
+                                        th:field="*{fechaDeje}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}"
+                                        required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label for="estacionRefrigerio"
+                                        th:text="#{formulario.estacion.refrigerio}">estacion
+                                        refrigerio:</label>
+                                    <input type="text"
+                                        th:field="*{estacionRefrigerio}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                                <td>
+                                    <label for="inicioRefrigerio"
+                                        th:text="#{formulario.inicio.refrigerio}">inicio
+                                        refrigerio:</label>
+                                    <input type="datetime-local"
+                                        th:field="*{inicioRefrigerio}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                                <td>
+                                    <label for="finRefrigerio"
+                                        th:text="#{formulario.fin.refrigerio}">fin
+                                        refrigerio:</label>
+                                    <input type="datetime-local"
+                                        th:field="*{finRefrigerio}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <h3
+                                        th:text="#{formulario.titulo.viaje.antes.servicio}">viaje
+                                        antes del servicio</h3>
+                                </td>
+                                <td colspan="2">
+                                    <h3
+                                        th:text="#{formulario.titulo.viaje.despues.servicio}">viaje
+                                        despues del servicio</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label
+                                        for="viajeAntesServicioInicio"
+                                        th:text="#{formulario.inicio}">inicio:</label>
+                                    <input type="text"
+                                        th:field="*{viajeAntesServicioInicio}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                                <td>
+                                    <label for="viajeAntesServicioFin"
+                                        th:text="#{formulario.fin}">fin:</label>
+                                    <input type="text"
+                                        th:field="*{viajeAntesServicioFin}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                                <td>
+                                    <label
+                                        for="viajeDespuesServicioInicio"
+                                        th:text="#{formulario.inicio}">inicio:</label>
+                                    <input type="text"
+                                        th:field="*{viajeDespuesServicioInicio}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                                <td>
+                                    <label for="viajeDespuesServicioFin"
+                                        th:text="#{formulario.fin}">fin:</label>
+                                    <input type="text"
+                                        th:field="*{viajeDespuesServicioFin}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <h3
+                                        th:text="#{formulario.titulo.informacion.locomotora}">informacion
+                                        de la locomotora</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <h4 th:text="#{formulario.em2000}">em2000</h4>
+                                </td>
+                                <td colspan="2">
+                                    <h4 th:text="#{formulario.teloc}">teloc</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="em2000Inicio"
+                                        th:text="#{formulario.inicio}">inicio:</label>
+                                    <input type="text"
+                                        th:field="*{em2000Inicio}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                                <td>
+                                    <label for="em2000Fin"
+                                        th:text="#{formulario.fin}">fin:</label>
+                                    <input type="text"
+                                        th:field="*{em2000Fin}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                                <td>
+                                    <label for="telocInicio"
+                                        th:text="#{formulario.inicio}">inicio:</label>
+                                    <input type="text"
+                                        th:field="*{telocInicio}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                                <td>
+                                    <label for="telocFin"
+                                        th:text="#{formulario.fin}">fin:</label>
+                                    <input type="text"
+                                        th:field="*{telocFin}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <h4
+                                        th:text="#{formulario.nivel.combustible}">nivel
+                                        de combustible</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="nivelCombustibleInicio"
+                                        th:text="#{formulario.inicio.porcentaje}">Inicio(%):</label>
+                                    <input type="number"
+                                        th:field="*{nivelCombustibleInicio}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                                <td>
+                                    <label for="nivelCombustibleFin"
+                                        th:text="#{formulario.fin.porcentaje}">Fin(%):</label>
+                                    <input type="number"
+                                        th:field="*{nivelCombustibleFin}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                                <td colspan="2">
+                                    <label for="estacionamiento"
+                                        th:text="#{formulario.estacionamiento}">Estacionamiento:</label>
+                                    <input type="text"
+                                        th:field="*{estacionamiento}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <h4 th:text="#{formulario.kw.hora}">kw/H</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="kwHFin"
+                                        th:text="#{formulario.fin}">Fin:</label>
+                                    <input type="number"
+                                        th:field="*{kwHFin}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                            <tr>
+                                <td colspan="4">
+                                    <h3
+                                        th:text="#{formulario.titulo.dotacion}">Dotacion</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label
+                                        for="senhalesColaReflectantes"
+                                        th:text="#{formulario.senhal.cola.reflectante}">Señales
+                                        de cola reflectantes:</label>
+                                    <input type="text"
+                                        th:field="*{senhalesColaReflectantes}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                                <td>
+                                    <label for="senhalesColaLuminosa"
+                                        th:text="#{formulario.senhal.cola.luminosa}">Señales
+                                        de colaluminosas:</label>
+                                    <input type="text"
+                                        th:field="*{senhalesColaLuminosa}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                                <td>
+                                    <label for="linternas"
+                                        th:text="#{formulario.linternas.dotacion}">Linternas
+                                        (luz blanca y roja):</label>
+                                    <input type="text"
+                                        th:field="*{linternas}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                                <td>
+                                    <label for="banderinesRojos"
+                                        th:text="#{formulario.banderines}">Banderines
+                                        rojos:</label>
+                                    <input type="text"
+                                        th:field="*{banderinesRojos}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="calcesAntideriva"
+                                        th:text="#{formulario.calces}">Calces
+                                        antideriva:</label>
+                                    <input type="text"
+                                        th:field="*{calcesAntideriva}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                                <td>
+                                    <label for="barraCortocircuito"
+                                        th:text="#{formulario.barras.cortocircuito}">Barras
+                                        de cortocircuito:</label>
+                                    <input type="text"
+                                        th:field="*{barraCortocircuito}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                                <td>
+                                    <label for="llaveTrinquete"
+                                        th:text="#{formulario.llave.trinquete}">Llave
+                                        deltrinquete:</label>
+                                    <input type="text"
+                                        th:field="*{llaveTrinquete}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                                <td>
+                                    <label for="dotacionOtros"
+                                        th:text="#{formulario.otros}">Otros:</label>
+                                    <input type="text"
+                                        th:field="*{dotacionOtros}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <h3
+                                        th:text="#{formulario.titulo.repostaje}">Repostaje</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label for="estacionRepostaje"
+                                        th:text="#{formulario.estacion}">Estacion:</label>
+                                    <input type="text"
+                                        th:field="*{estacionRepostaje}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                                <td>
+                                    <label for="litrosRepostaje"
+                                        th:text="#{formulario.litros}">Litros:</label>
+                                    <input type="number"
+                                        th:field="*{litrosRepostaje}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <label for="averiasLocomotora"
+                                        th:text="#{formulario.averias.locomotora}">Averias
+                                        en la locomotora:</label>
+                                    <textarea class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}"
+                                        rows="4" cols="125"
+                                        maxlength="500"
+                                        style="resize: none"
+                                        th:field="*{averiasLocomotora}"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <label
+                                        for="averiasMaterialRemolcado"
+                                        th:text="#{formulario.averias.material.remolcado}">Averias
+                                        en el material remolcado:</label>
+                                    <textarea class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}"
+                                        rows="4" cols="125"
+                                        maxlength="500"
+                                        style="resize: none"
+                                        th:field="*{averiasMaterialRemolcado}"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <label
+                                        for="otraInformacionRelevante"
+                                        th:text="#{formulario.otra.informacion.relevante}">Otra
+                                        informacion relevante:</label>
+                                    <textarea class="form-control"
+                                        th:readonly="*{(idEstadoReporteFinServicio== 2) or lectura}"
+                                        rows="4" cols="125"
+                                        maxlength="500"
+                                        style="resize: none"
+                                        th:field="*{otraInformacionRelevante}"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="submit"
+                                        th:value="#{boton.guardar}"
+                                        th:if="*{!lectura and idEstadoReporteFinServicio !=2}"
+                                        value="Guardar"
+                                        th:formaction="@{/guardarReporteFinServicio}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton" />
+                                </td>
+                                <td colspan="2">
+                                    <input type="submit"
+                                        th:value="#{boton.crear.ficha}"
+                                        th:if="*{!lectura and idEstadoReporteFinServicio==1}"
+                                        value="Crear ficha"
+                                        th:formaction="@{/generarFichaReporteFinServicio}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton" />
+                                    <input type="submit"
+                                        th:value="#{boton.ver.ficha}"
+                                        th:if="*{idEstadoReporteFinServicio ==2}"
+                                        value="Ver ficha"
+                                        th:formaction="@{/verFichaReporteFinServicio}"
+                                        th:formtarget="_blank"
+                                        class="btn btn-lg btn-primary btn-block mi-boton" />
+                                </td>
+                                <td>
+                                    <input type="submit"
+                                        th:formaction="@{/volverReporteFinServicio}"
+                                        th:value="#{boton.volver}"
+                                        formnovalidate value="Volver"
+                                        class="btn btn-lg btn-primary btn-block mi-boton" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

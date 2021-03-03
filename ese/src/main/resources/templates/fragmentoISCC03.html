@@ -1,0 +1,311 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoIscc3" th:hidden="*{!pagina.equals('3')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="3">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.iscc.utilizacion.vagones.elementos}"></h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="30%">
+                        <label
+                            th:text="#{formulario.informe.iscc.concepto}">concepto</label>
+                    </td>
+                    <td width="10%">
+                        <label
+                            th:text="#{formulario.informe.iscc.numero.vagones.verificados}">numero
+                            vagones</label>
+                    </td>
+                    <td width="60%">
+                        <label
+                            th:text="#{formulario.informe.iscc.observaciones}">Observaciones</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="vagonesSeConservan"
+                            th:text="#{formulario.informe.iscc.vagones.se.conservan}">vagones
+                            se conservan:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('3') and !isLectura}"
+                            th:field="*{vagonesSeConservan}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{vagonesSeConservanObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h4 class="title-page"
+                            th:text="#{formulario.titulo.informe.iscc.vagones.partes.moviles}"></h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="vagonesCerradosTechos"
+                            th:text="#{formulario.informe.iscc.vagones.cerrados.techos}">cerrados
+                            techos:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('3') and !isLectura}"
+                            th:field="*{vagonesCerradosTechos}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{vagonesCerradosTechosObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="vagonesCerradasPuertas"
+                            th:text="#{formulario.informe.iscc.vagones.cerradas.puertas}">cerradas
+                            puertas:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('3') and !isLectura}"
+                            th:field="*{vagonesCerradasPuertas}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{vagonesCerradasPuertasObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="vagonesCerradasTapas"
+                            th:text="#{formulario.informe.iscc.vagones.cerradas.tapas}">cerradas
+                            tapas:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('3') and !isLectura}"
+                            th:field="*{vagonesCerradasTapas}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{vagonesCerradasTapasObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="vagonesCerradasTapas"
+                            th:text="#{formulario.informe.iscc.vagones.cerradas.compuertas}">cerradas
+                            compuertas:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('3') and !isLectura}"
+                            th:field="*{vagonesCerradasCompuertas}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{vagonesCerradasCompuertasObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="vagonesCerradasValvulas"
+                            th:text="#{formulario.informe.iscc.vagones.cerradas.valvulas}">cerradas
+                            valvulas:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('3') and !isLectura}"
+                            th:field="*{vagonesCerradasValvulas}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{vagonesCerradasValvulasObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="vagonesBordesLevantados"
+                            th:text="#{formulario.informe.iscc.vagones.bordes.levantados}">bordes
+                            levantados:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('3') and !isLectura}"
+                            th:field="*{vagonesBordesLevantados}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{vagonesBordesLevantadosObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="vagonesBordesBajados"
+                            th:text="#{formulario.informe.iscc.vagones.bordes.bajados}">bordes
+                            bajados:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('3') and !isLectura}"
+                            th:field="*{vagonesBordesBajados}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{vagonesBordesBajadosObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="vagonesBordesBajadosInmoviles"
+                            th:text="#{formulario.informe.iscc.vagones.bordes.bajados.inmoviles}">bordes
+                            bajados inmoviles:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('3') and !isLectura}"
+                            th:field="*{vagonesBordesBajadosInmoviles}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{vagonesBordesBajadosInmovilesObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="vagonesVisiblesInscripciones"
+                            th:text="#{formulario.informe.iscc.vagones.visibles.inscripciones}">visibles
+                            inscripciones:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('3') and !isLectura}"
+                            th:field="*{vagonesVisiblesInscripciones}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{vagonesVisiblesInscripcionesObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="vagonesTelerosAmovibles"
+                            th:text="#{formulario.informe.iscc.vagones.teleros.amovibles}">teleros
+                            amovibles:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('3') and !isLectura}"
+                            th:field="*{vagonesTelerosAmovibles}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{vagonesTelerosAmoviblesObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="vagonesTelerosPivotantes"
+                            th:text="#{formulario.informe.iscc.vagones.teleros.pivotantes}">teleros
+                            pivotantes:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('3') and !isLectura}"
+                            th:field="*{vagonesTelerosPivotantes}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{vagonesTelerosPivotantesObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="vagonesTelerosPivotantesHorizontal"
+                            th:text="#{formulario.informe.iscc.vagones.teleros.pivotantes.horizontal}">teleros
+                            pivotantes horizontal:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('3') and !isLectura}"
+                            th:field="*{vagonesTelerosPivotantesHorizontal}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{vagonesTelerosPivotantesHorizontalObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="vagonesCadenasTeleros"
+                            th:text="#{formulario.informe.iscc.vagones.cadenas.teleros}">cadenas
+                            teleros:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('3') and !isLectura}"
+                            th:field="*{vagonesCadenasTeleros}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{vagonesCadenasTelerosObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="vagonesDispositivosTension"
+                            th:text="#{formulario.informe.iscc.vagones.dispositivos.tension}">dispositivos
+                            tension:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('3') and !isLectura}"
+                            th:field="*{vagonesDispositivosTension}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{vagonesDispositivosTensionObservaciones}" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

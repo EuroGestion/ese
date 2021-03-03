@@ -1,0 +1,94 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.informe.iscc}">Acceso a eSe</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page" th:text="#{titulo.informe.iscc}">Acceso</h1>
+                <form action="#" th:object="${generarInformeISCC}"
+                    id="generarInformeISCC" th:method="post"
+                    th:action="@{/generarInformeISCC}" class="my-box">
+                    <input type="hidden" th:field="*{pagina}">
+                    <input type="hidden" th:field="*{idISCC}">
+                    <input type="hidden" th:field="*{isLectura}">
+                    <input type="hidden" th:field="*{isFirmado}">
+                    <input type="hidden" th:field="*{paginaVuelta}">
+                    <input type="hidden" th:field="*{idEstadoISCC}">
+                    <input type="hidden"
+                        th:field="*{idFirmaInspectorSeguridad}">
+                    <input type="hidden"
+                        th:field="*{idFirmaResponsableSeguridad}">
+                    <div th:replace="fragmentoISCC01 :: fragmentoIscc1">...</div>
+                    <div th:replace="fragmentoISCC02 :: fragmentoIscc2">...</div>
+                    <div th:replace="fragmentoISCC03 :: fragmentoIscc3">...</div>
+                    <div th:replace="fragmentoISCC04 :: fragmentoIscc4">...</div>
+                    <div th:replace="fragmentoISCC05 :: fragmentoIscc5">...</div>
+                    <div th:replace="fragmentoISCC06 :: fragmentoIscc6">...</div>
+                    <div th:replace="fragmentoISCC07 :: fragmentoIscc7">...</div>
+                    <div th:replace="fragmentoISCC08 :: fragmentoIscc8">...</div>
+                    <div th:replace="fragmentoISCC09 :: fragmentoIscc9">...</div>
+                    <div th:replace="fragmentoISCC10 :: fragmentoIscc10">...</div>
+                    <div>
+                        <input type="submit"
+                            th:value="#{boton.ver.planificacion}"
+                            th:formaction="@{/verEvidenciaPlanificarInformeISCC}"
+                            value="Ver planificacion"
+                            th:formtarget="_blank" formnovalidate
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                        <input type="submit"
+                            th:value="#{boton.ver.ficha}"
+                            th:if="*{idEstadoISCC==5}"
+                            th:formaction="@{/verEvidenciaGenerarInformeISCC}"
+                            value="Ver ficha" th:formtarget="_blank"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                        <input type="submit"
+                            th:value="#{boton.anterior}"
+                            th:if="*{!pagina.equals('1')}"
+                            th:formaction="@{/paginaAnteriorISCC}"
+                            formnovalidate value="anterior"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                        <input type="submit"
+                            th:value="#{boton.siguiente}"
+                            th:if="*{!pagina.equals('10')}"
+                            th:formaction="@{/paginaSiguienteISCC}"
+                            value="Siguiente"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                        <input type="submit" th:value="#{boton.guardar}"
+                            th:if="*{pagina.equals('10') and !isLectura and idEstadoISCC!=5}"
+                            th:formaction="@{/guardarGenerarInformeISCC}"
+                            value="Guardar"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                        <input type="submit" th:value="#{boton.volver}"
+                            th:formaction="@{/volverGenerarInformeISCC}"
+                            value="Volver" formnovalidate
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

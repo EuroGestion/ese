@@ -1,0 +1,299 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.add.anomalia}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page" th:text="#{titulo.add.anomalia}">Añadir
+                    anomalia</h1>
+                <form action="#" class="my-box"
+                    th:object="${addAnomalia}" id="addAnomalia"
+                    th:method="post" th:action="@{/addAnomalia}"
+                    enctype="multipart/form-data">
+                    <input type="hidden" th:field="*{idAnomalia}" />
+                    <input type="hidden" th:field="*{idInformeAnomalia}" />
+                    <input type="hidden" th:field="*{codigoInforme}" />
+                    <input type="hidden" th:field="*{descripcion}" />
+                    <input type="hidden" th:field="*{observaciones}" />
+                    <input type="hidden" th:field="*{medidasCautelares}" />
+                    <input type="hidden" th:field="*{lectura}" />
+                    <input type="hidden"
+                        th:field="*{lecturaInformeAnomalia}" />
+                    <input type="hidden" th:field="*{idTipoInspeccion}" />
+                    <input type="hidden" th:field="*{idPersonal}">
+                    <input type="hidden" th:field="*{paginaVuelta}">
+                    <input type="hidden" th:field="*{page}">
+                    <table class="table-grid">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="numReferencia"
+                                        th:text="#{formulario.numero.referencia}">Numero
+                                        referencia:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{numReferencia}"
+                                        readonly />
+                                </td>
+                                <td>
+                                    <label for="fechaInspeccion"
+                                        th:text="#{formulario.fecha.inspeccion}">Fecha
+                                        inspeccion:</label>
+                                    <input class="form-control"
+                                        type="date" min="1900-01-01"
+                                        max="3000-01-01"
+                                        th:field="*{fechaInspeccion}"
+                                        readonly />
+                                </td>
+                                <td>
+                                    <label for="nombreInspector"
+                                        th:text="#{formulario.inspector.asignado}">Inspector
+                                        asignado:</label>
+                                    <input class="form-control"
+                                        th:field="*{nombreInspector}"
+                                        readonly />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <h3
+                                        th:text="#{formulario.titulo.datos.anomalia}">Datos
+                                        de la anomalia</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="idTipoAnomalia"
+                                        th:text="#{formulario.tipo.anomalia}">Tipo
+                                        de anomalia:</label>
+                                    <select class="form-control"
+                                        th:field="*{idTipoAnomalia}"
+                                        th:style="*{lectura ?'pointer-events: none;':''}"
+                                        th:readonly="*{lectura}"
+                                        required>
+                                        <option
+                                            th:each="var : ${tiposAnomalia}"
+                                            th:value="${var.idTipoAnomalia}"
+                                            th:text="${var.valor}">valorAnomalia</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="idEstado"
+                                        th:text="#{formulario.estado}">Estado:</label>
+                                    <select class="form-control"
+                                        th:field="*{idEstado}"
+                                        th:style="*{lectura ?'pointer-events: none;':''}"
+                                        th:readonly="*{lectura}"
+                                        required>
+                                        <option
+                                            th:each="var : ${estadosAnomalia}"
+                                            th:value="${var.idEstadoAnomalia}"
+                                            th:text="${var.valor}">valorEstadoAnomalia</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label for="descripcionAnomalia"
+                                        th:text="#{formulario.descripcion.anomalia}">Descripcion
+                                        de la situacion que produjo la
+                                        anomalia:</label>
+                                    <textarea class="form-control"
+                                        rows="4" cols="50"
+                                        maxlength="200"
+                                        style="resize: none"
+                                        th:readonly="*{lectura}"
+                                        th:field="*{descripcionAnomalia}"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label for="medidasAdoptadas"
+                                        th:text="#{formulario.medidas.adoptadas}">Medidas
+                                        adoptadas:</label>
+                                    <textarea class="form-control"
+                                        rows="4" cols="50"
+                                        maxlength="200"
+                                        style="resize: none"
+                                        th:readonly="*{lectura}"
+                                        th:field="*{medidasAdoptadas}"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label for="datosTecnicos"
+                                        th:text="#{formulario.datos.tecnicos}">Datos
+                                        tecnicos de la resolucion:</label>
+                                    <textarea class="form-control"
+                                        rows="4" cols="50"
+                                        maxlength="200"
+                                        style="resize: none"
+                                        th:readonly="*{lectura}"
+                                        th:field="*{datosTecnicos}"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label for="limitaciones"
+                                        th:text="#{formulario.limitaciones}">Limitaciones
+                                        a la explotacion:</label>
+                                    <textarea class="form-control"
+                                        rows="4" cols="50"
+                                        maxlength="200"
+                                        style="resize: none"
+                                        th:readonly="*{lectura}"
+                                        th:field="*{limitaciones}"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label for="controlSeguimiento"
+                                        th:text="#{formulario.control.seguimiento}">Control
+                                        y seguimiento de las medidas:</label>
+                                    <textarea class="form-control"
+                                        rows="4" cols="50"
+                                        maxlength="200"
+                                        style="resize: none"
+                                        th:readonly="*{lectura}"
+                                        th:field="*{controlSeguimiento}"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="idResponsable"
+                                        th:text="#{formulario.responsable}">Responsable:</label>
+                                    <select class="form-control"
+                                        th:field="*{idResponsable}"
+                                        th:style="*{lectura ?'pointer-events: none;':''}"
+                                        th:readonly="*{lectura}"
+                                        required>
+                                        <option
+                                            th:each="var : ${responsables}"
+                                            th:value="${var.idPersonal}"
+                                            th:text="${var.nombre}">responsable</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idAnomalia != null and idAnomalia !=''}">
+                                <td colspan="3">
+                                    <h3
+                                        th:text="#{formulario.titulo.documentos.anexos}">Documentos
+                                        anexos:</h3>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idAnomalia != null and idAnomalia !='' and !lectura}">
+                                <td>
+                                    <label for="evidencia"
+                                        th:text="#{formulario.evidencia}">Evidencia:</label>
+                                    <input class="form-control-file"
+                                        type="file"
+                                        th:field="*{evidencia}"
+                                        accept=".jpg , .jpeg,.pdf">
+                                </td>
+                                <td>
+                                    <label for="descripcionEvidencia"
+                                        th:text="#{formulario.descripcion}">Descripcion:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{descripcionEvidencia}" />
+                                </td>
+                                <td>
+                                    <button
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        onclick="return validarSubidaArchivo('evidencia',true,'descripcionEvidencia')"
+                                        type="submit"
+                                        th:formaction="@{/anadirEvidenciaAnomaliaInformeAnomalia}" th:text="#{boton.annadir}">Añadir</button>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idAnomalia != null and idAnomalia !=''}">
+                                <td colspan="3">
+                                    <table class="table-paginacion">
+                                        <thead>
+                                            <tr>
+                                                <th
+                                                    th:text="#{tabla.descripcion}">descripcion</th>
+                                                <th
+                                                    th:text="#{tabla.ver}">Ver</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                th:each="anexo :${listAnexosAnomalias}"
+                                                th:class="${anexoStat.odd}? 'odd':'even'">
+                                                <td>
+                                                    <output
+                                                        th:text="${anexo.descripcion}">descripcion</output>
+                                                </td>
+                                                <td>
+                                                    <button
+                                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                                        type="submit"
+                                                        th:formaction="@{/verEvidenciaAnomalia}"
+                                                        onclick="limpiarCamposValidacionJS(['evidencia','descripcionEvidencia'])"
+                                                        th:name="idAnexo"
+                                                        th:formtarget="_blank"
+                                                        th:value="${anexo.idAnexoAnomalia}">
+                                                        <i
+                                                            class="far fa-eye"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div
+                                        th:replace="utiles :: paginacion('paginacionTablaAddAnomalia', ${listAnexosAnomalias},'page')">...</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/aceptarAddAnomalia}"
+                                        th:if="*{!lectura}"
+                                        onclick="limpiarCamposValidacionJS(['evidencia','descripcionEvidencia'])"
+                                        th:value="#{boton.aceptar}" />
+                                </td>
+                                <td>
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/volverAnomaliaInformeAnomalia}"
+                                        th:value="#{boton.volver}"
+                                        formnovalidate />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

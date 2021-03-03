@@ -1,0 +1,170 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.habilitar}">Registro</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page" th:text="#{titulo.habilitar}">Habilitar</h1>
+                <form action="#" class="my-box"
+                    th:object="${habilitacion}" id="habilitar"
+                    th:method="post"
+                    th:action="@{/habilitarCertificadoComplementario}">
+                    <input type="hidden" th:field="*{idPersonal}" />
+                    <input type="hidden" th:field="*{idRevPsicofisica}" />
+                    <table class="table-grid">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="idTipoTitulo"
+                                        th:text="#{formulario.tipo.titulo}">Tipo
+                                        Titulo:</label>
+                                    <select class="form-control"
+                                        th:field="*{idTipoTitulo}"
+                                        required
+                                        onchange="cambiarTipoTitulo()">
+                                        <option
+                                            th:each="var : ${tiposTitulos}"
+                                            th:value="${var.idTipoTitulo}"
+                                            th:text="${var.valor}">Tipo
+                                            Titulo</option>
+                                    </select>
+                                </td>
+                                <td th:if="*{idTipoTitulo=='1'}">
+                                    <label for="numeroReferencia"
+                                        th:text="#{formulario.numero.referencia}">Numero
+                                        Referencia:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{numeroReferencia}" />
+                                </td>
+                                <td
+                                    th:if="*{idTipoTitulo=='1' or idTipoTitulo=='5'}">
+                                    <label for="fechaExpedicion"
+                                        th:text="#{formulario.fecha.expedicion}">Fecha
+                                        Expedicion:</label>
+                                    <input class="form-control"
+                                        type="date" min="1900-01-01"
+                                        max="3000-01-01" required
+                                        th:field="*{fechaExpedicion}" />
+                                </td>
+                                <td
+                                    th:if="*{idTipoTitulo!='1' and idTipoTitulo!='5'}">
+                                    <label for="numeroReferencia"
+                                        th:text="#{formulario.observaciones}">Observaciones:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{infoAdicional}" />
+                                </td>
+                                <td th:if="*{idTipoTitulo=='1'}">
+                                    <label for="categoriasConduccion"
+                                        th:text="#{formulario.categorias.conduccion}">Categorias
+                                        conduccion:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{categoriasConduccion}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td th:if="*{idTipoTitulo=='1'}">
+                                    <label for="notas"
+                                        th:text="#{formulario.notas}">Notas:</label>
+                                    <input class="form-control"
+                                        type="text" th:field="*{notas}" />
+                                </td>
+                                <td th:if="*{idTipoTitulo=='1'}">
+                                    <label for="infoAdicional"
+                                        th:text="#{formulario.informacion.adicional}">Informacion
+                                        adicional:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{infoAdicional}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="cursos"
+                                        th:text="#{formulario.cursos}">Cursos:</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <th:block
+                                        th:each="curso : ${cursos}"
+                                        th:required>
+                                        <input class="form-check-input"
+                                            type="checkbox" name="curso"
+                                            th:field="*{listaCursos}"
+                                            th:value="${curso.idCurso}"
+                                            th:text="${curso.tituloCurso}" />
+                                        <br />
+                                    </th:block>
+                                </td>
+                                <td>
+                                    <label th:text="${errorCheckbox}"></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="revPsicofisica"
+                                        th:text="#{formulario.revision.psicofisica}">Revision
+                                        psicofisica:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{revPsicofisica}"
+                                        readonly />
+                                </td>
+                                <td>
+                                    <label for="fechaRevPsicofisica"
+                                        th:text="#{formulario.fecha.revision.psicofisica}">Fecha
+                                        revision psicofisica:</label>
+                                    <input class="form-control"
+                                        type="date" min="1900-01-01"
+                                        max="3000-01-01"
+                                        th:field="*{fechaRevPsicofisica}"
+                                        readonly />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <input type="submit"
+                                        th:value="#{boton.habilitar}"
+                                        value="Habilitar"
+                                        class="btn btn-lg btn-primary btn-block mi-boton" />
+                                    <input type="submit"
+                                        th:value="#{boton.volver}"
+                                        th:formaction="@{/volverHabilitarPersonal}"
+                                        value="Volver" formnovalidate
+                                        class="btn btn-lg btn-primary btn-block mi-boton" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

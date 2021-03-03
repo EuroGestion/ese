@@ -1,0 +1,624 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.cad}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page" th:text="#{titulo.cad}">Control
+                    alcohol y drogas</h1>
+                <form action="#" th:object="${realizarCAD}"
+                    class="my-box" id="realizarCAD" th:method="post"
+                    th:action="@{/realizarCAD}">
+                    <input type="hidden" th:field="*{idInformeCAD}" />
+                    <input type="hidden" th:field="*{consentimiento}" />
+                    <input type="hidden"
+                        th:field="*{idEstadoInspeccion}" />
+                    <input type="hidden" th:field="*{paginaAnterior}" />
+                    <input type="hidden" th:field="*{limiteAlcohol}" />
+                    <input type="hidden" th:field="*{lectura}" />
+                    <input type="hidden" th:field="*{idPersonal}" />
+                    <table class="table-grid">
+                        <tbody>
+                            <tr
+                                th:if="*{idPersonalSometidoControl!=null}">
+                                <td class="form-group" colspan="3">
+                                    <label
+                                        for="idPersonalSometidoControl"
+                                        th:text="#{formulario.personal.sometido.control}">Personal
+                                        sometido al control</label>
+                                    <select class="form-control"
+                                        th:field="*{idPersonalSometidoControl}"
+                                        th:style="*{idEstadoInspeccion!=1 or lectura?'pointer-events: none;':''}"
+                                        th:readonly="*{idEstadoInspeccion!=1 or lectura}"
+                                        required>
+                                        <option
+                                            th:each="var : ${personales}"
+                                            th:value="${var.idPersonal}"
+                                            th:text="${var.nombreCompleto}">Personal</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idPersonalSometidoControl==null}">
+                                <td class="form-group" colspan="3">
+                                    <h3
+                                        th:text="#{formulario.personal.sometido.control}">Personal
+                                        sometido al control</h3>
+                                </td>
+                            </tr>
+                            <tr
+                                th:if="*{idPersonalSometidoControl==null}">
+                                <td>
+                                    <label
+                                        for="nombrePersonalSometidoControl"
+                                        class="labelColumna"
+                                        th:text="#{formulario.nombre}">nombre:</label>
+                                    <input type="text"
+                                        th:field="*{nombrePersonalSometidoControl}"
+                                        class="form-control"
+                                        style="width: 100%;"
+                                        th:readonly="*{lectura}" />
+                                </td>
+                                <td>
+                                    <label
+                                        for="passwordPersonalSometidoControl"
+                                        class="labelColumna"
+                                        th:text="#{formulario.password}">contraseña:</label>
+                                    <input type="password"
+                                        th:field="*{passwordPersonalSometidoControl}"
+                                        class="form-control"
+                                        style="width: 100%;"
+                                        th:readonly="*{lectura}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="form-group" colspan="3">
+                                    <label for="medicamentos"
+                                        th:text="#{formulario.medicamentos}">medicamentos:</label>
+                                    <textarea rows="4" cols="50"
+                                        class="form-control"
+                                        maxlength="200"
+                                        style="resize: none"
+                                        th:field="*{medicamentos}"
+                                        th:readonly="*{idEstadoInspeccion!=1 or lectura}"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="form-group" colspan="3">
+                                    <label
+                                        for="observacionesConsentimiento"
+                                        th:text="#{formulario.observaciones}">Observaciones:</label>
+                                    <textarea rows="4" cols="50"
+                                        class="form-control"
+                                        maxlength="200"
+                                        style="resize: none"
+                                        th:field="*{observacionesConsentimiento}"
+                                        th:readonly="*{idEstadoInspeccion!=1 or lectura}"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="form-group" colspan="3">
+                                    <h3
+                                        th:text="#{formulario.titulo.consentimiento}">Consentimiento</h3>
+                                    <input type="submit"
+                                        th:if="*{idEstadoInspeccion==1 and !lectura}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.autoriza}"
+                                        th:formaction="@{/autorizaCAD}"
+                                        value="Autoriza" />
+                                    <input type="submit"
+                                        th:if="*{idEstadoInspeccion==1 and !lectura}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.no.autoriza}"
+                                        th:formaction="@{/noAutorizaCAD}"
+                                        value="No autoriza" />
+                                    <input type="submit"
+                                        th:if="*{idEstadoInspeccion!=1}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.ver.documento}"
+                                        th:formaction="@{/verDocumentoCAD}"
+                                        formnovalidate
+                                        th:formtarget="_blank"
+                                        value="Ver documento" />
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group" colspan="3">
+                                    <h3
+                                        th:text="#{formulario.titulo.datos.prueba}">Datos
+                                        de la prueba</h3>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group" colspan="2">
+                                    <label for="lugar"
+                                        th:text="#{formulario.lugar}">Lugar</label>
+                                    <input class="form-control"
+                                        type="text" th:field="*{lugar}"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        required />
+                                </td>
+                                <td class="form-group">
+                                    <label for="idTipoControl"
+                                        th:text="#{formulario.tipo.control}">Tipo
+                                        de control</label>
+                                    <select class="form-control"
+                                        th:field="*{idTipoControl}"
+                                        th:style="*{idEstadoInspeccion==5 or lectura?'pointer-events: none;':''}"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        required>
+                                        <option
+                                            th:each="var : ${tipoControles}"
+                                            th:value="${var.idTipoCad}"
+                                            th:text="${var.valor}">Tipo
+                                            control</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group" colspan="3">
+                                    <label for="idCentroMedico"
+                                        th:text="#{formulario.centro.medico}">Centro
+                                        Medico</label>
+                                    <select class="form-control"
+                                        th:field="*{idCentroMedico}"
+                                        th:style="*{idEstadoInspeccion==5 or lectura?'pointer-events: none;':''}"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        required>
+                                        <option
+                                            th:each="var : ${centrosMedicos}"
+                                            th:value="${var.idCompania}"
+                                            th:text="${var.nombre}">Centro
+                                            medico</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group" colspan="3">
+                                    <label for="idDelegadoSeguridad1"
+                                        th:text="#{formulario.delegado.seguridad.uno}">Delegado
+                                        seguridad 1</label>
+                                    <select class="form-control"
+                                        th:style="*{idEstadoInspeccion==5 or lectura?'pointer-events: none;':''}"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{idDelegadoSeguridad1}">
+                                        <option
+                                            th:each="var : ${delegadosSeguridad}"
+                                            th:value="${var.idPersonal}"
+                                            th:text="${var.nombreCompleto}">Delegado
+                                            seguridad 1</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group" colspan="3">
+                                    <label for="idDelegadoSeguridad2"
+                                        th:text="#{formulario.delegado.seguridad.dos}">Delegado
+                                        seguridad 2</label>
+                                    <select class="form-control"
+                                        th:style="*{idEstadoInspeccion==5 or lectura?'pointer-events: none;':''}"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{idDelegadoSeguridad2}">
+                                        <option
+                                            th:each="var : ${delegadosSeguridad}"
+                                            th:value="${var.idPersonal}"
+                                            th:text="${var.nombreCompleto}">Delegado
+                                            seguridad 2</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group" colspan="3">
+                                    <h3
+                                        th:text="#{formulario.titulo.observaciones}">Observaciones</h3>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group" colspan="3">
+                                    <textarea rows="4" cols="50"
+                                        class="form-control"
+                                        maxlength="200"
+                                        style="resize: none"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{observaciones}"></textarea>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group" colspan="3">
+                                    <h3
+                                        th:text="#{formulario.titulo.resultados.prueba}">Resultados
+                                        de la prueba</h3>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group" colspan="3">
+                                    <h4
+                                        th:text="#{formulario.titulo.etilometro}">Etilometro</h4>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group">
+                                    <label for="primeraPrueba"
+                                        th:text="#{formulario.primera.prueba}">Primera
+                                        prueba</label>
+                                    <input class="form-control"
+                                        type="number" step="0.01"
+                                        min="0" max="5" lang="en"
+                                        th:field="*{primeraPrueba}"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:onblur="'comprobarPrimeraPrueba(\''+*{limiteAlcohol}+'\')'"
+                                        required />
+                                </td>
+                                <td class="form-group">
+                                    <label for="horaPrimeraPrueba"
+                                        th:text="#{formulario.hora}">hora</label>
+                                    <input class="form-control"
+                                        type="time"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{horaPrimeraPrueba}"
+                                        required />
+                                </td>
+                                <td class="form-group">
+                                    <label for="resultadoPrimeraPrueba"
+                                        th:text="#{formulario.resultado}">Resultado</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{resultadoPrimeraPrueba}"
+                                        readonly />
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group">
+                                    <label for="segundaPrueba"
+                                        th:text="#{formulario.segunda.prueba}">Segunda
+                                        prueba</label>
+                                    <input class="form-control"
+                                        type="number" step="0.01"
+                                        min="0" max="5" lang="en"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{segundaPrueba}"
+                                        th:onblur="'comprobarSegundaPrueba(\''+*{limiteAlcohol}+'\')'" />
+                                </td>
+                                <td class="form-group">
+                                    <label for="horaSegundaPrueba"
+                                        th:text="#{formulario.hora}">hora</label>
+                                    <input class="form-control"
+                                        type="time"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{horaSegundaPrueba}" />
+                                </td>
+                                <td class="form-group">
+                                    <label for="resultadoSegundaPrueba"
+                                        th:text="#{formulario.resultado}">Resultado</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{resultadoSegundaPrueba}"
+                                        readonly />
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group" colspan="3">
+                                    <h4
+                                        th:text="#{formulario.titulo.muestra.sangre}">Muestra
+                                        sangre</h4>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group">
+                                    <label for="numeroMuestraSangre"
+                                        th:text="#{formulario.numero.muestra}">numero
+                                        muestra</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{numeroMuestraSangre}" />
+                                </td>
+                                <td class="form-group">
+                                    <label for="analisisSangre"
+                                        th:text="#{formulario.analisis}">analisis</label>
+                                    <input class="form-control"
+                                        type="number" step="0.01"
+                                        min="0" lang="en"
+                                        onblur="comprobarNumero('analisisSangre')"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{analisisSangre}" />
+                                </td>
+                                <td class="form-group">
+                                    <label for="idResultadoSangre"
+                                        th:text="#{formulario.resultado}">Resultado</label>
+                                    <select class="form-control"
+                                        th:style="*{idEstadoInspeccion==5 or lectura?'pointer-events: none;':''}"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{idResultadoSangre}">
+                                        <option
+                                            th:each="var : ${resultadosCAD}"
+                                            th:value="${var.idResultadoCad}"
+                                            th:text="${var.valor}">resultado</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group" colspan="3">
+                                    <h4
+                                        th:text="#{formulario.titulo.muestra.orina}">Muestra
+                                        orina</h4>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group">
+                                    <label for="numeroMuestraOrina"
+                                        th:text="#{formulario.numero.muestra}">numero
+                                        muestra</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{numeroMuestraOrina}" />
+                                </td>
+                                <td class="form-group">
+                                    <label for="analisisOrina"
+                                        th:text="#{formulario.analisis}">analisis</label>
+                                    <input class="form-control"
+                                        type="number" step="0.01"
+                                        onblur="comprobarNumero('analisisOrina')"
+                                        min="0" lang="en"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{analisisOrina}" />
+                                </td>
+                                <td class="form-group">
+                                    <label for="idResultadoOrina"
+                                        th:text="#{formulario.resultado}">Resultado</label>
+                                    <select class="form-control"
+                                        th:style="*{idEstadoInspeccion==5 or lectura?'pointer-events: none;':''}"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{idResultadoOrina}">
+                                        <option
+                                            th:each="var : ${resultadosCAD}"
+                                            th:value="${var.idResultadoCad}"
+                                            th:text="${var.valor}">resultado</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group" colspan="3">
+                                    <label
+                                        for="observacionesRecogidaPrueba"
+                                        th:text="#{formulario.observaciones.recogida.muestras}">Observaciones
+                                        recogida pruebas:</label>
+                                    <textarea rows="4" cols="50"
+                                        class="form-control"
+                                        maxlength="200"
+                                        style="resize: none"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{observacionesRecogidaPrueba}"></textarea>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group" colspan="3">
+                                    <label
+                                        for="observacionesLaboratorioPrueba"
+                                        th:text="#{formulario.observaciones.laboratorio.muestras}">Observaciones
+                                        laboratorio:</label>
+                                    <textarea rows="4" cols="50"
+                                        class="form-control"
+                                        maxlength="200"
+                                        style="resize: none"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{observacionesLaboratorioPrueba}"></textarea>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group" colspan="3">
+                                    <h3
+                                        th:text="#{formulario.titulo.identificaciones}">identificaciones</h3>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group" colspan="2">
+                                    <label for="lugarIdentificacion"
+                                        th:text="#{formulario.lugar}">En:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{lugarIdentificacion}" />
+                                </td>
+                                <td class="form-group">
+                                    <label for="observacionesPrueba"
+                                        th:text="#{formulario.dia.hora}">dia
+                                        y hora:</label>
+                                    <input class="form-control"
+                                        type="datetime-local"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{diaHoraIdentificacion}" />
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group">
+                                    <h4
+                                        th:text="#{formulario.titulo.personal.medico}">Personal
+                                        medico</h4>
+                                </td>
+                                <td></td>
+                                <td class="form-group">
+                                    <h4
+                                        th:text="#{formulario.titulo.delegado.seguridad}">Delegado
+                                        seguridad</h4>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group">
+                                    <label for="nombrePersonalMedico"
+                                        th:text="#{formulario.nombre}">Nombre:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{nombrePersonalMedico}" />
+                                </td>
+                                <td></td>
+                                <td class="form-group">
+                                    <label for="nombreDelegadoSeguridad"
+                                        th:text="#{formulario.nombre}">Nombre:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{nombreDelegadoSeguridad}" />
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group">
+                                    <label for="dniPersonalMedico"
+                                        th:text="#{formulario.dni}">DNI:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{dniPersonalMedico}" />
+                                </td>
+                                <td></td>
+                                <td class="form-group">
+                                    <label for="dniDelegadoSeguridad"
+                                        th:text="#{formulario.dni}">DNI:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{dniDelegadoSeguridad}" />
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group">
+                                    <h4
+                                        th:text="#{formulario.titulo.delegado.adif}">Delegado
+                                        ADIF</h4>
+                                </td>
+                                <td></td>
+                                <td class="form-group">
+                                    <h4
+                                        th:text="#{formulario.titulo.tecnico.ciaf}">Tecnico
+                                        CIAF</h4>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group">
+                                    <label for="nombreDelegadoADIF"
+                                        th:text="#{formulario.nombre}">Nombre:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{nombreDelegadoADIF}" />
+                                </td>
+                                <td></td>
+                                <td class="form-group">
+                                    <label for="nombreTecnicoCIAF"
+                                        th:text="#{formulario.nombre}">Nombre:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{nombreTecnicoCIAF}" />
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group">
+                                    <label for="dniDelegadoADIF"
+                                        th:text="#{formulario.dni}">DNI:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{dniDelegadoADIF}" />
+                                </td>
+                                <td></td>
+                                <td class="form-group">
+                                    <label for="dniTecnicoCIAF"
+                                        th:text="#{formulario.dni}">DNI:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{dniTecnicoCIAF}" />
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group" colspan="3">
+                                    <h3
+                                        th:text="#{formulario.medidas.cautelares.tomadas}">Medidas
+                                        cautelares tomadas</h3>
+                                </td>
+                            </tr>
+                            <tr th:if="*{consentimiento}">
+                                <td class="form-group" colspan="3">
+                                    <textarea rows="4" cols="50"
+                                        class="form-control"
+                                        maxlength="200"
+                                        style="resize: none"
+                                        th:readonly="*{idEstadoInspeccion==5 or lectura}"
+                                        th:field="*{medidasCautelaresTomadas}"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="form-group">
+                                    <input type="submit"
+                                        th:if="*{idEstadoInspeccion!=1 and idEstadoInspeccion!=5 and !lectura}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.guardar}"
+                                        th:formaction="@{/guardarCAD}"
+                                        value="Guardar" />
+                                    <input type="submit"
+                                        th:if="*{idEstadoInspeccion==5 and !lectura}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.suspender.titulo}"
+                                        th:formaction="@{/suspenderTituloCAD}"
+                                        value="Suspender titulo" />
+                                </td>
+                                <td class="form-group">
+                                    <input type="submit"
+                                        th:if="*{idEstadoInspeccion!=1 and idEstadoInspeccion!=5 and !lectura}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.crear.ficha}"
+                                        th:formaction="@{/crearFichaCAD}"
+                                        value="Crear ficha" />
+                                    <input type="submit"
+                                        th:if="*{idEstadoInspeccion==5 and consentimiento}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.ver.ficha}"
+                                        th:formaction="@{/verFichaCAD}"
+                                        th:formtarget="_blank"
+                                        value="Ver ficha" />
+                                </td>
+                                <td class="form-group" align="left">
+                                    <input type="submit"
+                                        style="float: right"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:value="#{boton.volver}"
+                                        formnovalidate
+                                        th:formaction="@{/volverCAD}"
+                                        value="Volver" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

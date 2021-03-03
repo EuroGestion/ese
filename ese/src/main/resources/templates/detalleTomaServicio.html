@@ -1,0 +1,505 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.toma.servicio}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page" th:text="#{titulo.toma.servicio}">Detalle
+                    Tren</h1>
+                <form action="#" th:object="${detalleTomaServicio}"
+                    class="my-box" id="detalleTomaServicio"
+                    th:method="post" th:action="@{/detalleTomaServicio}"
+                    enctype="multipart/form-data">
+                    <input type="hidden" th:field="*{idTomaServicio}" />
+                    <input type="hidden" th:field="*{lectura}" />
+                    <input type="hidden"
+                        th:field="*{idEstadoTomaServicio}" />
+                    <table class="table-grid">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="fecha"
+                                        th:text="#{formulario.fecha}">fecha:</label>
+                                    <input type="date"
+                                        th:field="*{fecha}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        required />
+                                </td>
+                                <td>
+                                    <label for="hora"
+                                        th:text="#{formulario.hora}">hora:</label>
+                                    <input type="time"
+                                        th:field="*{hora}"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        required />
+                                </td>
+                                <td>
+                                    <label for="nveLocomotora"
+                                        th:text="#{formulario.nve.locomotora}">numero
+                                        tren:</label>
+                                    <input type="text"
+                                        th:field="*{nveLocomotora}"
+                                        class="form-control" maxlength="12"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        required />
+                                </td>
+                                <td>
+                                    <label for="idTren"
+                                        th:text="#{formulario.tren}">Tren:</label>
+                                    <select class="form-control"
+                                        th:field="*{idTren}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;':''}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        required>
+                                        <option
+                                            th:each="var : ${trenes}"
+                                            th:value="${var.idTren}"
+                                            th:text="${var.numero}">Tramo</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="lugar"
+                                        th:text="#{formulario.lugar}">Releva
+                                        a:</label>
+                                    <input type="text"
+                                        th:field="*{lugar}"
+                                        class="form-control" maxlength="50"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        required />
+                                </td>
+                                <td colspan="3">
+                                    <label for="motivo"
+                                        th:text="#{formulario.motivo}">Releva
+                                        a:</label>
+                                    <input type="text"
+                                        th:field="*{motivo}"
+                                        class="form-control" maxlength="50"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <h2
+                                        th:text="#{formulario.titulo.inspeccion}">inspeccion</h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <h3
+                                        th:text="#{formulario.titulo.accion}">inspeccion</h3>
+                                </td>
+                                <td>
+                                    <h3
+                                        th:text="#{formulario.titulo.correcto}">correcto</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="realizarAccion"
+                                        th:text="#{formulario.realizar.accion.toma.servicio}">realizar
+                                        accion:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{realizarAccion}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output
+                                        for="documentacionReglamentaria"
+                                        th:text="#{formulario.documentacion.reglamentaria.toma.servicio}">documentacion
+                                        reglamentaria:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{documentacionReglamentaria}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="libroTelefonemas"
+                                        th:text="#{formulario.libro.telefonemas.toma.servicio}">libro
+                                        telefonemas:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{libroTelefonemas}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="libroAverias"
+                                        th:text="#{formulario.libro.averias.toma.servicio}">libro
+                                        averias:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{libroAverias}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="dotacionUtilesServicio"
+                                        th:text="#{formulario.dotacion.utiles.servicio.toma.servicio}">dotacion
+                                        utiles servicio:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{dotacionUtilesServicio}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="senalizacionCabezaCola"
+                                        th:text="#{formulario.senhalizacion.cabeza.cola.toma.servicio}">senalizacion
+                                        cabeza cola:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{senalizacionCabezaCola}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="visibilidadAdecuada"
+                                        th:text="#{formulario.visibilidad.adecuada.toma.servicio}">visibilidad
+                                        adecuada:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{visibilidadAdecuada}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="anomaliasRodajeCaja"
+                                        th:text="#{formulario.anomalias.rodaje.caja.toma.servicio}">anomalias
+                                        rodaje caja:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{anomaliasRodajeCaja}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="anomaliasSuspension"
+                                        th:text="#{formulario.anomalias.suspension.toma.servicio}">anomalias
+                                        suspension:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{anomaliasSuspension}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output
+                                        for="anomaliasChoqueTraccion"
+                                        th:text="#{formulario.anomalias.choque.traccion.toma.servicio}">anomalias
+                                        choque traccion:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{anomaliasChoqueTraccion}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="estadoPrecintos"
+                                        th:text="#{formulario.estado.precintos.toma.servicio}">estado
+                                        precintos:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{estadoPrecintos}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output
+                                        for="posicionPalancaCambiador"
+                                        th:text="#{formulario.posicion.palanca.cambiador.toma.servicio}">posicion
+                                        palanca cambiador:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{posicionPalancaCambiador}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="frenosEstacionamiento"
+                                        th:text="#{formulario.frenos.estacionamiento.toma.servicio}">frenos
+                                        estacionamiento:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{frenosEstacionamiento}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="configuracionFrenado"
+                                        th:text="#{formulario.configuracion.frenado.toma.servicio}">configuracion
+                                        frenado:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{configuracionFrenado}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output
+                                        for="dispositivoVigilanciaHM"
+                                        th:text="#{formulario.dispositivo.vigilancia.hm.toma.servicio}">dispositivo
+                                        vigilancia hm:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{dispositivoVigilanciaHM}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="valvulaEmergenciaSeta"
+                                        th:text="#{formulario.valvula.emergencia.seta.toma.servicio}">valvula
+                                        emergencia seta:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{valvulaEmergenciaSeta}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="pruebasFreno"
+                                        th:text="#{formulario.pruebas.freno.toma.servicio}">pruebas
+                                        freno:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{pruebasFreno}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="pruebaInversionMarcha"
+                                        th:text="#{formulario.prueba.inversion.marcha.toma.servicio}">pruebas
+                                        inversion marcha:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{pruebaInversionMarcha}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="asfaCorrecto"
+                                        th:text="#{formulario.asfa.correcto.toma.servicio}">asfa
+                                        correcto:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{asfaCorrecto}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="equipoRadioTelefonia"
+                                        th:text="#{formulario.equipo.radio.telefonia.toma.servicio}">equipo
+                                        radio telefonia:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{equipoRadioTelefonia}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="inspeccionVisual"
+                                        th:text="#{formulario.inspeccion.visual.toma.servicio}">inspeccion
+                                        visual:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{inspeccionVisual}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <h3
+                                        th:text="#{formulario.titulo.particularidades.relevos}">inspeccion</h3>
+                                </td>
+                                <td>
+                                    <h3
+                                        th:text="#{formulario.titulo.correcto}">correcto</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="datosDocumentoTren"
+                                        th:text="#{formulario.datos.documento.tren.toma.servicio}">datos
+                                        documento tren:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{datosDocumentoTren}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output for="libroTelefonemasRelevo"
+                                        th:text="#{formulario.libro.telefonemas.relevo.toma.servicio}">libro
+                                        telefonemas relevo:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{libroTelefonemasRelevo}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <output
+                                        for="noExistenNotificaciones"
+                                        th:text="#{formulario.no.existen.notificaciones.toma.servicio}">no
+                                        existen notificaciones:</output>
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        th:field="*{noExistenNotificaciones}"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:style="*{((idEstadoTomaServicio== 2) or lectura)?'pointer-events: none;cursor: not-allowed;':''}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <label for="observaciones"
+                                        th:text="#{formulario.observaciones}">no
+                                        existen notificaciones:</label>
+                                    <textarea rows="4" cols="50"
+                                        maxlength="200"
+                                        style="resize: none"
+                                        class="form-control"
+                                        th:readonly="*{(idEstadoTomaServicio== 2) or lectura}"
+                                        th:field="*{observaciones}"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="submit"
+                                        th:value="#{boton.guardar}"
+                                        th:if="*{!lectura and idEstadoTomaServicio !=2}"
+                                        value="Guardar"
+                                        th:formaction="@{/guardarDetalleTomaServicio}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton" />
+                                </td>
+                                <td colspan="2">
+                                    <input type="submit"
+                                        th:value="#{boton.crear.ficha}"
+                                        th:if="*{!lectura and idEstadoTomaServicio==1}"
+                                        value="Crear ficha"
+                                        th:formaction="@{/generarFichaDetalleTomaServicio}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton" />
+                                    <input type="submit"
+                                        th:value="#{boton.ver.ficha}"
+                                        th:if="*{idEstadoTomaServicio ==2}"
+                                        value="Ver ficha"
+                                        th:formaction="@{/verFichaDetalleTomaServicio}"
+                                        th:formtarget="_blank"
+                                        class="btn btn-lg btn-primary btn-block mi-boton" />
+                                </td>
+                                <td>
+                                    <input type="submit"
+                                        th:formaction="@{/buscadorTomaServicio}"
+                                        th:formmethod="GET"
+                                        th:value="#{boton.volver}"
+                                        formnovalidate value="Volver"
+                                        class="btn btn-lg btn-primary btn-block mi-boton" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

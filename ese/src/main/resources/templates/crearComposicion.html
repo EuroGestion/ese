@@ -1,0 +1,262 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.registro}">Registro</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.crear.composicion}">Registro</h1>
+                <div id="container">
+                    <div class="dualbrand"></div>
+                    <div id="content">
+                        <form action="#" class="my-box"
+                            th:object="${crearComposicion}"
+                            id="crearComposicion" th:method="post"
+                            th:action="@{/crearComposicion}">
+                            <input type="hidden"
+                                th:field="*{vieneCrearTren}" />
+                            <input type="hidden"
+                                th:field="*{listaIdsComposiciones}" />
+                            <input type="hidden"
+                                th:field="*{pageTotalMateriales}" />
+                            <input type="hidden"
+                                th:field="*{pageTotalMaterialesComposicion}" />
+                            <table class="table-grid">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <label class="title-label"
+                                                for="fechaNacimiento"
+                                                th:text="#{formulario.fecha.inicio}">Fecha
+                                                inicio:</label>
+                                            <input class="form-control"
+                                                type="date"
+                                                min="1900-01-01"
+                                                max="3000-01-01"
+                                                th:field="*{fechaInicio}"
+                                                th:readonly="*{not #lists.isEmpty(listaIdsComposiciones)}"
+                                                required />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="fechaNacimiento"
+                                                th:text="#{formulario.fecha.fin}">Fecha
+                                                fin:</label>
+                                            <input class="form-control"
+                                                type="date"
+                                                min="1900-01-01"
+                                                max="3000-01-01"
+                                                th:field="*{fechaFin}"
+                                                th:readonly="*{not #lists.isEmpty(listaIdsComposiciones)}"
+                                                required />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="pais"
+                                                th:text="#{formulario.tren}">Tren:</label>
+                                            <select class="form-control"
+                                                th:field="*{idTren}"
+                                                th:style="*{(vieneCrearTren or (not #lists.isEmpty(listaIdsComposiciones)))?'pointer-events: none;':''}"
+                                                th:readonly="*{vieneCrearTren or (not #lists.isEmpty(listaIdsComposiciones))}"
+                                                required>
+                                                <option
+                                                    th:each="var : ${trenes}"
+                                                    th:value="${var.idTren}"
+                                                    th:text="${var.numero}">Tren</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <label class="title-label"
+                                                for="idioma"
+                                                th:text="#{formulario.dias}">Dias:</label>
+                                            <th:block
+                                                th:each="dia : ${dias}"
+                                                th:required>
+                                                <input
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="curso"
+                                                    th:style="*{not #lists.isEmpty(listaIdsComposiciones)?'pointer-events: none;':''}"
+                                                    th:readonly="*{not #lists.isEmpty(listaIdsComposiciones)}"
+                                                    th:field="*{listaDias}"
+                                                    th:value="${dia.idDia}"
+                                                    th:text="${dia.nombre}" />
+                                                 &nbsp;&nbsp;&nbsp;&nbsp;
+                                            </th:block>
+                                        </td>
+                                    </tr>
+                                    <tr
+                                        th:if="*{not #lists.isEmpty(listaIdsComposiciones)}">
+                                        <td colspan="3">
+                                            <h3
+                                                th:text="#{formulario.material.disponible}"></h3>
+                                        </td>
+                                    </tr>
+                                    <tr
+                                        th:if="*{not #lists.isEmpty(listaIdsComposiciones)}">
+                                        <td colspan="3">
+                                            <table
+                                                class="table-paginacion">
+                                                <thead>
+                                                    <tr>
+                                                        <th
+                                                            th:text="#{tabla.nve}">nve</th>
+                                                        <th
+                                                            th:text="#{tabla.tipo.material}">tipo
+                                                            material</th>
+                                                        <th
+                                                            th:text="#{tabla.modelo.material}">modelo
+                                                            material</th>
+                                                        <th
+                                                            th:text="#{tabla.anadir}">añadir</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        th:each="material : ${totalMateriales}"
+                                                        th:class="${materialStat.odd}? 'odd':'even'">
+                                                        <td>
+                                                            <output
+                                                                th:text="${material.nve}">nve</output>
+                                                        </td>
+                                                        <td>
+                                                            <output
+                                                                th:text="${material.modeloMaterial.tipoMaterial.valor}">tipoMaterial</output>
+                                                        </td>
+                                                        <td>
+                                                            <output
+                                                                th:text="${material.modeloMaterial.serie}">modeloMaterial</output>
+                                                        </td>
+                                                        <td>
+                                                            <button
+                                                                class="btn btn-lg btn-primary btn-block mi-boton"
+                                                                type="submit"
+                                                                th:formaction="@{/addMaterialComposicion}"
+                                                                th:name="idMaterial"
+                                                                th:value="${material.idMaterial}">
+                                                                <i
+                                                                    class="fas fa-plus"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div
+                                                th:replace="utiles :: paginacion('paginacionTablaCrearComposicionTotalMateriales', ${totalMateriales},'pageTotalMateriales')">...</div>
+                                        </td>
+                                    </tr>
+                                    <tr
+                                        th:if="*{not #lists.isEmpty(listaIdsComposiciones)}">
+                                        <td colspan="3">
+                                            <h3
+                                                th:text="#{formulario.material.asignado.composicion}"></h3>
+                                        </td>
+                                    </tr>
+                                    <tr
+                                        th:if="*{not #lists.isEmpty(listaIdsComposiciones)}">
+                                        <td colspan="3">
+                                            <table
+                                                class="table-paginacion">
+                                                <thead>
+                                                    <tr>
+                                                        <th
+                                                            th:text="#{tabla.nve}">nve</th>
+                                                        <th
+                                                            th:text="#{tabla.tipo.material}">tipo
+                                                            material</th>
+                                                        <th
+                                                            th:text="#{tabla.modelo.material}">modelo
+                                                            material</th>
+                                                        <th
+                                                            th:text="#{tabla.eliminar}">eliminar</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        th:each="material : ${totalMaterialesComposicion}"
+                                                        th:class="${materialStat.odd}? 'odd':'even'">
+                                                        <td>
+                                                            <output
+                                                                th:text="${material.nve}">nve</output>
+                                                        </td>
+                                                        <td>
+                                                            <output
+                                                                th:text="${material.modeloMaterial.tipoMaterial.valor}">tipoMaterial</output>
+                                                        </td>
+                                                        <td>
+                                                            <output
+                                                                th:text="${material.modeloMaterial.serie}">modeloMaterial</output>
+                                                        </td>
+                                                        <td>
+                                                            <button
+                                                                class="btn btn-lg btn-primary btn-block mi-boton"
+                                                                type="submit"
+                                                                th:formaction="@{/eliminarMaterialComposicion}"
+                                                                th:name="idMaterial"
+                                                                th:value="${material.idMaterial}">
+                                                                <i
+                                                                    class="fas fa-minus"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div
+                                                th:replace="utiles :: paginacion('paginacionTablaCrearComposicionTotalMaterialesComposicion', ${totalMaterialesComposicion},'pageTotalMaterialesComposicion')">...</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="submit"
+                                                th:value="#{boton.crear.composicion}"
+                                                th:formaction="@{/generarComposiciones}"
+                                                value="Crear composicion"
+                                                th:if="*{#lists.isEmpty(listaIdsComposiciones)}"
+                                                class="btn btn-lg btn-primary btn-block mi-boton" />
+                                        </td>
+                                        <td></td>
+                                        <td>
+                                            <input type="submit"
+                                                th:formaction="@{/volverCrearComposicion}"
+                                                th:value="#{boton.volver}"
+                                                formnovalidate
+                                                value="Volver"
+                                                class="btn btn-lg btn-primary btn-block mi-boton" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

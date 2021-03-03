@@ -1,0 +1,237 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoIseet4"
+        th:hidden="*{!pagina.equals('4')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.iseet.equipos.elementos.seguridad}">Equipos
+                            y elementos de seguridad del material
+                            rodante</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.iseet.elementos.choque.traccion}">elementos
+                            choque traccion</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.resultado}">
+                            Resultado</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoElementosChoqueTraccion18"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.elementos.choque.traccion.tensor.enganche}">tensor
+                            de enganche:</label>
+                    </td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoElementosChoqueTraccion18"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.elementos.choque.traccion.tensor.enganche.18}">existencia
+                            de grietas:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('4') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoElementosChoqueTraccion18}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                 <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoElementosChoqueTraccion19"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.elementos.choque.traccion.tensor.enganche.19}">inexistencia
+                            de soporte:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('4') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoElementosChoqueTraccion19}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                 <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoElementosChoqueTraccion20"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.elementos.choque.traccion.tensor.enganche.20}">existencia
+                            de holgura:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('4') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoElementosChoqueTraccion20}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                 
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoElementosChoqueTraccion21"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.elementos.choque.traccion.brida}">brida:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoElementosChoqueTraccion21"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.elementos.choque.traccion.brida.21}">existencia
+                            de desgaste:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('4') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoElementosChoqueTraccion21}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoElementosChoqueTraccion22"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.elementos.choque.traccion.gancho.traccion}">gancho
+                            de traccion:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoElementosChoqueTraccion22"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.elementos.choque.traccion.gancho.traccion.22}">existencia
+                            de fijacion:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('4') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoElementosChoqueTraccion22}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoElementosChoqueTraccion23"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.elementos.choque.traccion.barra.traccion}">barra
+                            de traccion:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoElementosChoqueTraccion23"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.elementos.choque.traccion.barra.traccion.23}">existencia
+                            de rotura:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('4') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoElementosChoqueTraccion23}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                 <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoElementosChoqueTraccion24"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.elementos.choque.traccion.barra.traccion.24}">existencia
+                            de arandelas:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('4') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoElementosChoqueTraccion24}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                
+                    <td colspan="4" class="bordeInformeISEET">
+                        <!-- observaciones -->
+                        <label
+                            for="observacionesElementosChoqueTraccion"
+                            th:text="#{formulario.observaciones}">Observaciones:</label>
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesElementosChoqueTraccion}"></textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

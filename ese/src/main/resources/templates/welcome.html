@@ -1,0 +1,207 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.inicio}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js"
+    crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <div id="principal" class="enlaces">
+                    <h1 class="title-page" th:text="#{titulo.inicio}">Welcome
+                    </h1>
+                    <a class="botonEnlace" href="tareasPendientes"
+                        th:if="${session.usuario.tienePermiso('tareas pendientes')}">
+                        <i class="fas fa-bell"></i>
+                        <span th:text="#{menu.opcion.tareas.pendientes}"></span>
+                    </a>
+                    <a class="botonEnlace" href="detalleLibrosPersonal">
+                        <i class="fas fa-book-reader"></i>
+                        <span th:text="#{menu.opcion.mis.libros}"></span>
+                    </a>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('administracion') }"
+                        href="#"
+                        onclick="ocultarYMostrarOpcionMenu('principal','administracion')">
+                        <i class="fas fa-tools"></i>
+                        <span th:text="#{menu.opcion.administracion}"></span>
+                    </a>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('formacion y titulo habilitante')}"
+                        href="#"
+                        onclick="ocultarYMostrarOpcionMenu('principal','formacionYTituloHabilitante')">
+                        <i class="far fa-address-card"></i>
+                        <span
+                            th:text="#{menu.opcion.formacion.revision}"></span>
+                    </a>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('inspecciones')}"
+                        href="buscadorInspeccion">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span th:text="#{menu.opcion.inspecciones}"></span>
+                    </a>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('accidentes')}"
+                        href="buscadorInvestigacion">
+                        <i class="fas fa-exclamation"></i>
+                        <span th:text="#{menu.opcion.investigaciones}"></span>
+                    </a>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('homologacion')}"
+                        href="buscadorHomologacion">
+                        <i class="far fa-handshake"></i>
+                        <span
+                            th:text="#{menu.opcion.cumplimiento.estandares}"></span>
+                    </a>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('PASF')}"
+                        href="buscadorPasf">
+                        <i class="fas fa-hard-hat"></i>
+                        <span th:text="#{menu.opcion.planes}"></span>
+                    </a>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('gestion de procedimientos')}"
+                        href="#"
+                        onclick="ocultarYMostrarOpcionMenu('principal','gestionProcedimientos')">
+                        <i class="fas fa-chart-line"></i>
+                        <span
+                            th:text="#{menu.opcion.gestion.procedimientos}"></span>
+                    </a>
+                </div>
+                <div id="administracion" class="enlaces" hidden>
+                    <h1 class="title-page"
+                        th:text="#{titulo.administracion}">Administración
+                    </h1>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('companias')}"
+                        href="buscadorCompania">
+                        <i class="fas fa-building"></i>
+                        <span th:text="#{menu.opcion.companias}"></span>
+                    </a>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('personal')}"
+                        href="buscadorPersonal">
+                        <i class="fas fa-user-cog"></i>
+                        <span th:text="#{menu.opcion.personal}"></span>
+                    </a>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('trenes')}"
+                        href="buscadorTren">
+                        <i class="fas fa-subway"></i>
+                        <span th:text="#{menu.opcion.trenes}"></span>
+                    </a>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('tramos')}"
+                        href="buscadorTramo">
+                        <i class="fas fa-arrows-alt-h"></i>
+                        <span th:text="#{menu.opcion.tramos}"></span>
+                    </a>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('composicion')}"
+                        href="buscadorComposicion">
+                        <i class="fas fa-truck-loading"></i>
+                        <span th:text="#{menu.opcion.composiciones}"></span>
+                    </a>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('permisos')}"
+                        href="buscadorRoles">
+                        <i class="fas fa-user-lock"></i>
+                        <span th:text="#{menu.opcion.roles}"></span>
+                    </a>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('materiales')}"
+                        href="buscadorMaterial">
+                        <i class="fas fa-train"></i>
+                        <span th:text="#{menu.opcion.materiales}"></span>
+                    </a>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('modelo material')}"
+                        href="buscadorModeloMaterial">
+                        <i class="far fa-object-group"></i>
+                        <span
+                            th:text="#{menu.opcion.modelos.materiales}"></span>
+                    </a>
+                    <a class="botonEnlace" href="#"
+                        onclick="ocultarYMostrarOpcionMenu('administracion','principal')">
+                        <i class="fas fa-arrow-left"></i>
+                        <span th:text="#{menu.opcion.volver}"></span>
+                    </a>
+                </div>
+                <div id="formacionYTituloHabilitante" class="enlaces"
+                    hidden>
+                    <h1 class="title-page"
+                        th:text="#{titulo.formacion.revisiones}">Formación
+                        y revisiones</h1>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('cursos')}"
+                        href="buscadorModificarFormacion">
+                        <i class="fas fa-user-graduate"></i>
+                        <span th:text="#{menu.opcion.formacion}"></span>
+                    </a>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('revisiones')}"
+                        href="buscadorModificarRevision">
+                        <i class="fas fa-user-md"></i>
+                        <span th:text="#{menu.opcion.revision}"></span>
+                    </a>
+                    <a class="botonEnlace" href="#"
+                        onclick="ocultarYMostrarOpcionMenu('formacionYTituloHabilitante','principal')">
+                        <i class="fas fa-arrow-left"></i>
+                        <span th:text="#{menu.opcion.volver}"></span>
+                    </a>
+                </div>
+                <div id="gestionProcedimientos" class="enlaces" hidden>
+                    <h1 class="title-page"
+                        th:text="#{titulo.gestion.procedimientos}">Gestión
+                        de procedimientos</h1>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('gestion de turnos')}"
+                        href="buscadorReportesFinServicio">
+                        <i class="fas fa-user-clock"></i>
+                        <span
+                            th:text="#{menu.opcion.reportes.fin.servicio}"></span>
+                    </a>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('toma de servicio')}"
+                        href="buscadorTomaServicio">
+                        <i class="fas fa-user-check"></i>
+                        <span th:text="#{menu.opcion.toma.servicio}"></span>
+                    </a>
+                    <a class="botonEnlace"
+                        th:if="${session.usuario.tienePermiso('libros')}"
+                        href="buscadorLibros">
+                        <i class="fas fa-book-open"></i>
+                        <span th:text="#{menu.opcion.libros}"></span>
+                    </a>
+                    <a class="botonEnlace" href="#"
+                        onclick="ocultarYMostrarOpcionMenu('gestionProcedimientos','principal')">
+                        <i class="fas fa-arrow-left"></i>
+                        <span th:text="#{menu.opcion.volver}"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

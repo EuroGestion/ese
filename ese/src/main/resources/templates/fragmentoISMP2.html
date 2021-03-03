@@ -1,0 +1,285 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoIsmp2" th:hidden="*{!pagina.equals('2')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="4">
+                        <h2 class="title-page"
+                            th:text="#{titulo.informe.ismp.senalizacion}">Señalizacion</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.ismp.paneles.naranjas}">paneles
+                            naranjas</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.concepto}">concepto</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.numero}">
+                            numero</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label for="numeroContenedoresPanelesBuenEstado"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.vagones.contenedores.paneles.buen.estado}">buen
+                            estado:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{numeroContenedoresPanelesBuenEstado}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label for="numeroContenedoresPanelesMalEstado"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.vagones.contenedores.paneles.mal.estado}">mal
+                            estado:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{numeroContenedoresPanelesMalEstado}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label for="numeroContenedoresPanelesIncorrecto"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.vagones.contenedores.paneles.incorrecto}">paneles
+                            incorrectos:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{numeroContenedoresPanelesIncorrecto}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label
+                            for="numeroContenedoresPanelesInspeccionado"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.vagones.contenedores.paneles.inspeccionado}">paneles
+                            inspeccionados:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{numeroContenedoresPanelesInspeccionado}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.tipo.incorrecciones}">tipo
+                            incorrecciones</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.numero.unidades}">
+                            numero unidades</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label for="numeroONUIncorrecto"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.numero.onu.peligro.incorrecto}">numero
+                            ONU y/o PELIGRO incorrecto:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{numeroONUIncorrecto}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label for="faltaPanelAlgunLateral"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.falta.panel.algun.lateral}">falta
+                            panel algun lateral:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{faltaPanelAlgunLateral}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label for="faltaPanel2Laterales"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.falta.panel.dos.laterales}">falta
+                            panel dos laterales:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{faltaPanel2Laterales}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label for="panelesTamanoInadecuado"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.paneles.tamano.inadecuado}">paneles
+                            tamaño inadecuado:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{panelesTamanoInadecuado}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label for="panelesOtras" class="labelColumna"
+                            th:text="#{formulario.informe.ismp.paneles.otras}">paneles
+                            otras:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{panelesOtras}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <!-- observaciones -->
+                        <label for="panelesObservaciones"
+                            th:text="#{formulario.observaciones}">Observaciones:</label>
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{panelesObservaciones}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h2 class="title-page"
+                            th:text="#{titulo.informe.ismp.carta.porte}">carta
+                            de porte</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.transportes}">transporte</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.correcta}">correcta</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.incorrecta}">incorrecta</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.ismp.total}">total</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="vacioCorrecta" class="labelColumna"
+                            th:text="#{formulario.informe.ismp.carta.porte.vacio}">vacio:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            onblur="sumaCartaPortes('vacio')"
+                            th:field="*{vacioCorrecta}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            onblur="sumaCartaPortes('vacio')"
+                            th:field="*{vacioIncorrecta}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            readonly th:field="*{vacioTotal}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for=cargadoCorrecta class="labelColumna"
+                            th:text="#{formulario.informe.ismp.carta.porte.cargado}">cargado:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            onblur="sumaCartaPortes('cargado')"
+                            th:field="*{cargadoCorrecta}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            onblur="sumaCartaPortes('cargado')"
+                            th:field="*{cargadoIncorrecta}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            readonly th:field="*{cargadoTotal}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for=numeroDocumentosCorrecta
+                            class="labelColumna"
+                            th:text="#{formulario.informe.ismp.carta.porte.documentos.inspeccionados}">cargado:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            onblur="sumaCartaPortes('numeroDocumentos')"
+                            th:field="*{numeroDocumentosCorrecta}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            onblur="sumaCartaPortes('numeroDocumentos')"
+                            th:field="*{numeroDocumentosIncorrecta}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            readonly th:field="*{numeroDocumentosTotal}" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,383 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.registro}">Registro</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page" th:text="#{titulo.registro}">Registro</h1>
+                <div id="container">
+                    <div class="dualbrand"></div>
+                    <div id="content">
+                        <form action="#" class="my-box"
+                            th:object="${formularioUser}" id="reg"
+                            th:method="post"
+                            th:action="@{/registerUsuario}"
+                            enctype="multipart/form-data">
+                            <table class="table-grid">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="4">
+                                            <h3 class="title-page"
+                                                th:text="#{titulo.personal.datos}">Datos
+                                                personales</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="title-label"
+                                                for="nombre"
+                                                th:text="#{formulario.nombre}">Nombre:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{nombre}"
+                                                required maxlength="30" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="apellido"
+                                                th:text="#{formulario.primer.apellido}">Primer
+                                                apellido:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{apellido}"
+                                                required maxlength="30" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="apellido2"
+                                                th:text="#{formulario.segundo.apellido}">Segundo
+                                                apellido:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{apellido2}"
+                                                maxlength="30" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="documento"
+                                                th:text="#{formulario.dni}">DNI:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{documento}"
+                                                required maxlength="14" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="title-label"
+                                                for="fechaNacimiento"
+                                                th:text="#{formulario.fecha.nacimiento}">Fecha
+                                                de
+                                                Nacimiento(dd/mm/aaaa):</label>
+                                            <input class="form-control"
+                                                type="date"
+                                                min="1900-01-01"
+                                                max="3000-01-01"
+                                                th:field="*{fechaNacimiento}"
+                                                required />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="tipoVia"
+                                                th:text="#{formulario.tipo.via}">Tipo
+                                                via:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{tipoVia}"
+                                                maxlength="10" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="via"
+                                                th:text="#{formulario.via}">Via:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{via}"
+                                                maxlength="30" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="numero"
+                                                th:text="#{formulario.numero}">Numero:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{numero}"
+                                                maxlength="11" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="title-label"
+                                                for="planta"
+                                                th:text="#{formulario.planta}">Planta:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{planta}"
+                                                maxlength="11" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="puerta"
+                                                th:text="#{formulario.puerta}">Puerta:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{puerta}"
+                                                maxlength="2" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="nacionalidad"
+                                                th:text="#{formulario.nacionalidad}">Nacionalidad:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{nacionalidad}"
+                                                maxlength="50" required />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="lugarNacimiento"
+                                                th:text="#{formulario.lugar.nacimiento}">Lugar
+                                                nacimiento:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{lugarNacimiento}"
+                                                maxlength="100" required />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="title-label"
+                                                for="puerta"
+                                                th:text="#{formulario.cp}">codigo
+                                                postal:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{cp}"
+                                                maxlength="5" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="pais"
+                                                th:text="#{formulario.pais}">Pais:</label>
+                                            <select class="form-control"
+                                                th:field="*{idPais}"
+                                                required
+                                                onchange="cargarProvinciasRegister()">
+                                                <option
+                                                    th:each="var : ${paises}"
+                                                    th:value="${var.idPais}"
+                                                    th:text="${var.nombre}">Compañia</option>
+                                            </select>
+                                        </td>
+                                        <td th:if="${provincias}">
+                                            <label class="title-label"
+                                                for="provincia"
+                                                th:text="#{formulario.provincia}">Provincia:</label>
+                                            <select class="form-control"
+                                                th:field="*{idProvincia}"
+                                                required
+                                                onchange="cargarLocalidadesRegister()">
+                                                <option
+                                                    th:each="var : ${provincias}"
+                                                    th:value="${var.idProvincia}"
+                                                    th:text="${var.nombre}">Compañia</option>
+                                            </select>
+                                        </td>
+                                        <td th:if="${localidades}">
+                                            <label class="title-label"
+                                                for="Localidad"
+                                                th:text="#{formulario.localidad}">Localidad:</label>
+                                            <select class="form-control"
+                                                th:field="*{idLocalidad}"
+                                                required>
+                                                <option
+                                                    th:each="var : ${localidades}"
+                                                    th:value="${var.idLocalidad}"
+                                                    th:text="${var.nombre}">Compañia</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <h3 class="title-page"
+                                                th:text="#{titulo.personal.datos.laboral}">Datos
+                                                laborales</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="title-label"
+                                                for="idCompania"
+                                                th:text="#{formulario.compania}">Compañia:</label>
+                                            <select class="form-control"
+                                                th:field="*{idCompania}"
+                                                required>
+                                                <option
+                                                    th:each="var : ${companias}"
+                                                    th:value="${var.idCompania}"
+                                                    th:text="${var.nombre}">Compañia</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="idCargo"
+                                                th:text="#{formulario.cargo}">Cargo:</label>
+                                            <select class="form-control"
+                                                th:field="*{idCargo}"
+                                                required>
+                                                <option
+                                                    th:each="var : ${cargos}"
+                                                    th:value="${var.idCargo}"
+                                                    th:text="${var.nombre}">Cargo</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="idRol"
+                                                th:text="#{formulario.rol}">Rol:</label>
+                                            <select class="form-control"
+                                                th:field="*{idRol}"
+                                                required>
+                                                <option
+                                                    th:each="var : ${roles}"
+                                                    th:value="${var.idRol}"
+                                                    th:text="${var.nombre}">Rol</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="licencia"
+                                                th:text="#{formulario.licencia}">Licencia:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{licencia}"
+                                                maxlength="20" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="title-label"
+                                                for="docEmpresa"
+                                                th:text="#{formulario.numero.empleado}">Numero
+                                                empleado:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{docEmpresa}"
+                                                maxlength="20" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="email"
+                                                th:text="#{formulario.email}">Email:</label>
+                                            <input class="form-control"
+                                                type="email"
+                                                pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
+                                                th:field="*{email}"
+                                                maxlength="50" required />
+                                        </td>
+                                        <td>
+                                            <label for="telefono"
+                                                th:text="#{formulario.telefono}">Telefono:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{telefono}"
+                                                maxlength="14" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <h3 class="title-page"
+                                                th:text="#{titulo.personal.datos.acceso}">Datos
+                                                acceso</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="title-label"
+                                                for="foto"
+                                                th:text="#{formulario.foto}">Foto:</label>
+                                            <input
+                                                class="form-control-file"
+                                                type="file"
+                                                th:field="*{foto}"
+                                                accept=".jpg , .jpeg">
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="usuario"
+                                                th:text="#{formulario.usuario}">Usuario:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{usuario}"
+                                                maxlength="20" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="password"
+                                                th:text="#{formulario.password}">Contraseña:</label>
+                                            <input class="form-control"
+                                                type="password"
+                                                th:field="*{password}"
+                                                maxlength="200" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="passwordConfirm"
+                                                th:text="#{formulario.password.confirm}">Confirmar
+                                                contraseña:</label>
+                                            <input class="form-control"
+                                                type="password"
+                                                th:field="*{passwordConfirm}"
+                                                maxlength="200" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <input type="submit"
+                                                th:value="#{boton.registrar}"
+                                                onclick="return validarSubidaArchivo('foto',false,'')"
+                                                value="Register"
+                                                class="btn btn-lg btn-primary btn-block mi-boton" />
+                                            <input type="submit"
+                                                th:formaction="@{/buscadorPersonal}"
+                                                th:value="#{boton.cancelar}"
+                                                th:formmethod="GET"
+                                                formnovalidate
+                                                value="Cancelar"
+                                                class="btn btn-lg btn-primary btn-block mi-boton" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

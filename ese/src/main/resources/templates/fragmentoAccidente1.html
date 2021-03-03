@@ -1,0 +1,363 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoAccidente1"
+        th:hidden="*{!pagina.equals('1')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="4">
+                        <h3 th:text="#{formulario.titulo.datos.suceso}">Datos
+                            del suceso</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="numeroIdentificacion"
+                            th:text="#{formulario.numero.identificacion}">Nº
+                            Identificacion:</label>
+                        <input class="form-control" type="text"
+                            th:required="*{pagina.equals('1') and !lectura}"
+                            th:field="*{numeroIdentificacion}"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}" />
+                    </td>
+                    <td>
+                        <label for="idEmpresa"
+                            th:text="#{formulario.empresa}">empresa:</label>
+                        <select class="form-control"
+                            th:field="*{idEmpresa}"
+                            th:required="*{pagina.equals('1') and !lectura}"
+                            th:style="*{((idAccidente !=null and idEstadoAccidente!=1) or lectura)?'pointer-events: none;':''}"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}">
+                            <option th:each="var : ${empresas}"
+                                th:value="${var.idCompania}"
+                                th:text="${var.nombre}">empresa</option>
+                        </select>
+                    </td>
+                    <td>
+                        <label for="idTipoInvestigacion"
+                            th:text="#{formulario.tipo.investigacion}">tipo
+                            investigacion:</label>
+                        <select class="form-control"
+                            th:field="*{idTipoAccidente}"
+                            style="pointer-events: none;" readonly>
+                            <option
+                                th:each="var : ${tiposInvestigacion}"
+                                th:value="${var.idTipoAccidente}"
+                                th:text="${var.valor}">tipo</option>
+                        </select>
+                    </td>
+                    <td>
+                        <label for="idCausa"
+                            th:text="#{formulario.causa}">causa:</label>
+                        <select class="form-control"
+                            th:field="*{idCausa}"
+                            th:required="*{pagina.equals('1') and !lectura}"
+                            th:style="*{((idAccidente !=null and idEstadoAccidente!=1) or lectura)?'pointer-events: none;':''}"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}">
+                            <option th:each="var : ${causas}"
+                                th:value="${var.idCausaAccidente}"
+                                th:text="${var.valor}">causa</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="fecha" th:text="#{formulario.fecha}">fecha:</label>
+                        <input class="form-control" type="date"
+                            th:field="*{fecha}"
+                            th:required="*{pagina.equals('1') and !lectura}"
+                            th:style="*{((idAccidente !=null and idEstadoAccidente!=1) or lectura)?'pointer-events: none;':''}"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}" />
+                    </td>
+                    <td>
+                        <label for="hora" th:text="#{formulario.hora}">hora:</label>
+                        <input class="form-control" type="time"
+                            th:style="*{((idAccidente !=null and idEstadoAccidente!=1) or lectura)?'pointer-events: none;':''}"
+                            th:field="*{hora}"
+                            th:required="*{pagina.equals('1') and !lectura}"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}" />
+                    </td>
+                    <td>
+                        <label for="lugar" th:text="#{formulario.lugar}">lugar:</label>
+                        <input class="form-control" type="text"
+                            th:field="*{lugar}"
+                            th:required="*{pagina.equals('1') and !lectura}"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3
+                            th:text="#{formulario.titulo.descripcion.suceso}">Descripcion
+                            suceso</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="descripcionSucesoInvestigacion"
+                            th:text="#{formulario.descripcion.suceso}">Descripcion
+                            suceso:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}"
+                            rows="4" cols="125" maxlength="500"
+                            style="resize: none"
+                            th:field="*{descripcionSucesoInvestigacion}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label
+                            for="condicionesAtmosfericasInvestigacion"
+                            th:text="#{formulario.condiciones.atmosfericas}">condiciones
+                            atmosfericas:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}"
+                            rows="4" cols="125" maxlength="500"
+                            style="resize: none"
+                            th:field="*{condicionesAtmosfericasInvestigacion}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label
+                            for="circulacionesImplicadasInvestigacion"
+                            th:text="#{formulario.circulaciones.implicadas}">circulaciones
+                            implicadas:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}"
+                            rows="4" cols="125" maxlength="500"
+                            style="resize: none"
+                            th:field="*{circulacionesImplicadasInvestigacion}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="composicionTrenesInvestigacion"
+                            th:text="#{formulario.composicion.trenes}">composicion
+                            trenes:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}"
+                            rows="4" cols="125" maxlength="500"
+                            style="resize: none"
+                            th:field="*{composicionTrenesInvestigacion}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="danhiosMaterialRodanteInvestigacion"
+                            th:text="#{formulario.danhio.material.rodante}">daño
+                            material rodante:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}"
+                            rows="4" cols="125" maxlength="500"
+                            style="resize: none"
+                            th:field="*{danhiosMaterialRodanteInvestigacion}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="danhiosInfraestructuraInvestigacion"
+                            th:text="#{formulario.danhio.infraestructura}">daño
+                            infraestructura:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}"
+                            rows="4" cols="125" maxlength="500"
+                            style="resize: none"
+                            th:field="*{danhiosInfraestructuraInvestigacion}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="perturbacionesServicio"
+                            th:text="#{formulario.perturbaciones.servicio}">perturbaciones
+                            servicio:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}"
+                            rows="4" cols="125" maxlength="500"
+                            style="resize: none"
+                            th:field="*{perturbacionesServicio}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="previsionesRestablecimiento"
+                            th:text="#{formulario.previsiones.restablecimiento}">previsiones
+                            restablecimiento:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}"
+                            rows="4" cols="125" maxlength="500"
+                            style="resize: none"
+                            th:field="*{previsionesRestablecimiento}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="primerasMedidasAdoptadas"
+                            th:text="#{formulario.primeras.medidas.adoptadas}">primeras
+                            medidas adoptadas:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}"
+                            rows="4" cols="125" maxlength="500"
+                            style="resize: none"
+                            th:field="*{primerasMedidasAdoptadas}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="notificacionesEfectuadas"
+                            th:text="#{formulario.notificaciones.efectuadas}">notificaciones
+                            efectuadas:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}"
+                            rows="4" cols="125" maxlength="500"
+                            style="resize: none"
+                            th:field="*{notificacionesEfectuadas}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="observacionesFichaAccidente"
+                            th:text="#{formulario.observaciones}">observaciones:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}"
+                            rows="4" cols="125" maxlength="500"
+                            style="resize: none"
+                            th:field="*{observacionesFichaAccidente}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3 th:text="#{formulario.titulo.victimas.tren}">victimas
+                            tren</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="heridosVictimaTren"
+                            th:text="#{formulario.heridos}">heridos:</label>
+                        <input class="form-control"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}"
+                            type="number"
+                            th:required="*{pagina.equals('1') and !lectura}"
+                            th:field="*{heridosVictimaTren}" />
+                    </td>
+                    <td>
+                        <label for="muertesVictimaTren"
+                            th:text="#{formulario.muertes}">muertes:</label>
+                        <input class="form-control"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}"
+                            type="number"
+                            th:required="*{pagina.equals('1') and !lectura}"
+                            th:field="*{muertesVictimaTren}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3
+                            th:text="#{formulario.titulo.victimas.ajenas.tren}">victimas
+                            ajenas tren</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="heridosVictimaAjenaTren"
+                            th:text="#{formulario.heridos}">heridos:</label>
+                        <input class="form-control"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}"
+                            type="number"
+                            th:required="*{pagina.equals('1') and !lectura}"
+                            th:field="*{heridosVictimaAjenaTren}" />
+                    </td>
+                    <td>
+                        <label for="muertesVictimaAjenaTren"
+                            th:text="#{formulario.muertes}">muertes:</label>
+                        <input class="form-control"
+                            th:readonly="*{(idAccidente !=null and idEstadoAccidente!=1) or lectura}"
+                            type="number"
+                            th:required="*{pagina.equals('1') and !lectura}"
+                            th:field="*{muertesVictimaAjenaTren}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.firmas}">Firmas</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h4 class="title-page"
+                            th:text="#{formulario.responsable.seguridad}">responsable
+                            de seguridad</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <select class="form-control"
+                            style="pointer-events: none;" readonly
+                            th:if="*{idFirmaFichaAccidente!=null}"
+                            th:field="*{idFirmaFichaAccidente}">
+                            <option th:each="var : ${personal}"
+                                th:value="${var.idPersonal}"
+                                th:text="${var.nombreCompleto}"></option>
+                        </select>
+                        <label for="nombreFirmaFichaAccidente"
+                            class="labelColumna"
+                            th:if="*{idFirmaFichaAccidente==null and idEstadoAccidente==1}"
+                            th:text="#{formulario.nombre}">nombre:</label>
+                        <input type="text"
+                            th:field="*{nombreFirmaFichaAccidente}"
+                            th:if="*{idFirmaFichaAccidente==null and idEstadoAccidente==1}"
+                            class="form-control" style="width: 100%;"
+                            th:readonly="*{lectura}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label for="passwordFirmaFichaAccidente"
+                            class="labelColumna"
+                            th:if="*{idFirmaFichaAccidente==null and idEstadoAccidente==1}"
+                            th:text="#{formulario.password}">contraseña:</label>
+                        <input type="password"
+                            th:field="*{passwordFirmaFichaAccidente}"
+                            class="form-control" style="width: 100%;"
+                            th:if="*{idFirmaFichaAccidente==null and idEstadoAccidente==1}"
+                            th:readonly="*{lectura}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" th:value="#{boton.firmar}"
+                            value="firmar"
+                            th:if="*{idFirmaFichaAccidente==null and idEstadoAccidente==1}"
+                            th:formaction="@{/firmaAccidenteFichaAccidente}"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <input type="submit"
+                            th:value="#{boton.siguiente}"
+                            th:if="*{idAccidente !=null and idEstadoAccidente>1}"
+                            th:formaction="@{/paginaSiguienteAccidente}"
+                            value="Siguiente"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

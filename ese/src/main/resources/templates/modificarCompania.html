@@ -1,0 +1,245 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.registro.compania}">Registro</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+   <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.registro.compania.modificar}">Modificación
+                    compañía</h1>
+                <form action="#" class="my-box"
+                    th:object="${modificarCompania}" id="reg"
+                    th:method="post"
+                    th:action="@{/guardarModificarCompania}">
+                    <input type="hidden" th:field="*{idCompania}" />
+                    <input type="hidden" th:field="*{lectura}" />
+                    <table class="table-grid">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label class="title-label"
+                                        for="nombre"
+                                        th:text="#{formulario.nombre}">Nombre:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{lectura}"
+                                        th:field="*{nombre}" required
+                                        maxlength="200" />
+                                </td>
+                                <td>
+                                    <label for="telefono"
+                                        th:text="#{formulario.telefono}">Telefono:</label>
+                                    <input type="text"
+                                        class="form-control"
+                                        th:readonly="*{lectura}"
+                                        th:field="*{telefono}"
+                                        maxlength="14" />
+                                </td>
+                                <td>
+                                    <label class="title-label"
+                                        for="tipoCompania">Tipo
+                                        Compañia:</label>
+                                    <select class="form-control"
+                                        th:field="*{tipoCompania}"
+                                        th:style="*{lectura?'pointer-events: none;':''}"
+                                        th:readonly="*{lectura}"
+                                        required>
+                                        <option
+                                            th:each="var : ${tiposCompania}"
+                                            th:value="${var.idTipoCompania}"
+                                            th:text="${var.valor}">Tipo
+                                            Compañia</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label class="title-label"
+                                        for="email"
+                                        th:text="#{formulario.email}">Email:</label>
+                                    <input class="form-control"
+                                        type="email"
+                                        pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
+                                        th:readonly="*{lectura}"
+                                        th:field="*{email}"
+                                        maxlength="50" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="title-label"
+                                        for="documento"
+                                        th:text="#{formulario.documento}">Documento:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{lectura}"
+                                        th:field="*{documento}" required
+                                        maxlength="14" />
+                                </td>
+                                <td>
+                                    <label class="title-label"
+                                        for="licencia"
+                                        th:text="#{formulario.licencia}">licencia:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{lectura}"
+                                        th:field="*{licencia}" required
+                                        maxlength="14" />
+                                </td>
+                                <td>
+                                    <label class="title-label"
+                                        for="tipoVia"
+                                        th:text="#{formulario.tipo.via}">Tipo
+                                        via:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{lectura}"
+                                        th:field="*{tipoVia}"
+                                        maxlength="10" />
+                                </td>
+                                <td>
+                                    <label class="title-label" for="via"
+                                        th:text="#{formulario.via}">Via:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{lectura}"
+                                        th:field="*{via}" maxlength="30" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="title-label"
+                                        for="numero"
+                                        th:text="#{formulario.numero}">Numero:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{lectura}"
+                                        th:field="*{numero}"
+                                        maxlength="11" />
+                                </td>
+                                <td>
+                                    <label class="title-label"
+                                        for="planta"
+                                        th:text="#{formulario.planta}">Planta:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{lectura}"
+                                        th:field="*{planta}"
+                                        maxlength="11" />
+                                </td>
+                                <td>
+                                    <label class="title-label"
+                                        for="puerta"
+                                        th:text="#{formulario.puerta}">Puerta:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:readonly="*{lectura}"
+                                        th:field="*{puerta}"
+                                        maxlength="10" />
+                                </td>
+                                <td>
+                                    <label class="title-label"
+                                        for="pais"
+                                        th:text="#{formulario.pais}">Pais:</label>
+                                    <select class="form-control"
+                                        th:field="*{idPais}" required
+                                        th:style="*{lectura?'pointer-events: none;':''}"
+                                        th:readonly="*{lectura}"
+                                        onchange="cargarProvinciasModificarRegisterCompania()">
+                                        <option
+                                            th:each="var : ${paises}"
+                                            th:value="${var.idPais}"
+                                            th:text="${var.nombre}">Compañia</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td th:if="${provincias}">
+                                    <label class="title-label"
+                                        for="provincia"
+                                        th:text="#{formulario.provincia}">Provincia:</label>
+                                    <select class="form-control"
+                                        th:field="*{idProvincia}"
+                                        th:style="*{lectura?'pointer-events: none;':''}"
+                                        th:readonly="*{lectura}"
+                                        required
+                                        onchange="cargarLocalidadesModificarRegisterCompania()">
+                                        <option
+                                            th:each="var : ${provincias}"
+                                            th:value="${var.idProvincia}"
+                                            th:text="${var.nombre}">Compañia</option>
+                                    </select>
+                                </td>
+                                <td th:if="${localidades}">
+                                    <label class="title-label"
+                                        for="Localidad"
+                                        th:text="#{formulario.localidad}">Localidad:</label>
+                                    <select class="form-control"
+                                        th:field="*{idLocalidad}"
+                                        th:style="*{lectura?'pointer-events: none;':''}"
+                                        th:readonly="*{lectura}"
+                                        required>
+                                        <option
+                                            th:each="var : ${localidades}"
+                                            th:value="${var.idLocalidad}"
+                                            th:text="${var.nombre}">Compañia</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <label for="observaciones"
+                                        th:text="#{formulario.observaciones}">observaciones:</label>
+                                    <textarea rows="4" cols="50"
+                                        maxlength="200"
+                                        style="resize: none"
+                                        class="form-control"
+                                        th:readonly="*{lectura}"
+                                        th:field="*{observaciones}"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <input type="submit"
+                                        th:value="#{boton.guardar}"
+                                        value="Guardar"
+                                        th:if="*{!lectura}"
+                                        th:formaction="@{/guardarModificarCompania}"
+                                        class="btn btn-lg btn-primary btn-block mi-boton" />
+                                    <input type="submit"
+                                        th:formaction="@{/volverModificarCompania}"
+                                        th:value="#{boton.volver}"
+                                        formnovalidate value="Volver"
+                                        class="btn btn-lg btn-primary btn-block mi-boton" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

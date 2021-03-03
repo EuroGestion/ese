@@ -1,0 +1,642 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.registro}">Registro</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js"
+    crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.registro.modificar}">Modificación
+                    usuario</h1>
+                <div id="container">
+                    <div class="dualbrand"></div>
+                    <div id="content">
+                        <form action="#" class="my-box"
+                            th:object="${modificarRegister}" id="reg"
+                            th:method="post"
+                            th:action="@{/guardarModificarRegister}"
+                            enctype="multipart/form-data">
+                            <input type="hidden"
+                                th:field="*{idPersonal}" />
+                            <input type="hidden" th:field="*{lectura}" />
+                            <input type="hidden" th:field="*{page}" />
+                            <table class="table-grid">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="4">
+                                            <h3 class="title-page"
+                                                th:text="#{titulo.personal.datos}">Datos
+                                                personales</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="title-label"
+                                                for="nombre"
+                                                th:text="#{formulario.nombre}">Nombre:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:readonly="*{lectura}"
+                                                th:field="*{nombre}"
+                                                required maxlength="30" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="apellido"
+                                                th:text="#{formulario.primer.apellido}">Primer
+                                                apellido:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:readonly="*{lectura}"
+                                                th:field="*{apellido}"
+                                                required maxlength="30" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="apellido2"
+                                                th:text="#{formulario.segundo.apellido}">Segundo
+                                                apellido:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:readonly="*{lectura}"
+                                                th:field="*{apellido2}"
+                                                maxlength="30" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="documento"
+                                                th:text="#{formulario.dni}">DNI:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:readonly="*{lectura}"
+                                                th:field="*{documento}"
+                                                required maxlength="14" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="title-label"
+                                                for="fechaNacimiento"
+                                                th:text="#{formulario.fecha.nacimiento}">Fecha
+                                                de
+                                                Nacimiento(dd/mm/aaaa):</label>
+                                            <input class="form-control"
+                                                type="date"
+                                                min="1900-01-01"
+                                                max="3000-01-01"
+                                                th:readonly="*{lectura}"
+                                                th:field="*{fechaNacimiento}"
+                                                required />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="tipoVia"
+                                                th:text="#{formulario.tipo.via}">Tipo
+                                                via:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:readonly="*{lectura}"
+                                                th:field="*{tipoVia}"
+                                                maxlength="10" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="via"
+                                                th:text="#{formulario.via}">Via:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:readonly="*{lectura}"
+                                                th:field="*{via}"
+                                                maxlength="30" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="numero"
+                                                th:text="#{formulario.numero}">Numero:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:readonly="*{lectura}"
+                                                th:field="*{numero}"
+                                                maxlength="11" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="title-label"
+                                                for="planta"
+                                                th:text="#{formulario.planta}">Planta:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:readonly="*{lectura}"
+                                                th:field="*{planta}"
+                                                maxlength="11" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="puerta"
+                                                th:text="#{formulario.puerta}">Puerta:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:readonly="*{lectura}"
+                                                th:field="*{puerta}"
+                                                maxlength="2" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="nacionalidad"
+                                                th:text="#{formulario.nacionalidad}">Nacionalidad:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:readonly="*{lectura}"
+                                                th:field="*{nacionalidad}"
+                                                maxlength="50" required />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="lugarNacimiento"
+                                                th:text="#{formulario.lugar.nacimiento}">Lugar
+                                                nacimiento:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:readonly="*{lectura}"
+                                                th:field="*{lugarNacimiento}"
+                                                maxlength="100" required />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="title-label"
+                                                for="puerta"
+                                                th:text="#{formulario.cp}">codigo
+                                                postal:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{cp}"
+                                                maxlength="5" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="pais"
+                                                th:text="#{formulario.pais}">Pais:</label>
+                                            <select class="form-control"
+                                                th:field="*{idPais}"
+                                                th:style="*{lectura?'pointer-events: none;':''}"
+                                                th:readonly="*{lectura}"
+                                                required
+                                                onchange="cargarProvinciasModificarRegister()">
+                                                <option
+                                                    th:each="var : ${paises}"
+                                                    th:value="${var.idPais}"
+                                                    th:text="${var.nombre}">Compañia</option>
+                                            </select>
+                                        </td>
+                                        <td th:if="${provincias}">
+                                            <label class="title-label"
+                                                for="provincia"
+                                                th:text="#{formulario.provincia}">Provincia:</label>
+                                            <select class="form-control"
+                                                th:field="*{idProvincia}"
+                                                th:style="*{lectura?'pointer-events: none;':''}"
+                                                th:readonly="*{lectura}"
+                                                required
+                                                onchange="cargarLocalidadesModificarRegister()">
+                                                <option
+                                                    th:each="var : ${provincias}"
+                                                    th:value="${var.idProvincia}"
+                                                    th:text="${var.nombre}">Compañia</option>
+                                            </select>
+                                        </td>
+                                        <td th:if="${localidades}">
+                                            <label class="title-label"
+                                                for="Localidad"
+                                                th:text="#{formulario.localidad}">Localidad:</label>
+                                            <select class="form-control"
+                                                th:field="*{idLocalidad}"
+                                                th:style="*{lectura?'pointer-events: none;':''}"
+                                                th:readonly="*{lectura}"
+                                                required>
+                                                <option
+                                                    th:each="var : ${localidades}"
+                                                    th:value="${var.idLocalidad}"
+                                                    th:text="${var.nombre}">Compañia</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <h3 class="title-page"
+                                                th:text="#{titulo.personal.datos.laboral}">Datos
+                                                laborales</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="title-label"
+                                                for="idCompania"
+                                                th:text="#{formulario.compania}">Compañia:</label>
+                                            <select class="form-control"
+                                                th:field="*{idCompania}"
+                                                th:style="*{lectura?'pointer-events: none;':''}"
+                                                th:readonly="*{lectura}"
+                                                required>
+                                                <option
+                                                    th:each="var : ${companias}"
+                                                    th:value="${var.idCompania}"
+                                                    th:text="${var.nombre}">Compañia</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="idCargo"
+                                                th:text="#{formulario.cargo}">Cargo:</label>
+                                            <select class="form-control"
+                                                th:field="*{idCargo}"
+                                                th:style="*{lectura?'pointer-events: none;':''}"
+                                                th:readonly="*{lectura}"
+                                                required>
+                                                <option
+                                                    th:each="var : ${cargos}"
+                                                    th:value="${var.idCargo}"
+                                                    th:text="${var.nombre}">Cargo</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="idRol"
+                                                th:text="#{formulario.rol}">Rol:</label>
+                                            <select class="form-control"
+                                                th:field="*{idRol}"
+                                                th:style="*{lectura?'pointer-events: none;':''}"
+                                                th:readonly="*{lectura}"
+                                                required>
+                                                <option
+                                                    th:each="var : ${roles}"
+                                                    th:value="${var.idRol}"
+                                                    th:text="${var.nombre}">Rol</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="licencia"
+                                                th:text="#{formulario.licencia}">Licencia:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:readonly="*{lectura}"
+                                                th:field="*{licencia}"
+                                                maxlength="20" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="title-label"
+                                                for="docEmpresa"
+                                                th:text="#{formulario.numero.empleado}">Numero
+                                                empleado:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:readonly="*{lectura}"
+                                                th:field="*{docEmpresa}"
+                                                maxlength="20" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="email"
+                                                th:text="#{formulario.email}">Email:</label>
+                                            <input class="form-control"
+                                                type="email"
+                                                pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
+                                                th:readonly="*{lectura}"
+                                                th:field="*{email}"
+                                                maxlength="50" required />
+                                        </td>
+                                        <td>
+                                            <label for="telefono"
+                                                th:text="#{formulario.telefono}">Telefono:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:readonly="*{lectura}"
+                                                th:field="*{telefono}"
+                                                maxlength="14" />
+                                        </td>
+                                    </tr>
+                                    <tr th:if="*{!lectura}">
+                                        <td>
+                                            <label class="title-label"
+                                                for="foto"
+                                                th:text="#{formulario.foto}">Foto:</label>
+                                            <input
+                                                class="form-control-file"
+                                                type="file"
+                                                th:field="*{foto}"
+                                                accept=".jpg , .jpeg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <h3 class="title-page"
+                                                th:text="#{titulo.idiomas}">Idiomas</h3>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="*{!lectura}">
+                                        <td>
+                                            <label class="title-label"
+                                                for="idRol"
+                                                th:text="#{formulario.idioma}">Idioma:</label>
+                                            <select class="form-control"
+                                                th:field="*{idIdioma}">
+                                                <option
+                                                    th:each="var : ${idiomas}"
+                                                    th:value="${var.idIdioma}"
+                                                    th:text="${var.nombre}">Idioma</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="idRol"
+                                                th:text="#{formulario.nivel.idioma}">Nivel
+                                                idioma:</label>
+                                            <select class="form-control"
+                                                th:field="*{idNivelIdioma}">
+                                                <option
+                                                    th:each="var : ${nivelIdiomas}"
+                                                    th:value="${var.idNivelIdioma}"
+                                                    th:text="${var.nombre}">Nivel
+                                                    idioma</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label for="notasEvidencia"
+                                                th:text="#{formulario.notas}">Notas:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{notasEvidencia}" />
+                                        </td>
+                                        <td rowspan="2">
+                                            <button
+                                                class="btn btn-lg btn-primary btn-block mi-boton"
+                                                type="submit"
+                                                th:formaction="@{/anadirEvidenciaIdiomaPersona}">Añadir</button>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="*{!lectura}">
+                                        <td>
+                                            <label class="title-label"
+                                                for="fechaNacimiento"
+                                                th:text="#{formulario.fecha}">Fecha:</label>
+                                            <input class="form-control"
+                                                type="date"
+                                                min="1900-01-01"
+                                                max="3000-01-01"
+                                                th:field="*{fechaIdioma}" />
+                                        </td>
+                                        <td colspan="2">
+                                            <label for="evidencia"
+                                                th:text="#{formulario.evidencia}">Evidencia:</label>
+                                            <input
+                                                class="form-control-file"
+                                                type="file"
+                                                th:field="*{evidencia}"
+                                                accept=".jpg , .jpeg,.pdf">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <table
+                                                class="table-paginacion">
+                                                <thead>
+                                                    <tr>
+                                                        <th
+                                                            th:text="#{tabla.idioma}">descripcion</th>
+                                                        <th
+                                                            th:text="#{tabla.nivel.idioma}">descripcion</th>
+                                                        <th
+                                                            th:text="#{tabla.notas}">notas</th>
+                                                        <th
+                                                            th:text="#{tabla.fecha}">fecha</th>
+                                                        <th
+                                                            th:text="#{tabla.estado}">estado</th>
+                                                        <th
+                                                            th:text="#{tabla.ver}">Ver</th>
+                                                        <th
+                                                            th:text="#{tabla.activar.desactivar}">Ver</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        th:each="idiomaPersona :${listIdiomasPersona}"
+                                                        th:class="${idiomaPersonaStat.odd}? 'odd':'even'">
+                                                        <td>
+                                                            <output
+                                                                th:text="${idiomaPersona.idioma.nombre}">idioma</output>
+                                                        </td>
+                                                        <td>
+                                                            <output
+                                                                th:text="${idiomaPersona.nivelIdioma.nombre}">nivel
+                                                                idioma</output>
+                                                        </td>
+                                                        <td>
+                                                            <output
+                                                                th:text="${idiomaPersona.notas}">notas</output>
+                                                        </td>
+                                                        <td>
+                                                            <output
+                                                                th:text="${#dates.format(idiomaPersona.fecha, 'dd-MM-yyyy')}">fecha</output>
+                                                        </td>
+                                                        <td>
+                                                            <output
+                                                                th:text="${idiomaPersona.fechaBaja==null}?#{tabla.activado}:#{tabla.desactivado}">fecha</output>
+                                                        </td>
+                                                        <td>
+                                                            <button
+                                                                class="btn btn-lg btn-primary btn-block mi-boton"
+                                                                type="submit"
+                                                                th:formaction="@{/verEvidenciaIdiomaPersona}"
+                                                                th:if="${idiomaPersona.evidencia82!=null}"
+                                                                th:name="idIdiomaPersona"
+                                                                th:formtarget="_blank"
+                                                                th:value="${idiomaPersona.idIdiomaPersona}">
+                                                                <i
+                                                                    class="far fa-eye"></i>
+                                                            </button>
+                                                        </td>
+                                                        <td>
+                                                            <button
+                                                                class="btn btn-lg btn-primary btn-block mi-boton"
+                                                                type="submit"
+                                                                th:formaction="@{/activarIdiomaPersona}"
+                                                                th:if="${idiomaPersona.fechaBaja!=null}"
+                                                                th:name="idIdiomaPersona"
+                                                                th:value="${idiomaPersona.idIdiomaPersona}">
+                                                                <i
+                                                                    class="fas fa-head-side-cough"></i>
+                                                            </button>
+                                                            <button
+                                                                class="btn btn-lg btn-primary btn-block mi-boton"
+                                                                type="submit"
+                                                                th:formaction="@{/desactivarIdiomaPersona}"
+                                                                th:if="${idiomaPersona.fechaBaja==null}"
+                                                                th:name="idIdiomaPersona"
+                                                                th:value="${idiomaPersona.idIdiomaPersona}">
+                                                                <i
+                                                                    class="fas fa-head-side-cough-slash"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div
+                                                th:replace="utiles :: paginacion('paginacionTablaModificarRegister', ${listIdiomasPersona},'page')">...</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <h3 class="title-page"
+                                                th:text="#{titulo.documentos}">Documentos</h3>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="*{!lectura}">
+                                        <td>
+                                            <label for="tituloDocumento"
+                                                th:text="#{formulario.titulo}">Titulo:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{tituloDocumento}" />
+                                        </td>
+                                        <td>
+                                            <label class="title-label"
+                                                for="fechaDocumento"
+                                                th:text="#{formulario.fecha}">Fecha:</label>
+                                            <input class="form-control"
+                                                type="date"
+                                                min="1900-01-01"
+                                                max="3000-01-01"
+                                                th:field="*{fechaDocumento}" />
+                                        </td>
+                                        <td>
+                                            <label
+                                                for="observacionesDocumento"
+                                                th:text="#{formulario.observaciones}">Notas:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{observacionesDocumento}" />
+                                        </td>
+                                        <td rowspan="2">
+                                            <button
+                                                class="btn btn-lg btn-primary btn-block mi-boton"
+                                                type="submit"
+                                                th:formaction="@{/anadirDocumentoPersonal}">Añadir</button>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="*{!lectura}">
+                                        <td colspan="2">
+                                            <label
+                                                for="evidenciaDocumento"
+                                                th:text="#{formulario.documento}">documento:</label>
+                                            <input
+                                                class="form-control-file"
+                                                type="file"
+                                                th:field="*{evidenciaDocumento}"
+                                                accept=".jpg , .jpeg,.pdf">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <table
+                                                class="table-paginacion">
+                                                <thead>
+                                                    <tr>
+                                                        <th
+                                                            th:text="#{tabla.titulo}">titulo</th>
+                                                        <th
+                                                            th:text="#{tabla.fecha}">fecha</th>
+                                                        <th
+                                                            th:text="#{tabla.observaciones}">Observaciones</th>
+                                                        <th
+                                                            th:text="#{tabla.ver}">Ver</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        th:each="documentoPersona :${listDocumentosPersona}"
+                                                        th:class="${documentoPersonaStat.odd}? 'odd':'even'">
+                                                        <td>
+                                                            <output
+                                                                th:text="${documentoPersona.documento.titulo}">titulo</output>
+                                                        </td>
+                                                        <td>
+                                                            <output
+                                                                th:text="${#dates.format(documentoPersona.documento.fechaDocumento, 'dd-MM-yyyy')}">fecha</output>
+                                                        </td>
+                                                        <td>
+                                                            <output
+                                                                th:text="${documentoPersona.documento.observaciones}">observaciones</output>
+                                                        </td>
+                                                        <td>
+                                                            <button
+                                                                class="btn btn-lg btn-primary btn-block mi-boton"
+                                                                type="submit"
+                                                                th:formaction="@{/verDocumentoPersonal}"
+                                                                th:name="idDocumentoPersona"
+                                                                th:formtarget="_blank"
+                                                                th:value="${documentoPersona.idDocumentoPersonal}">
+                                                                <i
+                                                                    class="far fa-eye"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div
+                                                th:replace="utiles :: paginacion('paginacionTablaDocumentosModificarRegister', ${listDocumentosPersona},'pageDocumento')">...</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <input type="submit"
+                                                th:value="#{boton.guardar}"
+                                                th:if="*{!lectura}"
+                                                onclick="return validarSubidaArchivo('foto',false,'')"
+                                                value="Guardar"
+                                                th:formaction="@{/guardarModificarRegister}"
+                                                class="btn btn-lg btn-primary btn-block mi-boton" />
+                                            <input type="submit"
+                                                th:formaction="@{/volverModificarRegister}"
+                                                th:value="#{boton.volver}"
+                                                formnovalidate
+                                                value="Volver"
+                                                class="btn btn-lg btn-primary btn-block mi-boton" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

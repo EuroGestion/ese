@@ -1,0 +1,200 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.modificar.revision}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+    <script th:inline="javascript">
+    //thymeleaf to javascript variables
+    /*<![CDATA[*/
+    var sortProperty = /*[[${buscadorPasf.order}]]*/ null;
+    var sortDesc = /*[[${buscadorPasf.direccion}]]*/ null;
+    var currentPage = /*[[${buscadorPasf.page}]]*/ 0;
+    /*]]>*/
+
+    $(document).ready(function(){
+     //show up/down arrows
+     $("table#tablaBuscadorPasf thead th").each(function(){
+        var head = $(this);
+        if(head.attr('data-sort-prop')==sortProperty){
+            head.append(sortDesc=="desc"?'▾':'▴');
+        }
+        });
+
+     //set click action, reload page on clicking with all query params
+     $("table#tablaBuscadorPasf thead th").click(function() {
+      var headerSortPropName = $(this).attr("data-sort-prop");
+        if(headerSortPropName=="ver" || headerSortPropName=="evidencia" || headerSortPropName=="informe"){
+            return;   
+        }
+         
+
+      $("#order").attr("value",headerSortPropName);
+      if(headerSortPropName==sortProperty){
+       
+          $("#direccion").attr("value",(sortDesc=="desc"?"asc":"desc"));
+      }else{
+          $("#direccion").attr("value","asc");
+          
+      }
+
+      $("#buscadorPasf").attr("action",getContextPath()+"/ordenTablaBuscadorPasf");
+      $("#buscadorPasf").submit();
+      });
+    });
+  </script>
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page" th:text="#{titulo.buscador.pasf}">Buscador</h1>
+                <div style="width: 100%">
+                    <form action="#" class="my-box"
+                        th:object="${buscadorPasf}" id="buscadorPasf"
+                        th:method="post"
+                        th:action="@{/borrarFiltrosBuscadorPasf}">
+                        <input type="hidden" th:field="*{page}" />
+                        <input type="hidden" th:field="*{order}" />
+                        <input type="hidden" th:field="*{direccion}" />
+                        <table class="table-grid">
+                            <tr>
+                                <td>
+                                    <label for="anno"
+                                        th:text="#{formulario.anno}">Año:</label>
+                                    <input class="form-control"
+                                        type="text" th:field="*{anno}" />
+                                </td>
+                                <td>
+                                    <label for="idEstado"
+                                        th:text="#{formulario.estado}">Estado
+                                        Plan:</label>
+                                    <select class="form-control"
+                                        th:field="*{idEstado}">
+                                        <option
+                                            th:each="var : ${estadosPasf}"
+                                            th:value="${var.idEstadoPasf}"
+                                            th:text="${var.valor}">Estado
+                                            Plan</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/filtrarBuscadorPasf}"
+                                        th:value="#{boton.filtrar}" />
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/borrarFiltrosBuscadorPasf}"
+                                        th:value="#{boton.borrar.filtros}" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table id="tablaBuscadorPasf" class="table-paginacion">
+                            <thead>
+                                <tr>
+                                    <th data-sort-prop="anno" th:text="#{tabla.anno}">año</th>
+                                    <th data-sort-prop="estadoPasf.valor" th:text="#{tabla.estado}">estado</th>
+                                    <th data-sort-prop="ver" th:text="#{tabla.ver.modificar}">ver/modificar</th>
+                                    <th data-sort-prop="evidencia" th:text="#{tabla.ver.evidencia}">ver
+                                        evidencia</th>
+                                    <th data-sort-prop="informe" th:text="#{tabla.ver.informe}">ver
+                                        informe</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="pasf : ${pasfs}"
+                                    th:class="${pasfStat.odd}? 'odd':'even'">
+                                    <td>
+                                        <output th:text="${pasf.anno}">año</output>
+                                    </td>
+                                    <td>
+                                        <output
+                                            th:text="${pasf.estadoPasf.valor}">estado</output>
+                                    </td>
+                                    <td>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/verPasf}"
+                                            th:if="${!session.usuario.tienePermisoEscritura('PASF') or (session.usuario.tienePermisoEscritura('PASF') and pasf.estadoPasf.idEstadoPasf!=1)}"
+                                            th:name="idPasf"
+                                            th:value="${pasf.idPasf}">
+                                            <i class="far fa-eye"></i>
+                                        </button>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/modificarPasf}"
+                                            th:if="${session.usuario.tienePermisoEscritura('PASF') and pasf.estadoPasf.idEstadoPasf==1}"
+                                            th:name="idPasf"
+                                            th:value="${pasf.idPasf}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/descargarPasf}"
+                                            th:if="${pasf.estadoPasf.idEstadoPasf > 1}"
+                                            th:name="idPasf"
+                                            th:formtarget="_blank"
+                                            th:value="${pasf.idPasf}">
+                                            <i class="far fa-eye"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/verInformePasfActual}"
+                                            th:if="${pasf.estadoPasf.idEstadoPasf > 1}"
+                                            th:name="idPasf"
+                                            th:value="${pasf.idPasf}">
+                                            <i class="far fa-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div
+                            th:replace="utiles :: paginacion('paginacionTablaBuscadorPASF', ${pasfs},'page')">...</div>
+                        <div class="botoneraNuevo">
+                            <button type="submit"
+                                class="btn btn-lg btn-primary btn-block mi-boton"
+                                th:formaction="@{/addPasf}"
+                                th:if="${session.usuario.tienePermisoEscritura('PASF')}"
+                                th:formmethod="GET"
+                                th:text="#{boton.nuevo}">Añadir
+                                nuevo plan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,587 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.detalle.personal}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.detalle.personal}">Detalle
+                    personal</h1>
+                <form action="#" class="my-box"
+                    th:object="${detallePersonal}" id="detallePersonal"
+                    th:method="post" th:action="@{/modificarFormacion}"
+                    enctype="multipart/form-data">
+                    <input type="hidden" th:field="*{idPersonal}" />
+                    <input type="hidden" th:field="*{pageTitulos}" />
+                    <input type="hidden" th:field="*{pageCursos}" />
+                    <input type="hidden" th:field="*{pageRevisiones}" />
+                    <input type="hidden" th:field="*{pageInspecciones}" />
+                    <input type="hidden" th:field="*{pageReportes}" />
+                    <input type="hidden" th:field="*{foto}" />
+                    <table class="table-grid">
+                        <tbody>
+                            <tr>
+                                <td colspan="2">
+                                    <label for="nombre"
+                                        th:text="#{formulario.nombre}">Nombre:</label>
+                                    <input type="text"
+                                        class="form-control"
+                                        th:field="*{nombre}"
+                                        style="width: 100%;" readonly />
+                                </td>
+                                <td>
+                                    <label for="cargo"
+                                        th:text="#{formulario.cargo}">Cargo:</label>
+                                    <input type="text"
+                                        class="form-control"
+                                        th:field="*{cargo}"
+                                        style="width: 100%;" readonly />
+                                </td>
+                                <td rowspan="3">
+                                    <img th:if="*{foto !=null}"
+                                        class="imagen"
+                                        th:src="@{'data:image/jpeg;base64,'+*{foto}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="dni"
+                                        th:text="#{formulario.dni}">DNI:</label>
+                                    <input type="text"
+                                        class="form-control"
+                                        th:field="*{dni}" readonly />
+                                </td>
+                                <td>
+                                    <label for="numeroEmpleado"
+                                        th:text="#{formulario.numero.empleado}">Nº
+                                        Empleado:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{numeroEmpleado}"
+                                        readonly />
+                                </td>
+                                <td>
+                                    <label for="usuario"
+                                        th:text="#{formulario.usuario}">Usuario:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{usuario}" readonly />
+                                </td>
+                                <!--                                 <td rowspan="2"> -->
+                                <!--                                     <img th:if="*{foto !=null}" -->
+                                <!--                                         class="imagen" -->
+                                <!--                                         th:src="@{'data:image/jpeg;base64,'+*{foto}}"> -->
+                                <!--                                 </td> -->
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="fechaAlta"
+                                        th:text="#{formulario.fecha.alta}">Fecha
+                                        de alta:</label>
+                                    <input class="form-control"
+                                        type="date"
+                                        th:field="*{fechaAlta}" readonly />
+                                </td>
+                                <td>
+                                    <label for="nacionalidad"
+                                        th:text="#{formulario.nacionalidad}">Nacionalidad:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{nacionalidad}"
+                                        readonly />
+                                </td>
+                                <td>
+                                    <label for="email"
+                                        th:text="#{formulario.email}">Email:</label>
+                                    <input class="form-control"
+                                        type="text" th:field="*{email}"
+                                        readonly />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <label for="direccion"
+                                        th:text="#{formulario.direccion.completa}">Direccion
+                                        completa:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{direccionCompleta}"
+                                        style="width: 100%;" readonly />
+                                </td>
+                            </tr>
+                            <tr th:if="*{!tieneLicenciaConduccion}">
+                                <td colspan="3">
+                                    <label for="licenciaConduccion"
+                                        th:text="#{formulario.licencia.conduccion}">Licencia
+                                        conduccion:</label>
+                                    <input class="form-control-file"
+                                        type="file"
+                                        th:field="*{licenciaConduccion}"
+                                        accept=".jpg , .jpeg, .pdf">
+                                </td>
+                                <td>
+                                    <button
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        onclick="return validarSubidaArchivo('licenciaConduccion',true,'')"
+                                        type="submit"
+                                        th:formaction="@{/anadirLicenciaConduccionPersonal}">Añadir</button>
+                                </td>
+                            </tr>
+                            <tr th:if="*{tieneLicenciaConduccion}">
+                                <td>
+                                    <label for="licenciaConduccion"
+                                        th:text="#{formulario.licencia.conduccion}">Licencia
+                                        conduccion:</label>
+                                </td>
+                                <td>
+                                    <button
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit" formnovalidate
+                                        th:formtarget="_blank"
+                                        th:formaction="@{/verLicenciaConduccionPersonal}">Ver
+                                        Titulo</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table-paginacion">
+                        <caption
+                            style="font-size: 24px; font-family: inherit; font-weight: 500; line-height: 1.1; color: inherit;"
+                            th:text="#{formulario.titulos}"></caption>
+                        <thead>
+                            <tr>
+                                <th th:text="#{tabla.valido.desde}">Valido
+                                    desde</th>
+                                <th th:text="#{tabla.tipo.titulo}">Tipo
+                                    titulo</th>
+                                <th th:text="#{tabla.nombre}">Nombre</th>
+                                <th th:text="#{tabla.fecha.caducidad}">Fecha
+                                    caducidad</th>
+                                <th th:text="#{tabla.estado}">Estado</th>
+                                <th th:text="#{tabla.ver}">Ver</th>
+                                <th
+                                    th:text="#{tabla.suspender.ver.suspension}">Suspender</th>
+                                <th th:text="#{tabla.revocar}">Revocar</th>
+                                <th th:text="#{tabla.caducar}">Caducar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="titulo : ${titulos}"
+                                th:class="${tituloStat.odd}? 'odd':'even'">
+                                <td>
+                                    <output
+                                        th:text="${#dates.format(titulo.validoDesde, 'dd-MM-yyyy')}">Valido
+                                        desde</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${titulo.tipoTitulo.valor}">Tipo
+                                        titulo</output>
+                                </td>
+                                <td>
+                                    <output th:text="${titulo.nombre}">nombre</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${#dates.format(titulo.fechaCaducidad, 'dd-MM-yyyy')}">Fecha
+                                        Caducidad</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${titulo.estadoTitulo.valor}">Estado
+                                        titulo</output>
+                                </td>
+                                <td>
+                                    <button type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:formaction="@{/verDetalleTitulo}"
+                                        th:if="${session.usuario.tienePermiso('titulos')}"
+                                        th:name="idTitulo"
+                                        th:value="${titulo.idTitulo}">
+                                        <i class="far fa-eye"></i>
+                                    </button>
+                                </td>
+                                <td align="center">
+                                    <button type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:if="${titulo.estadoTitulo.valor.equals('Concedido') and session.usuario.tienePermisoEscritura('titulos')}"
+                                        th:formaction="@{/suspenderTitulo}"
+                                        th:name="idTitulo"
+                                        th:value="${titulo.idTitulo}"
+                                        th:text="#{boton.suspender}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:if="${titulo.estadoTitulo.valor.equals('Suspendido') and session.usuario.tienePermisoEscritura('titulos')}"
+                                        th:formaction="@{/suspensionActivaTitulo}"
+                                        th:name="idTitulo"
+                                        th:value="${titulo.idTitulo}"
+                                        th:text="#{boton.ver}">
+                                        <i class="far fa-eye"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:if="${titulo.estadoTitulo.valor.equals('Concedido') and session.usuario.tienePermisoEscritura('titulos')}"
+                                        th:formaction="@{/revocarTitulo}"
+                                        th:name="idTitulo"
+                                        th:value="${titulo.idTitulo}"
+                                        th:text="#{boton.revocar}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:if="${titulo.estadoTitulo.valor.equals('Concedido') and session.usuario.tienePermisoEscritura('titulos')}"
+                                        th:formaction="@{/caducarTitulo}"
+                                        th:name="idTitulo"
+                                        th:value="${titulo.idTitulo}"
+                                        th:text="#{boton.caducar}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div
+                        th:replace="utiles :: paginacion('paginacionTablaDetallePersonalTitulos', ${titulos},'pageTitulos')">...</div>
+                    <div class="botoneraNuevo">
+                        <button
+                            th:if="${detallePersonal.habilitar and session.usuario.tienePermisoEscritura('titulos')}"
+                            type="submit"
+                            class="btn btn-lg btn-primary btn-block mi-boton"
+                            th:formaction="@{/habilitar}"
+                            th:text="#{boton.nuevo}">Nuevo</button>
+                    </div>
+                    <table class="table-paginacion">
+                        <caption
+                            style="font-size: 24px; font-family: inherit; font-weight: 500; line-height: 1.1; color: inherit;"
+                            th:text="#{formulario.cursos}"></caption>
+                        <thead>
+                            <tr>
+                                <th th:text="#{tabla.valido.desde}">Valido
+                                    desde</th>
+                                <th th:text="#{tabla.tipo.curso}">Tipo
+                                    curso</th>
+                                <th th:text="#{tabla.titulo.curso}">Titulo
+                                    curso</th>
+                                <th th:text="#{tabla.fecha.caducidad}">Fecha
+                                    caducidad</th>
+                                <th th:text="#{tabla.estado}">Estado</th>
+                                <th th:text="#{tabla.ver}">Ver</th>
+                                <th
+                                    th:text="#{tabla.superar.no.superar}">Superar/no
+                                    Superar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="cursoAlumno : ${cursoAlumnos}"
+                                th:class="${cursoAlumnoStat.odd}? 'odd':'even'">
+                                <td>
+                                    <output
+                                        th:text="${#dates.format(cursoAlumno.curso.validoDesde, 'dd-MM-yyyy')}">Valido
+                                        desde</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${cursoAlumno.curso.tipoCurso.valor}">Tipo
+                                        curso</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${cursoAlumno.curso.tituloCurso}">Titulo
+                                        curso</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${#dates.format(cursoAlumno.curso.fechaCaducidad, 'dd-MM-yyyy')}">Fecha
+                                        Caducidad</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${cursoAlumno.estadoCursoAlumno.valor}">Estado
+                                        curso</output>
+                                </td>
+                                <td>
+                                    <button type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:formaction="@{/verDetalleCurso}"
+                                        th:name="idCursoAlumno"
+                                        th:value="${cursoAlumno.idCursoAlumno}"
+                                        th:if="${session.usuario.tienePermiso('cursos')}"
+                                        th:text="#{boton.ver}">
+                                        <i class="far fa-eye"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button type="submit"
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        th:if="${cursoAlumno.estadoCursoAlumno.valor.equals('En Curso') and session.usuario.tienePermisoEscritura('cursos')}"
+                                        th:formaction="@{/modificarFormacionCursoAlumno}"
+                                        th:name="idCursoAlumno"
+                                        th:value="${cursoAlumno.idCursoAlumno}"
+                                        th:text="#{boton.modificar}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div
+                        th:replace="utiles :: paginacion('paginacionTablaDetallePersonalCursos', ${cursoAlumnos},'pageCursos')">...</div>
+                    <table class="table-paginacion">
+                        <caption
+                            style="font-size: 24px; font-family: inherit; font-weight: 500; line-height: 1.1; color: inherit;"
+                            th:text="#{formulario.revisiones}"></caption>
+                        <thead>
+                            <tr>
+                                <th th:text="#{tabla.valido.desde}">Valido
+                                    desde</th>
+                                <th th:text="#{tabla.causa}">Causa</th>
+                                <th th:text="#{tabla.fecha.caducidad}">Fecha
+                                    caducidad</th>
+                                <th th:text="#{tabla.estado}">Estado</th>
+                                <th th:text="#{tabla.ver}">Ver</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="revision : ${revisiones}"
+                                th:class="${revisionStat.odd}? 'odd':'even'">
+                                <td>
+                                    <output
+                                        th:text="${#dates.format(revision.validoDesde, 'dd-MM-yyyy')}">Valido
+                                        desde</output>
+                                </td>
+                                <td>
+                                    <output th:text="${revision.causa}">Causa</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${#dates.format(revision.fechaCaducidad, 'dd-MM-yyyy')}">Fecha
+                                        Caducidad</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${revision.estadoRevision.valor}">Estado
+                                        Revision</output>
+                                </td>
+                                <td>
+                                    <button
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/verDetalleRevision}"
+                                        th:name="idRevision"
+                                        th:value="${revision.idRevisionPsico}"
+                                        th:if="${session.usuario.tienePermiso('revisiones')}"
+                                        th:text="#{boton.ver}">
+                                        <i class="far fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div
+                        th:replace="utiles :: paginacion('paginacionTablaDetallePersonalRevisiones', ${revisiones},'pageRevisiones')">...</div>
+                    <table class="table-grid">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <h3
+                                        th:text="#{formulario.sanciones}">
+                                        Sanciones</h3>
+                                </td>
+                                <td style="text-align: left;">
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:value="#{boton.sanciones}"
+                                        value="Sanciones"
+                                        th:if="${session.usuario.tienePermiso('personal')}"
+                                        th:formaction="@{/verSanciones}" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table-paginacion">
+                        <caption
+                            style="font-size: 24px; font-family: inherit; font-weight: 500; line-height: 1.1; color: inherit;"
+                            th:text="#{formulario.inspecciones}"></caption>
+                        <thead>
+                            <tr>
+                                <th th:text="#{tabla.codigo}">codigo</th>
+                                <th th:text="#{tabla.tipo}">tipo</th>
+                                <th th:text="#{tabla.fecha}">fecha</th>
+                                <th th:text="#{tabla.estado}">estado</th>
+                                <th th:text="#{tabla.ver.modificar}">Ver</th>
+                                <th th:text="#{tabla.anomalias}">Anomalias</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="inspeccion : ${inspecciones}"
+                                th:class="${inspeccionStat.odd}? 'odd':'even'">
+                                <td>
+                                    <output
+                                        th:text="${inspeccion.codigo}">codigo</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${inspeccion.tipoInspeccion}">tipo</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${#dates.format(inspeccion.fecha, 'dd-MM-yyyy')}">Fecha
+                                        inicio</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${inspeccion.estadoInspeccion}">estado</output>
+                                </td>
+                                <td>
+                                    <button
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/verInspeccionPersonal}+${inspeccion.codigoTipoInspeccion}"
+                                        th:name="idInspeccion"
+                                        th:if="${!session.usuario.tienePermisoEscritura('inspecciones') or (session.usuario.tienePermisoEscritura('inspecciones') and inspeccion.idEstadoInspeccion==5)}"
+                                        th:value="${inspeccion.viewInspeccionPK.idInspeccion}">
+                                        <i class="far fa-eye"></i>
+                                    </button>
+                                    <button
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/modificarInspeccionPersonal}+${inspeccion.codigoTipoInspeccion}"
+                                        th:disabled="${inspeccion.idEstadoInspeccion==5}"
+                                        th:name="idInspeccion"
+                                        th:if="${session.usuario.tienePermisoEscritura('inspecciones') and inspeccion.idEstadoInspeccion!=5}"
+                                        th:value="${inspeccion.viewInspeccionPK.idInspeccion}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/crearInformeAnomaliasPersonal}+${inspeccion.codigoTipoInspeccion}"
+                                        th:disabled="${(inspeccion.idEstadoInspeccion==1 and inspeccion.codigoTipoInspeccion!='CAD')}"
+                                        th:if="${inspeccion.codigoTipoInspeccion!='CAD' and session.usuario.tienePermisoEscritura('inspecciones') and inspeccion.idEstadoInspeccion!=5}"
+                                        th:name="idInspeccion"
+                                        th:value="${inspeccion.viewInspeccionPK.idInspeccion}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/verInformeAnomaliasPersonal}+${inspeccion.codigoTipoInspeccion}"
+                                        th:disabled="${(inspeccion.idEstadoInspeccion==1 and inspeccion.codigoTipoInspeccion!='CAD')}"
+                                        th:if="${(inspeccion.codigoTipoInspeccion!='CAD' and !session.usuario.tienePermisoEscritura('inspecciones') 
+                                            and inspeccion.tieneInformeAnomalias) or(inspeccion.codigoTipoInspeccion!='CAD' and session.usuario.tienePermisoEscritura('inspecciones') 
+                                            and inspeccion.tieneInformeAnomalias and inspeccion.idEstadoInspeccion==5)}"
+                                        th:name="idInspeccion"
+                                        th:value="${inspeccion.viewInspeccionPK.idInspeccion}">
+                                        <i class="far fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div
+                        th:replace="utiles :: paginacion('paginacionTablaDetallePersonalInspecciones', ${inspecciones},'pageInspecciones')">...</div>
+                    <table class="table-paginacion">
+                        <caption
+                            style="font-size: 24px; font-family: inherit; font-weight: 500; line-height: 1.1; color: inherit;"
+                            th:text="#{formulario.reportes}"></caption>
+                        <thead>
+                            <tr>
+                                <th th:text="#{tabla.tren}">Nombre</th>
+                                <th th:text="#{tabla.fecha}">Tipo</th>
+                                <th th:text="#{tabla.ver.modificar}">Ver</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="reporte : ${reportes}"
+                                th:class="${reporteStat.odd}? 'odd':'even'">
+                                <td>
+                                    <output
+                                        th:text="${reporte.tren.numero}">Nombre</output>
+                                </td>
+                                <td>
+                                    <output
+                                        th:text="${#dates.format(reporte.fecha, 'dd-MM-yyyy')}">fecha</output>
+                                </td>
+                                <td>
+                                    <button
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/verReportePersonal}"
+                                        th:if="${!session.usuario.tienePermisoEscritura('gestion de turnos')}"
+                                        th:name="idReporte"
+                                        th:value="${reporte.idHistoricoMaquinista}">
+                                        <i class="far fa-eye"></i>
+                                    </button>
+                                    <button
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/modificarReportePersonal}"
+                                        th:if="${session.usuario.tienePermisoEscritura('gestion de turnos')}"
+                                        th:name="idReporte"
+                                        th:value="${reporte.idHistoricoMaquinista}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div
+                        th:replace="utiles :: paginacion('paginacionTablaDetallePersonalReportes', ${reportes},'pageReportes')">...</div>
+                    <div class="botoneraNuevo">
+                        <input
+                            class="btn btn-lg btn-primary btn-block mi-boton"
+                            type="submit" th:value="#{boton.baja}"
+                            value="Dar de baja"
+                            th:if="${session.usuario.tienePermisoEscritura('personal')}"
+                            th:formaction="@{/bajaPersonal}" />
+                        <input
+                            class="btn btn-lg btn-primary btn-block mi-boton"
+                            type="submit"
+                            th:value="#{boton.cambiar.password}"
+                            value="Cambiar contraseña"
+                            th:if="${session.usuario.tienePermisoEscritura('personal')}"
+                            th:formaction="@{/cambiarPasswordPersonal}" />
+                        <input
+                            class="btn btn-lg btn-primary btn-block mi-boton"
+                            type="submit" th:value="#{boton.volver}"
+                            value="Volver" formnovalidate
+                            th:formaction="@{/volverVerDetallePersonal}" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

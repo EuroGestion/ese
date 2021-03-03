@@ -1,0 +1,83 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.informe.iso}">Acceso a eSe</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.crear.investigacion}">Acceso</h1>
+                <form action="#" th:object="${generarAccidente}"
+                    id="accidente" th:method="post"
+                    th:action="@{/generarAccidente}" class="my-box" enctype="multipart/form-data">
+                    <input type="hidden" th:field="*{pagina}">
+                    <input type="hidden" th:field="*{idAccidente}">
+                    <input type="hidden" th:field="*{lectura}">
+                    <input type="hidden" th:field="*{idEstadoAccidente}">
+                    <input type="hidden" th:field="*{firmadoFichaNotificacion}">
+                    <input type="hidden" th:field="*{firmadoInformeFinal}">
+                    <input type="hidden" th:field="*{confirmadoIntervieneCIAF}">
+                    <input type="hidden" th:field="*{confirmadoDelegaInvestigacion}">
+                    <input type="hidden"
+                        th:field="*{idFirmaFichaAccidente}">
+                    <input type="hidden"
+                        th:field="*{idFirmaFichaEstructura}">
+                    <input type="hidden"
+                        th:field="*{idFirmaFichaNotificacionResponsableSeguridad}">
+                    <input type="hidden"
+                        th:field="*{idFirmaFichaNotificacionDelegadoSeguridad}">
+                    <input type="hidden"
+                        th:field="*{idFirmaInformeFinalResponsableSeguridad}">
+                    <input type="hidden"
+                        th:field="*{idFirmaInformeFinalDelegadoSeguridad}">
+                    <input type="hidden"
+                        th:field="*{idFirmaFichaComentarios}">
+                    <input type="hidden"
+                        th:field="*{idFirmaFichaMedidas}">
+                    <div
+                        th:replace="fragmentoAccidente1 :: fragmentoAccidente1">...</div>
+                    <div
+                        th:replace="fragmentoAccidente2 :: fragmentoAccidente2">...</div>
+                    <div
+                        th:replace="fragmentoAccidente3 :: fragmentoAccidente3">...</div>
+                    <div
+                        th:replace="fragmentoAccidente4 :: fragmentoAccidente4">...</div>
+                    <div>
+                        <input type="submit" th:value="#{boton.guardar}"
+                            th:if="*{idEstadoAccidente!=8 and !lectura}"
+                            th:formaction="@{/guardarAccidente}"
+                            value="Guardar"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                        <input type="submit" th:value="#{boton.volver}"
+                            th:formaction="@{/volverAccidente}"
+                            value="Volver" formnovalidate
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

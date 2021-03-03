@@ -1,0 +1,337 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoIseet13"
+        th:hidden="*{!pagina.equals('13')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.iseet.equipos.elementos.seguridad}">Equipos
+                            y elementos de seguridad del material
+                            rodante</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h4 class="title-page"
+                            th:text="#{formulario.informe.iseet.equipos.vigilancia.control}">Equipos
+                            de vigilancia y control</h4>
+                    </td>
+                    <td>
+                        <h4 class="title-page"
+                            th:text="#{formulario.resultado}">
+                            Resultado</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoEquipoVigilanciaControl93"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.equipos.vigilancia.control.hombre.muerto}">hombre
+                            muerto:</label>
+                    </td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoEquipoVigilanciaControl93"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.equipos.vigilancia.control.hombre.muerto.93}">incorrecto:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('13') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoEquipoVigilanciaControl93}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoEquipoVigilanciaControl94"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.equipos.vigilancia.control.hombre.muerto.94}">no
+                            esta precintado:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('13') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoEquipoVigilanciaControl94}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoEquipoVigilanciaControl95"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.equipos.vigilancia.control.tacografo}">tacografo:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoEquipoVigilanciaControl95"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.equipos.vigilancia.control.tacografo.95}">incorrecto
+                            funcionamiento:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('13') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoEquipoVigilanciaControl95}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoEquipoVigilanciaControl96"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.equipos.vigilancia.control.equipo.radiotelefonia}">equipo
+                            de radiotelefonia:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoEquipoVigilanciaControl96"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.equipos.vigilancia.control.equipo.radiotelefonia.96}">incorrecta
+                            conexion:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('13') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoEquipoVigilanciaControl96}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoEquipoVigilanciaControl97"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.equipos.vigilancia.control.equipo.radiotelefonia.97}">incorrecto
+                            funcionamiento:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('13') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoEquipoVigilanciaControl97}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoEquipoVigilanciaControl98"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.equipos.vigilancia.control.asfa}">ASFA:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoEquipoVigilanciaControl98"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.equipos.vigilancia.control.asfa.98}">incorrecta
+                            conexion:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('13') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoEquipoVigilanciaControl98}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoEquipoVigilanciaControl99"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.equipos.vigilancia.control.asfa.99}">incorrecta
+                            colocacion:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('13') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoEquipoVigilanciaControl99}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoEquipoVigilanciaControl100"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.equipos.vigilancia.control.asfa.100}">incorrecto
+                            funcionamiento:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('13') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoEquipoVigilanciaControl100}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoEquipoVigilanciaControl101"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.equipos.vigilancia.control.asfa.101}">mal
+                            estado:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('13') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoEquipoVigilanciaControl101}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoEquipoVigilanciaControl102"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.equipos.vigilancia.control.interruptor.seta}">interruptor
+                            seta:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoEquipoVigilanciaControl102"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.equipos.vigilancia.control.interruptor.seta.102}">no
+                            funciona:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('13') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoEquipoVigilanciaControl102}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoEquipoVigilanciaControl103"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.equipos.vigilancia.control.ertms}">ERTMS:</label>
+                    </td>
+                    <td colspan="2" class="bordeInformeISEET">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label
+                            for="idResultadoEquipoVigilanciaControl103"
+                            class="labelColumna"
+                            th:text="#{formulario.informe.iseet.equipos.vigilancia.control.ertms.103}">incorrecta:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('13') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{idResultadoEquipoVigilanciaControl103}">
+                            <option
+                                th:each="var : ${resultadoInspecciones}"
+                                th:value="${var.idResultadoInspeccion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="bordeInformeISEET">
+                        <!-- observaciones -->
+                        <label
+                            for="observacionesEquipoVigilanciaControl"
+                            th:text="#{formulario.observaciones}">Observaciones:</label>
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesEquipoVigilanciaControl}"></textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

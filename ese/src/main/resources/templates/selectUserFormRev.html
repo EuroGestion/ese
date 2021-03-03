@@ -1,0 +1,231 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.programar.formacion}">Formacion</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.programar.formacion}"
+                    th:if="${selectPersonalFormRev.isFormacion}"></h1>
+                <h1 class="title-page"
+                    th:text="#{titulo.programar.revision}"
+                    th:if="${selectPersonalFormRev.isRevision}"></h1>
+                <form action="#" class="my-box"
+                    th:object="${selectPersonalFormRev}"
+                    id="selectUserFormRev" th:method="post"
+                    th:action="@{/borrarFiltrosFormRev}">
+                    <input id="isFormacion" name="isFormacion"
+                        type="hidden" th:value="*{isFormacion}" />
+                    <input id="isRevision" name="isRevision"
+                        type="hidden" th:value="*{isRevision}" />
+                    <input type="hidden"
+                        th:field="*{listaPersonalTotal}" />
+                    <input type="hidden" th:field="*{pageTotal}" />
+                    <input type="hidden" th:field="*{pageSeleccionados}" />
+                    <!-- formulario -->
+                    <table class="table-grid">
+                        <tr>
+                            <td>
+                                <label for="nombre"
+                                    th:text="#{formulario.nombre}">Nombre:</label>
+                                <input type="text" class="form-control"
+                                    th:field="*{nombre}" />
+                            </td>
+                            <td>
+                                <label for="apellido"
+                                    th:text="#{formulario.apellido}">Apellido:</label>
+                                <input class="form-control" type="text"
+                                    th:field="*{apellido}" />
+                            </td>
+                            <td>
+                                <label for="idCargo"
+                                    th:text="#{formulario.cargo}">Cargo:</label>
+                                <select class="form-control"
+                                    th:field="*{idCargo}">
+                                    <option th:each="var : ${cargos}"
+                                        th:value="${var.idCargo}"
+                                        th:text="${var.nombre}">Cargo</option>
+                                </select>
+                            </td>
+                            <td>
+                                <label for="dni"
+                                    th:text="#{formulario.dni}">DNI:</label>
+                                <input type="text" class="form-control"
+                                    th:field="*{dni}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <input type="submit"
+                                    th:formaction="@{/filtrarFormRev}"
+                                    th:value="#{boton.filtrar}"
+                                    class="btn btn-lg btn-primary btn-block mi-boton" />
+                                <input type="submit"
+                                    th:formaction="@{/borrarFiltrosFormRev}"
+                                    th:value="#{boton.borrar.filtros}"
+                                    class="btn btn-lg btn-primary btn-block mi-boton" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <table class="table-paginacion">
+                                    <caption
+                                        style="font-size: 24px; font-family: inherit; font-weight: 500; line-height: 1.1; color: inherit;"
+                                        th:text="#{formulario.personales.totales}"></caption>
+                                    <thead>
+                                        <tr>
+                                            <th
+                                                th:text="#{tabla.nombre.completo}">Nombre</th>
+                                            <th th:text="#{tabla.dni}">DNI</th>
+                                            <th th:text="#{tabla.cargo}">Cargo</th>
+                                            <th
+                                                th:text="#{tabla.anadir}">Anadir</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            th:each="persona : ${personasTotales}"
+                                            th:class="${personaStat.odd}? 'odd':'even'">
+                                            <td>
+                                                <output
+                                                    th:text="${persona.nombreCompleto}">Nombre</output>
+                                            </td>
+                                            <td>
+                                                <output
+                                                    th:text="${persona.documento}">DNI</output>
+                                            </td>
+                                            <td>
+                                                <output
+                                                    th:text="${persona.cargo.nombre}">Cargo</output>
+                                            </td>
+                                            <td>
+                                                <button
+                                                    class="btn btn-lg btn-primary btn-block mi-boton"
+                                                    type="submit"
+                                                    th:formaction="@{/addPersonalSelectFormRev}"
+                                                    th:name="idPersonal"
+                                                    th:value="${persona.idPersonal}">
+                                                    <i
+                                                        class="fas fa-plus"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </th:block>
+                                    </tbody>
+                                </table>
+                                <div
+                                    th:replace="utiles :: paginacion('paginacionTablaSelectUserFormRevTotal', ${personasTotales},'pageTotal')">...</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <table class="table-paginacion">
+                                    <caption
+                                        style="font-size: 24px; font-family: inherit; font-weight: 500; line-height: 1.1; color: inherit;"
+                                        th:text="#{formulario.personales.seleccionados}"></caption>
+                                    <thead>
+                                        <tr>
+                                            <th
+                                                th:text="#{tabla.nombre.completo}">Nombre</th>
+                                            <th th:text="#{tabla.dni}">DNI</th>
+                                            <th th:text="#{tabla.cargo}">Cargo</th>
+                                            <th
+                                                th:text="#{tabla.eliminar}">Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            th:each="persona : ${personasSeleccionadas}"
+                                            th:class="${personaStat.odd}? 'odd':'even'">
+                                            <td>
+                                                <output
+                                                    th:text="${persona.nombreCompleto}">Nombre</output>
+                                            </td>
+                                            <td>
+                                                <output
+                                                    th:text="${persona.documento}">DNI</output>
+                                            </td>
+                                            <td>
+                                                <output
+                                                    th:text="${persona.cargo.nombre}">Cargo</output>
+                                            </td>
+                                            <td>
+                                                <button
+                                                    class="btn btn-lg btn-primary btn-block mi-boton"
+                                                    type="submit"
+                                                    th:formaction="@{/eliminarPersonalSelectFormRev}"
+                                                    th:name="idPersonal"
+                                                    th:value="${persona.idPersonal}">
+                                                    <i
+                                                        class="fas fa-minus"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </th:block>
+                                    </tbody>
+                                </table>
+                                <div
+                                    th:replace="utiles :: paginacion('paginacionTablaSelectUserFormRevSeleccionados', ${personasSeleccionadas},'pageSeleccionados')">...</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="submit"
+                                    class="btn btn-lg btn-primary btn-block mi-boton"
+                                    th:value="#{boton.formacion}"
+                                    value="Formacion"
+                                    th:formaction="@{/selectPersonalOptionForm}"
+                                    th:if="*{isFormacion}" />
+                                <input type="submit"
+                                    class="btn btn-lg btn-primary btn-block mi-boton"
+                                    th:value="#{boton.revision}"
+                                    value="Revision"
+                                    th:formaction="@{/selectPersonalOptionRev}"
+                                    th:if="*{isRevision}" />
+                                <input type="submit"
+                                    class="btn btn-lg btn-primary btn-block mi-boton"
+                                    th:value="#{boton.volver}"
+                                    value="Volver" formnovalidate
+                                    th:formmethod="GET"
+                                    th:formaction="@{/buscadorModificarFormacion}"
+                                    th:if="*{isFormacion}" />
+                                <input type="submit"
+                                    class="btn btn-lg btn-primary btn-block mi-boton"
+                                    th:value="#{boton.volver}"
+                                    value="Volver" formnovalidate
+                                    th:formmethod="GET"
+                                    th:formaction="@{/buscadorModificarRevision}"
+                                    th:if="*{isRevision}" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

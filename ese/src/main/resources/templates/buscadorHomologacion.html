@@ -1,0 +1,194 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.modificar.revision}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+<script th:inline="javascript">
+    //thymeleaf to javascript variables
+    /*<![CDATA[*/
+    var sortProperty = /*[[${buscadorHomologacion.order}]]*/ null;
+    var sortDesc = /*[[${buscadorHomologacion.direccion}]]*/ null;
+    var currentPage = /*[[${buscadorHomologacion.page}]]*/ 0;
+    /*]]>*/
+
+    $(document).ready(function(){
+     //show up/down arrows
+     $("table#tablaBuscadorHomologacion thead th").each(function(){
+        var head = $(this);
+        if(head.attr('data-sort-prop')==sortProperty){
+            head.append(sortDesc=="desc"?'▾':'▴');
+        }
+        });
+
+     //set click action, reload page on clicking with all query params
+     $("table#tablaBuscadorHomologacion thead th").click(function() {
+      var headerSortPropName = $(this).attr("data-sort-prop");
+        if(headerSortPropName=="ver"){
+            return;   
+        }
+         
+
+      $("#order").attr("value",headerSortPropName);
+      if(headerSortPropName==sortProperty){
+       
+          $("#direccion").attr("value",(sortDesc=="desc"?"asc":"desc"));
+      }else{
+          $("#direccion").attr("value","asc");
+          
+      }
+
+      $("#buscadorHomologacion").attr("action",getContextPath()+"/ordenTablaBuscadorHomologacion");
+      $("#buscadorHomologacion").submit();
+      });
+    });
+  </script>
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.buscador.homologacion}">Buscador</h1>
+                <div style="width: 100%">
+                    <form action="#" class="my-box"
+                        th:object="${buscadorHomologacion}"
+                        id="buscadorHomologacion" th:method="post"
+                        th:action="@{/borrarFiltrosBuscadorHomologacion}">
+                        <input type="hidden" th:field="*{page}" />
+                        <input type="hidden" th:field="*{order}" />
+                        <input type="hidden" th:field="*{direccion}" />
+                        <table class="table-grid">
+                            <tr>
+                                <td>
+                                    <label for="nombre"
+                                        th:text="#{formulario.nombre}">Nombre:</label>
+                                    <input class="form-control"
+                                        type="text" th:field="*{nombre}" />
+                                </td>
+                                <td>
+                                    <label for="documento"
+                                        th:text="#{formulario.documento}">Documento:</label>
+                                    <input class="form-control"
+                                        type="text"
+                                        th:field="*{documento}" />
+                                </td>
+                                <td>
+                                    <label for="idEstado"
+                                        th:text="#{formulario.estado.homologacion}">Estado
+                                        Homologacion:</label>
+                                    <select class="form-control"
+                                        th:field="*{idEstado}">
+                                        <option
+                                            th:each="var : ${estadosProveedores}"
+                                            th:value="${var.idEstadoProveedor}"
+                                            th:text="${var.valor}">Estado
+                                            Homologacion</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/filtrarBuscadorHomologacion}"
+                                        th:value="#{boton.filtrar}" />
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/borrarFiltrosBuscadorHomologacion}"
+                                        th:value="#{boton.borrar.filtros}" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table id="tablaBuscadorHomologacion"
+                            class="table-paginacion">
+                            <thead>
+                                <tr>
+                                    <th
+                                        data-sort-prop="compania.documento"
+                                        th:text="#{tabla.documento}">documento</th>
+                                    <th data-sort-prop="compania.nombre"
+                                        th:text="#{tabla.nombre}">nombre</th>
+                                    <th
+                                        data-sort-prop="estadoProveedor.valor"
+                                        th:text="#{tabla.estado}">estado</th>
+                                    <th data-sort-prop="ver"
+                                        th:text="#{tabla.ver.modificar}">ver/modificar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="proveedor : ${proveedores}"
+                                    th:class="${proveedorStat.odd}? 'odd':'even'">
+                                    <td>
+                                        <output
+                                            th:text="${proveedor.compania.documento}">documento</output>
+                                    </td>
+                                    <td>
+                                        <output
+                                            th:text="${proveedor.compania.nombre}">nombre</output>
+                                    </td>
+                                    <td>
+                                        <output
+                                            th:text="${proveedor.estadoProveedor.valor}">estado</output>
+                                    </td>
+                                    <td>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/verProveedor}"
+                                            th:if="${!session.usuario.tienePermisoEscritura('homologacion') or(session.usuario.tienePermisoEscritura('homologacion') and proveedor.estadoProveedor.idEstadoProveedor==9)}"
+                                            th:name="idProveedor"
+                                            th:value="${proveedor.idProveedor}">
+                                            <i class="far fa-eye"></i>
+                                        </button>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/modificarProveedor}"
+                                            th:if="${session.usuario.tienePermisoEscritura('homologacion') and proveedor.estadoProveedor.idEstadoProveedor!=9}"
+                                            th:name="idProveedor"
+                                            th:value="${proveedor.idProveedor}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div
+                            th:replace="utiles :: paginacion('paginacionTablaBuscadorHomologacion', ${proveedores},'page')">...</div>
+                        <div class="botoneraNuevo">
+                            <button type="submit"
+                                class="btn btn-lg btn-primary btn-block mi-boton"
+                                th:formaction="@{/addProveedor}"
+                                th:if="${session.usuario.tienePermisoEscritura('homologacion')}"
+                                th:formmethod="GET"
+                                th:text="#{boton.nuevo}">Homologar
+                                nuevo proveedor</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

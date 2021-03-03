@@ -1,0 +1,280 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.modificar.revision}">Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+<script th:inline="javascript">
+    //thymeleaf to javascript variables
+    /*<![CDATA[*/
+    var sortProperty = /*[[${buscadorInspeccion.order}]]*/ null;
+    var sortDesc = /*[[${buscadorInspeccion.direccion}]]*/ null;
+    var currentPage = /*[[${buscadorInspeccion.page}]]*/ 0;
+    /*]]>*/
+
+    $(document).ready(function(){
+     //show up/down arrows
+     $("table#tablaBuscadorInspeccion thead th").each(function(){
+        var head = $(this);
+        if(head.attr('data-sort-prop')==sortProperty){
+            head.append(sortDesc=="desc"?'▾':'▴');
+        }
+        });
+
+     //set click action, reload page on clicking with all query params
+     $("table#tablaBuscadorInspeccion thead th").click(function() {
+      var headerSortPropName = $(this).attr("data-sort-prop");
+        if(headerSortPropName=="ver" ||headerSortPropName=="anomalias"){
+            return;   
+        }
+         
+
+      $("#order").attr("value",headerSortPropName);
+      if(headerSortPropName==sortProperty){
+       
+          $("#direccion").attr("value",(sortDesc=="desc"?"asc":"desc"));
+      }else{
+          $("#direccion").attr("value","asc");
+          
+      }
+
+      $("#buscadorInspeccion").attr("action",getContextPath()+"/ordenTablaBuscadorInspeccion");
+      $("#buscadorInspeccion").submit();
+      });
+    });
+  </script>
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.buscador.inspeccion}">Buscador</h1>
+                <div style="width: 100%">
+                    <form action="#" class="my-box"
+                        th:object="${buscadorInspeccion}"
+                        id="buscadorInspeccion" th:method="post"
+                        th:action="@{/borrarFiltrosBuscadorInspeccion}">
+                        <input type="hidden" th:field="*{page}" />
+                        <input type="hidden" th:field="*{order}" />
+                        <input type="hidden" th:field="*{direccion}" />
+                        <table class="table-grid">
+                            <tr>
+                                <td>
+                                    <label for="idTipoInspeccion"
+                                        th:text="#{formulario.tipo.inspeccion}">Tipo
+                                        Inspeccion:</label>
+                                    <select class="form-control"
+                                        th:field="*{idTipoInspeccion}">
+                                        <option
+                                            th:each="var : ${tiposInspeccion}"
+                                            th:value="${var.idTipoInspeccion}"
+                                            th:text="${var.valor}">Tipo
+                                            Inspeccion</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="idInspector"
+                                        th:text="#{formulario.inspector}">Inspector:</label>
+                                    <select class="form-control"
+                                        th:field="*{idInspector}">
+                                        <option
+                                            th:each="var : ${inspectores}"
+                                            th:value="${var.idPersonal}"
+                                            th:text="${var.nombre}">inspector</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="idEstadoInspeccion"
+                                        th:text="#{formulario.estado.inspeccion}">Estado
+                                        Inspeccion:</label>
+                                    <select class="form-control"
+                                        th:field="*{idEstado}">
+                                        <option
+                                            th:each="var : ${estadosInspecciones}"
+                                            th:value="${var.idEstadoInspeccion}"
+                                            th:text="${var.valor}">Estado
+                                            Inspeccion</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="codigo"
+                                        th:text="#{formulario.codigo}">codigo:</label>
+                                    <input class="form-control"
+                                        type="text" th:field="*{codigo}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="fecha"
+                                        th:text="#{formulario.fecha}">Fecha:</label>
+                                    <input class="form-control"
+                                        type="date" min="1900-01-01"
+                                        max="3000-01-01"
+                                        th:field="*{fecha}" />
+                                </td>
+                                <td>
+                                    <label for="nve"
+                                        th:text="#{formulario.nve}">codigo:</label>
+                                    <input class="form-control"
+                                        type="text" th:field="*{nve}" />
+                                </td>
+                                <td>
+                                    <label for="idTren"
+                                        th:text="#{formulario.numero.tren}">Numero
+                                        de tren:</label>
+                                    <select class="form-control"
+                                        th:field="*{idTren}">
+                                        <option
+                                            th:each="var : ${trenes}"
+                                            th:value="${var.idTren}"
+                                            th:text="${var.numero}">numeroTren</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="idOrigen"
+                                        th:text="#{formulario.origen}">Numero
+                                        de tren:</label>
+                                    <input class="form-control"
+                                        type="text" th:field="*{origen}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/filtrarBuscadorInspeccion}"
+                                        th:value="#{boton.filtrar}" />
+                                    <input
+                                        class="btn btn-lg btn-primary btn-block mi-boton"
+                                        type="submit"
+                                        th:formaction="@{/borrarFiltrosBuscadorInspeccion}"
+                                        th:value="#{boton.borrar.filtros}" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table id="tablaBuscadorInspeccion"
+                            class="table-paginacion">
+                            <thead>
+                                <tr>
+                                    <th data-sort-prop="codigo"
+                                        th:text="#{tabla.codigo}">codigo</th>
+                                    <th data-sort-prop="tipoInspeccion"
+                                        th:text="#{tabla.tipo}">tipo</th>
+                                    <th data-sort-prop="fecha"
+                                        th:text="#{tabla.fecha}">fecha</th>
+                                    <th
+                                        data-sort-prop="estadoInspeccion"
+                                        th:text="#{tabla.estado}">estado</th>
+                                    <th data-sort-prop="ver"
+                                        th:text="#{tabla.ver.modificar}">Ver</th>
+                                    <th data-sort-prop="anomalias"
+                                        th:text="#{tabla.anomalias}">Anomalias</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    th:each="inspeccion : ${inspecciones}"
+                                    th:class="${inspeccionStat.odd}? 'odd':'even'">
+                                    <td>
+                                        <output
+                                            th:text="${inspeccion.codigo}">codigo</output>
+                                    </td>
+                                    <td>
+                                        <output
+                                            th:text="${inspeccion.tipoInspeccion}">tipo</output>
+                                    </td>
+                                    <td>
+                                        <output
+                                            th:text="${#dates.format(inspeccion.fecha, 'dd-MM-yyyy')}">Fecha
+                                            inicio</output>
+                                    </td>
+                                    <td>
+                                        <output
+                                            th:text="${inspeccion.estadoInspeccion}">estado</output>
+                                    </td>
+                                    <td>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/verInspeccion}+${inspeccion.codigoTipoInspeccion}"
+                                            th:name="idInspeccion"
+                                            th:if="${!session.usuario.tienePermisoEscritura('inspecciones') or (session.usuario.tienePermisoEscritura('inspecciones') and inspeccion.idEstadoInspeccion==5)}"
+                                            th:value="${inspeccion.viewInspeccionPK.idInspeccion}">
+                                            <i class="far fa-eye"></i>
+                                        </button>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/modificarInspeccion}+${inspeccion.codigoTipoInspeccion}"
+                                            th:disabled="${inspeccion.idEstadoInspeccion==5}"
+                                            th:name="idInspeccion"
+                                            th:if="${session.usuario.tienePermisoEscritura('inspecciones') and inspeccion.idEstadoInspeccion!=5}"
+                                            th:value="${inspeccion.viewInspeccionPK.idInspeccion}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/crearInformeAnomalias}+${inspeccion.codigoTipoInspeccion}"
+                                            th:disabled="${(inspeccion.idEstadoInspeccion==1 and inspeccion.codigoTipoInspeccion!='CAD')}"
+                                            th:if="${inspeccion.codigoTipoInspeccion!='CAD' and session.usuario.tienePermisoEscritura('inspecciones') and inspeccion.idEstadoInspeccion!=5 and !inspeccion.cerradoInformeAnomalias}"
+                                            th:name="idInspeccion"
+                                            th:value="${inspeccion.viewInspeccionPK.idInspeccion}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button
+                                            class="btn btn-lg btn-primary btn-block mi-boton"
+                                            type="submit"
+                                            th:formaction="@{/verInformeAnomalias}+${inspeccion.codigoTipoInspeccion}"
+                                            th:disabled="${(inspeccion.idEstadoInspeccion==1 and inspeccion.codigoTipoInspeccion!='CAD')}"
+                                            th:if="${(inspeccion.codigoTipoInspeccion!='CAD' and !session.usuario.tienePermisoEscritura('inspecciones') 
+                                            and inspeccion.tieneInformeAnomalias) or(inspeccion.codigoTipoInspeccion!='CAD' and session.usuario.tienePermisoEscritura('inspecciones') 
+                                            and inspeccion.tieneInformeAnomalias and inspeccion.idEstadoInspeccion==5) or(inspeccion.codigoTipoInspeccion!='CAD' and session.usuario.tienePermisoEscritura('inspecciones') and inspeccion.idEstadoInspeccion!=5 and inspeccion.cerradoInformeAnomalias)}"
+                                            th:name="idInspeccion"
+                                            th:value="${inspeccion.viewInspeccionPK.idInspeccion}">
+                                            <i class="far fa-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div
+                            th:replace="utiles :: paginacion('paginacionTablaBuscadorInspeccion', ${inspecciones},'page')">...</div>
+                        <div class="botoneraNuevo">
+                            <button type="submit"
+                                class="btn btn-lg btn-primary btn-block mi-boton"
+                                th:formaction="@{/programarInspeccion}"
+                                th:if="${session.usuario.tienePermisoEscritura('inspecciones')}"
+                                th:formmethod="GET"
+                                th:text="#{boton.nuevo}">Programar
+                                nueva inspeccion</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

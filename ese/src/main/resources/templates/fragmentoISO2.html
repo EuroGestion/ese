@@ -1,0 +1,412 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoIso2" th:hidden="*{!pagina.equals('2')}">
+        <!-- dotacion de las locomotoras -->
+        <h1 th:text="#{titulo.dotacion.locomotora}">Dotación de las
+            locomotoras</h1>
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td width="20%"></td>
+                    <td width="10%">
+                        <!-- verificado -->
+                        <label th:text="#{formulario.verificado}">Verificado</label>
+                    </td>
+                    <td width="10%">
+                        <!-- numero -->
+                        <label th:text="#{formulario.numero}">Número</label>
+                    </td>
+                    <td width="60%">
+                        <!-- observaciones tabla -->
+                        <label th:text="#{formulario.observaciones}">Observaciones</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- chapa reflectante -->
+                        <label for="verificadoChapa" class="labelColumna"
+                            th:text="#{formulario.chapa}">Señales
+                            de cola o chapas reflectantes:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{verificadoChapa}">
+                            <option th:each="var : ${verificaciones}"
+                                th:value="${var.idEstadoVerificacion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{numeroChapa}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesChapa}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- linternas -->
+                        <label for="verificadoLinternas" class="labelColumna"
+                            th:text="#{formulario.linternas}">Linternas
+                            con luces blanco y rojo:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{verificadoLinternas}">
+                            <option th:each="var : ${verificaciones}"
+                                th:value="${var.idEstadoVerificacion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{numeroLinternas}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesLinternas}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- banderines -->
+                        <label for="verificadoBanderines" class="labelColumna"
+                            th:text="#{formulario.banderines}">Banderines
+                            rojos:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{verificadoBanderines}">
+                            <option th:each="var : ${verificaciones}"
+                                th:value="${var.idEstadoVerificacion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{numeroBanderines}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesBanderines}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- calces -->
+                        <label for="verificadoCalces" class="labelColumna"
+                            th:text="#{formulario.calces}">Calces
+                            antideriva:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{verificadoCalces}">
+                            <option th:each="var : ${verificaciones}"
+                                th:value="${var.idEstadoVerificacion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{numeroCalces}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesCalces}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- barras -->
+                        <label for="verificadoBarras" class="labelColumna"
+                            th:text="#{formulario.barras}">Barras
+                            o útiles de cortocircuito:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{verificadoBarras}">
+                            <option th:each="var : ${verificaciones}"
+                                th:value="${var.idEstadoVerificacion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{numeroBarras}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesBarras}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- juego de llaves -->
+                        <label for="verificadoJuegoLlaves" class="labelColumna"
+                            th:text="#{formulario.juego.llaves}">Juego
+                            de llaves cerradura de vehiculos:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{verificadoJuegoLlaves}">
+                            <option th:each="var : ${verificaciones}"
+                                th:value="${var.idEstadoVerificacion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{numeroJuegoLlaves}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesJuegoLlaves}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- manual conduccion -->
+                        <label for="verificadoManual" class="labelColumna"
+                            th:text="#{formulario.manual.conduccion}">Manual
+                            de conducción material tracción:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{verificadoManual}">
+                            <option th:each="var : ${verificaciones}"
+                                th:value="${var.idEstadoVerificacion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{numeroManual}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesManual}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- libro averias -->
+                        <label for="verificadoLibro" class="labelColumna"
+                            th:text="#{formulario.libro.averias}">Libro
+                            de averías:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{verificadoLibro}">
+                            <option th:each="var : ${verificaciones}"
+                                th:value="${var.idEstadoVerificacion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{numeroLibro}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesLibro}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <!-- observaciones -->
+                        <label for="observaciones"
+                            th:text="#{formulario.observaciones}">Observaciones:</label>
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesLocomotora}"></textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- acompañamiento del tren: personal de conduccion -->
+        <h1 th:text="#{titulo.acompanamiento.tren}">Acompañamiento
+            del tren: personal de conducción</h1>
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td width="20%"></td>
+                    <td width="10%">
+                        <!-- verificado -->
+                        <label th:text="#{formulario.verificado}">Verificado</label>
+                    </td>
+                    <td width="70%">
+                        <!-- observaciones tabla -->
+                        <label th:text="#{formulario.observaciones}">Observaciones</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- destreza conduccion -->
+                        <label for="verificadoDestreza" class="labelColumna"
+                            th:text="#{formulario.destreza}">Tiene
+                            destreza en la conducción:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{verificadoDestreza}">
+                            <option th:each="var : ${verificaciones}"
+                                th:value="${var.idEstadoVerificacion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesDestreza}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- cumple documentacion -->
+                        <label for="verificadoCumpleDoc" class="labelColumna"
+                            th:text="#{formulario.cumple.doc}">Cumple
+                            documentación y normativa:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{verificadoCumple}">
+                            <option th:each="var : ${verificaciones}"
+                                th:value="${var.idEstadoVerificacion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesCumple}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- cumple tiempos -->
+                        <label for="verificadoCumpleTiempo" class="labelColumna"
+                            th:text="#{formulario.cumple.tiempo}">Cumple
+                            tiempos máximos conducción:</label>
+                    </td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{verificadoCumpleTiempo}">
+                            <option th:each="var : ${verificaciones}"
+                                th:value="${var.idEstadoVerificacion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesCumpleTiempo}" />
+                    </td>
+                </tr>
+               
+                <tr>
+                    <td> <label for="verificadoDispositivos" class="labelColumna"
+                            th:text="#{formulario.dispositivos}">Cumple
+                            el uso adecuado de dispositivos de
+                            comunicación y dispositivos electrónicos
+                            durante la conducción:</label></td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{verificadoDispositivos}">
+                            <option th:each="var : ${verificaciones}"
+                                th:value="${var.idEstadoVerificacion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesDispositivos}" />
+                    </td>
+                </tr>
+               
+                <tr>
+                    <td><label for="verificadoPoseeFormacion" class="labelColumna"
+                            th:text="#{formulario.posee.formacion}">Tiene
+                            la suficiente y correcta formación en las
+                            operaciones de conducción:</label></td>
+                    <td>
+                        <select class="form-control"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:style="*{(isLectura or isFirmado)?'pointer-events: none;':''}"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{verificadoPoseeFormacion}">
+                            <option th:each="var : ${verificaciones}"
+                                th:value="${var.idEstadoVerificacion}"
+                                th:text="${var.valor}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesPoseeFormacion}" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

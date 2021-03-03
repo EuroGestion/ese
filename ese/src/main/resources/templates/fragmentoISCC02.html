@@ -1,0 +1,208 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoIscc2" th:hidden="*{!pagina.equals('2')}">
+        <table class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="3">
+                        <h3 class="title-page"
+                            th:text="#{titulo.informe.iscc.carga.cobertura.cargamento}"></h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <!-- observaciones -->
+                        <label for="transporteSeRealiza"
+                            th:text="#{formulario.informe.iscc.transporte.se.realiza}">Transporte
+                            se realiza:</label>
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{transporteSeRealiza}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <!-- observaciones -->
+                        <label for="cohesionUnidades"
+                            th:text="#{formulario.informe.iscc.cohesion.unidades}">Cohesion
+                            unidades:</label>
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{cohesionUnidades}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <!-- observaciones -->
+                        <label for="mercanciasCubiertas"
+                            th:text="#{formulario.informe.iscc.mercancias.cubiertas}">Mercancias
+                            cubiertas:</label>
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{mercanciasCubiertas}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="30%">
+                        <label
+                            th:text="#{formulario.informe.iscc.concepto}">concepto</label>
+                    </td>
+                    <td width="10%">
+                        <label
+                            th:text="#{formulario.informe.iscc.numero.vagones.verificados}">numero
+                            vagones</label>
+                    </td>
+                    <td width="60%">
+                        <label
+                            th:text="#{formulario.informe.iscc.observaciones}">Observaciones</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h4 class="title-page"
+                            th:text="#{formulario.titulo.informe.iscc.carga.respeta.posibilidades}"></h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="cargaDistribucionCarga"
+                            th:text="#{formulario.informe.iscc.carga.distribucion.carga}">distribucion
+                            carga:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:field="*{cargaDistribucionCarga}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{cargaDistribucionCargaObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="cargaCargasConcentradas"
+                            th:text="#{formulario.informe.iscc.carga.cargas.concentradas}">cargas
+                            concentradas:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:field="*{cargaCargasConcentradas}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{cargaCargasConcentradasObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h4 class="title-page"
+                            th:text="#{formulario.titulo.informe.iscc.carga.suspension.aparatos}"></h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="cargaDistanciaBrida"
+                            th:text="#{formulario.informe.iscc.carga.distancia.brida}">distancia
+                            brida:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:field="*{cargaDistanciaBrida}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{cargaDistanciaBridaObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="cargaAlturaCentro"
+                            th:text="#{formulario.informe.iscc.carga.altura.centro}">altura
+                            centro:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:field="*{cargaAlturaCentro}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{cargaAlturaCentroObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h4 class="title-page"
+                            th:text="#{formulario.titulo.informe.iscc.carga.limites}"></h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="cargaRebasaGalibo"
+                            th:text="#{formulario.informe.iscc.carga.rebasa.galibo}">rebasa
+                            galibo:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:field="*{cargaRebasaGalibo}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{cargaRebasaGaliboObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="cargaRebasaLimites"
+                            th:text="#{formulario.informe.iscc.carga.rebasa.limites}">rebasa
+                            limites:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:required="*{pagina.equals('2') and !isLectura}"
+                            th:field="*{cargaRebasaLimites}" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{cargaRebasaLimitesObservaciones}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <!-- observaciones -->
+                        <label for="observacionesCarga"
+                            th:text="#{formulario.observaciones}">observaciones:</label>
+                        <textarea rows="4" cols="50" maxlength="200"
+                            style="resize: none" class="form-control"
+                            th:readonly="*{isLectura or isFirmado}"
+                            th:field="*{observacionesCarga}"></textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

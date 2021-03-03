@@ -1,0 +1,296 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div th:fragment="fragmentoAccidente4"
+        th:hidden="*{!pagina.equals('4')}">
+        <table th:if="*{intervieneCIAF}" class="table-grid">
+            <tbody>
+                <tr>
+                    <td colspan="4">
+                        <h3
+                            th:text="#{formulario.titulo.informe.provisional.ciaf}">Informe
+                            provisional recibido de la CIAF</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="numIdentificacion"
+                            th:text="#{formulario.numero.identificacion}">Num.
+                            Identificacion:</label>
+                        <input class="form-control" type="text"
+                            th:field="*{numIdentificacion}"
+                            th:required="*{pagina.equals('4') and !lectura}"
+                            th:readonly="*{idEstadoAccidente>6 or lectura}" />
+                    </td>
+                    <td>
+                        <label for="fechaCIAF"
+                            th:text="#{formulario.fecha}">fecha:</label>
+                        <input class="form-control" type="date"
+                            th:style="*{(idEstadoAccidente>6 or lectura)?'pointer-events: none;':''}"
+                            th:field="*{fechaCIAF}"
+                            th:required="*{pagina.equals('4') and !lectura}"
+                            th:readonly="*{idEstadoAccidente>6 or lectura}" />
+                    </td>
+                </tr>
+                <tr th:if="*{idEstadoAccidente==5 and !lectura}">
+                    <td>
+                        <label for="evidencia"
+                            th:text="#{formulario.documento}">Documento:</label>
+                        <input class="form-control-file" type="file"
+                            th:field="*{evidencia}"
+                            accept=".jpg , .jpeg,.pdf">
+                    </td>
+                    <td>
+                        <button
+                            class="btn btn-lg btn-primary btn-block mi-boton"
+                            type="submit" formnovalidate
+                            onclick="limpiarCamposValidacionJS(['evidencia']);return validarSubidaArchivo('evidencia',true,'')"
+                            th:formaction="@{/anadirDocumentoInformeProvisionalCIAF}">Añadir</button>
+                    </td>
+                </tr>
+                <tr th:if="*{idEstadoAccidente>5}">
+                    <td>
+                        <label for="evidencia"
+                            th:text="#{formulario.documento}">Documento:</label>
+                    </td>
+                    <td>
+                        <button
+                            class="btn btn-lg btn-primary btn-block mi-boton"
+                            type="submit" formnovalidate
+                            th:formtarget="_blank"
+                            th:formaction="@{/verEvidenciaInformeRecibidoCIAFAccidente}">Ver</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="comentariosInformeCIAF"
+                            th:text="#{formulario.comentario.informe}">Comentarios
+                            al informe:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{idEstadoAccidente>6 or lectura}"
+                            rows="4" cols="125" maxlength="500"
+                            style="resize: none"
+                            th:field="*{comentariosInformeCIAF}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="observacionesIntervencionCIAF"
+                            th:text="#{formulario.observaciones.intervencion.ciaf}">Observaciones
+                            a la intervencion de la CIAF:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{idEstadoAccidente>6 or lectura}"
+                            rows="4" cols="125" maxlength="500"
+                            style="resize: none"
+                            th:field="*{observacionesIntervencionCIAF}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.firmas}">Firmas</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h4 class="title-page"
+                            th:text="#{formulario.responsable.seguridad}">responsable
+                            de seguridad</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <select class="form-control"
+                            style="pointer-events: none;" readonly
+                            th:if="*{idFirmaFichaComentarios!=null}"
+                            th:field="*{idFirmaFichaComentarios}">
+                            <option th:each="var : ${personal}"
+                                th:value="${var.idPersonal}"
+                                th:text="${var.nombreCompleto}"></option>
+                        </select>
+                        <label for="nombreFirmaFichaComentarios"
+                            class="labelColumna"
+                            th:if="*{idFirmaFichaComentarios==null and idEstadoAccidente==6}"
+                            th:text="#{formulario.nombre}">nombre:</label>
+                        <input type="text"
+                            th:field="*{nombreFirmaFichaComentarios}"
+                            th:if="*{idFirmaFichaComentarios==null and idEstadoAccidente==6}"
+                            class="form-control" style="width: 100%;"
+                            th:readonly="*{lectura}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="passwordFirmaFichaComentarios"
+                            class="labelColumna"
+                            th:if="*{idFirmaFichaComentarios==null and idEstadoAccidente==6}"
+                            th:text="#{formulario.password}">contraseña:</label>
+                        <input type="password"
+                            th:field="*{passwordFirmaFichaComentarios}"
+                            class="form-control" style="width: 100%;"
+                            th:if="*{idFirmaFichaComentarios==null and idEstadoAccidente==6}"
+                            th:readonly="*{lectura}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" th:value="#{boton.firmar}"
+                            value="firmar"
+                            th:if="*{idFirmaFichaComentarios==null and idEstadoAccidente==6}"
+                            th:formaction="@{/firmaAccidenteFichaComentarios}"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table th:if="*{idEstadoAccidente>=7}" class="table-grid">
+            <tbody>
+                <!-- mayor 7 estado -->
+                <tr>
+                    <td colspan="4">
+                        <h3
+                            th:text="#{formulario.titulo.medidas.adoptadas}">Medidas
+                            Adoptadas</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="annoReferencia"
+                            th:text="#{formulario.anno.referencia}">Año
+                            de referencia:</label>
+                        <input class="form-control"
+                            th:readonly="*{idEstadoAccidente>7 or lectura}"
+                            type="text"
+                            th:required="*{pagina.equals('4') and !lectura}"
+                            th:field="*{annoReferencia}" />
+                    </td>
+                    <td>
+                        <label for="numRefInformeFinalCIAF"
+                            th:text="#{formulario.numero.referencia.informe.fina.ciaf}">Num
+                            referencia informe final CIAF:</label>
+                        <input class="form-control"
+                            th:readonly="*{idEstadoAccidente>7 or lectura}"
+                            type="text"
+                            th:required="*{pagina.equals('4') and !lectura}"
+                            th:field="*{numRefInformeFinalCIAF}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="medidasAdoptadas"
+                            th:text="#{formulario.medidas.adoptadas}">Medidas
+                            adoptadas:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{idEstadoAccidente>7 or lectura}"
+                            rows="4" cols="125" maxlength="500"
+                            style="resize: none"
+                            th:field="*{medidasAdoptadas}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="medidasProyectadas"
+                            th:text="#{formulario.medidas.proyectadas}">medidas
+                            proyectadas:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{idEstadoAccidente>7 or lectura}"
+                            rows="4" cols="125" maxlength="500"
+                            style="resize: none"
+                            th:field="*{medidasProyectadas}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label for="observaciones"
+                            th:text="#{formulario.observaciones}">Observaciones:</label>
+                        <textarea class="form-control"
+                            th:readonly="*{idEstadoAccidente>7 or lectura}"
+                            rows="4" cols="125" maxlength="500"
+                            style="resize: none"
+                            th:field="*{observaciones}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3 class="title-page"
+                            th:text="#{titulo.firmas}">Firmas</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h4 class="title-page"
+                            th:text="#{formulario.responsable.seguridad}">responsable
+                            de seguridad</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <select class="form-control"
+                            style="pointer-events: none;" readonly
+                            th:if="*{idFirmaFichaMedidas!=null}"
+                            th:field="*{idFirmaFichaMedidas}">
+                            <option th:each="var : ${personal}"
+                                th:value="${var.idPersonal}"
+                                th:text="${var.nombreCompleto}"></option>
+                        </select>
+                        <label for="nombreFirmaFichaMedidas"
+                            class="labelColumna"
+                            th:if="*{idFirmaFichaMedidas==null and idEstadoAccidente==7}"
+                            th:text="#{formulario.nombre}">nombre:</label>
+                        <input type="text"
+                            th:field="*{nombreFirmaFichaMedidas}"
+                            th:if="*{idFirmaFichaMedidas==null and idEstadoAccidente==7}"
+                            class="form-control" style="width: 100%;"
+                            th:readonly="*{lectura}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <!-- libro de normas del maquinista (LNM) -->
+                        <label for="passwordFirmaFichaMedidas"
+                            class="labelColumna"
+                            th:if="*{idFirmaFichaMedidas==null and idEstadoAccidente==7}"
+                            th:text="#{formulario.password}">contraseña:</label>
+                        <input type="password"
+                            th:field="*{passwordFirmaFichaMedidas}"
+                            class="form-control" style="width: 100%;"
+                            th:if="*{idFirmaFichaMedidas==null and idEstadoAccidente==7}"
+                            th:readonly="*{lectura}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" th:value="#{boton.firmar}"
+                            value="firmar"
+                            th:if="*{idFirmaFichaMedidas==null and idEstadoAccidente==7}"
+                            th:formaction="@{/firmaAccidenteFichaMedidas}"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <input type="submit"
+                            th:value="#{boton.anterior}"
+                            th:formaction="@{/paginaAnteriorAccidente}"
+                            formnovalidate value="Anterior"
+                            class="btn btn-lg btn-primary btn-block mi-boton" />
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

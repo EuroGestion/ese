@@ -1,0 +1,123 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{titulo.registro}">Registro</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- jquery -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+    crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/791b4deb36.js" crossorigin="anonymous"></script>
+<!-- archivos locales -->
+<script th:src="@{/js/ese.js}" src="../../js/ese.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/ese.css" th:href="@{/css/ese.css}" />
+</head>
+<body onload="nobackbutton();">
+    <div th:replace="menu :: menu">...</div>
+    <div th:replace="utiles :: error">...</div>
+    <div th:replace="utiles :: info">...</div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <h1 class="title-page"
+                    th:text="#{titulo.crear.modelo.material}">Registro</h1>
+                <div id="container">
+                    <div class="dualbrand"></div>
+                    <div id="content">
+                        <form action="#" class="my-box"
+                            th:object="${addModeloMaterial}"
+                            id="addModeloMaterial" th:method="post"
+                            th:action="@{/addModeloMaterial}">
+                            <input type="hidden"
+                                th:field="*{idModeloMaterial}" />
+                            <table class="table-grid">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <label for="tipo"
+                                                th:text="#{formulario.tipo}">Tipo:</label>
+                                            <select class="form-control"
+                                                th:field="*{idTipoMaterial}"
+                                                th:style="*{lectura?'pointer-events: none;':''}"
+                                                th:readonly="*{lectura}"
+                                                required>
+                                                <option
+                                                    th:each="var : ${tiposMaterial}"
+                                                    th:value="${var.idTipoMaterial}"
+                                                    th:text="${var.valor}">Tipo</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label for="serie"
+                                                th:text="#{formulario.serie}">Serie:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{serie}"
+                                                th:readonly="*{lectura}"
+                                                required />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="subserie"
+                                                th:text="#{formulario.subserie}">Subserie:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{subserie}"
+                                                th:readonly="*{lectura}"
+                                                required />
+                                        </td>
+                                        <td>
+                                            <label for="notas"
+                                                th:text="#{formulario.notas}">Notas:</label>
+                                            <input class="form-control"
+                                                type="text"
+                                                th:field="*{notas}"
+                                                maxlength="12"
+                                                th:readonly="*{lectura}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="submit"
+                                                th:value="#{boton.crear.modelo.material}"
+                                                th:formaction="@{/crearModeloMaterial}"
+                                                th:if="*{!lectura and idModeloMaterial ==null}"
+                                                value="Crear modelo material"
+                                                class="btn btn-lg btn-primary btn-block mi-boton" />
+                                            <input type="submit"
+                                                th:value="#{boton.guardar}"
+                                                th:formaction="@{/guardarModeloMaterial}"
+                                                th:if="*{!lectura and idModeloMaterial !=null}"
+                                                value="Modificar modelo material"
+                                                class="btn btn-lg btn-primary btn-block mi-boton" />
+                                        </td>
+                                        <td>
+                                            <input type="submit"
+                                                th:formaction="@{/buscadorModeloMaterial}"
+                                                th:formmethod="GET"
+                                                th:value="#{boton.volver}"
+                                                formnovalidate
+                                                value="Volver"
+                                                class="btn btn-lg btn-primary btn-block mi-boton" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
